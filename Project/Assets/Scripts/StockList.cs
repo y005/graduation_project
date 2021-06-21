@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [CreateAssetMenu(menuName = "StockList")]
 public class StockList : ScriptableObject
 {
@@ -32,4 +33,5 @@ public class StockList : ScriptableObject
     {
         apiInfo.Add(code,new APIData(send_price, send_divdate, send_divrate, send_sector, send_marketcap, send_per, send_52));
     }
+
 }

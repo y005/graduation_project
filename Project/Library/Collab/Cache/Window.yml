@@ -14,17 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SimpleSelectedItems:
     m_Keys:
-    - Assets/Scenes/Load.unity
-    - Assets/Scripts/LoadControl.cs
-    - Assets/Scripts/Scriptable Objects/Stock List.asset
-    - Assets/Scripts/Scriptable Objects/Stock List.asset.meta
-    - Assets/Scripts/Scriptable Objects/StockList.asset
-    - Assets/Scripts/Scriptable Objects/StockList.asset.meta
+    - Assets/Scenes/InGame.unity
+    - Assets/Scripts/InGameControl.cs
+    - Assets/Scripts/StockList.cs
     - 
-    m_Values: 01010101010101
-  RevisionSummary: "\uC52C \uAC04\uC758 \uC811\uADFC \uAC00\uB2A5\uD55C \uC8FC\uC2DD
-    \uBAA9\uB85D \uAC1D\uCCB4 \uC0DD\uC131"
+    m_Values: 00010100
+  RevisionSummary: 
   ChangesSearchValue: 
-  SelectedHistoryRevision: 
+  SelectedHistoryRevision: 7f9a90f5a3c1d5d0d907ec71b30637c876052cf1
   HistoryPageNumber: 0
-  TabIndex: 0
+  TabIndex: 1

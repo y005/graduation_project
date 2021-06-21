@@ -5,13 +5,18 @@ using UnityEngine.UI;
 
 public class InGameControl : MonoBehaviour
 {
+    //전체 수익 텍스트 UI
     public Text a;
+    //배당 수익 텍스트 UI
     public Text b;
+    //서브메뉴창 UI
     public GameObject SubMenu;
+    //서브메뉴1 UI
     public GameObject SubPage1;
     public GameObject SubPage2;
     public GameObject SubPage3;
     public GameObject SubPage4;
+    public StockList list; 
 
     // Start is called before the first frame update
     void Start()
@@ -19,41 +24,22 @@ public class InGameControl : MonoBehaviour
         string pos;
         int x = 0, z = 0;
         //객체 생성
-        //foreach (KeyValuePair<string,  > item in )
-        for(int i = 0; i < 15; i++)
+        foreach (string key in list.apiInfo.Keys)
         {
             
-            GameObject a = (GameObject)Instantiate(Resources.Load("Prefabs/cube"));
-
+            //GameObject a = (GameObject)Instantiate(Resources.Load("Prefabs/Cube"));
+            Debug.Log(list.apiInfo[key].api_marketprice);
+            
             //섹터확인
-            /*
-            if technology -> pos = tech
+            /*if technology -> pos = tech
             else if communication services -> pos = cs
             else if consumer cyclical -> pos = cc
             else if financial -> pos = fin
-             */
+            */
 
-            //섹터에 따른 것으로 조건문 수정하기
-            if (i < 4) 
-            {
-                x = -5;
-                z = -5;
-            }
-            else if(i >= 4 && i < 8)
-            {
+            //a.transform.position = new Vector3(2, 2, 2);
 
-            }
-            else if (i >= 8 && i < 12)
-            {
-
-            }
-            else
-            {
-
-            }
-            a.transform.position = new Vector3(x, 1, z);
-
-        }
+       }
     }
 
     // Update is called once per frame

@@ -49,6 +49,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\API.cs" />
      <Compile Include="Assets\Scripts\MainMenuControl.cs" />
+     <Compile Include="Assets\ReadME.cs" />
      <Compile Include="Assets\Scripts\StockList.cs" />
      <Compile Include="Assets\Scripts\InGameControl.cs" />
      <Compile Include="Assets\Scripts\LoadControl.cs" />
