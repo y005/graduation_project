@@ -12,14 +12,17 @@ using System.Threading.Tasks;
 
 public class MainMenuControl : MonoBehaviour
 {
-    public Text API;
+    public Text apikey;
+    public API api;
 
     public async void StartBtnClick()
     {
         bool result = await checkApi();
         //유효한 API인 경우에만 인게임으로 진입한다.
         if (result) {
-            SceneManager.LoadScene("InGame");
+            //api를 스크립터블 오브젝트에 저장
+            api.key = apikey.text;
+            SceneManager.LoadScene("Load");
         }
         //유효하지 않은 경우 상태메세지를 출력한다. 
         else
@@ -48,7 +51,7 @@ public class MainMenuControl : MonoBehaviour
             RequestUri = new Uri("https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary?symbol=AMRN&region=US"),
             Headers =
     {
-        { "x-rapidapi-key", API.text },
+        { "x-rapidapi-key", apikey.text },
         { "x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com" },
     },
         };

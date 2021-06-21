@@ -47,8 +47,11 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\API.cs" />
      <Compile Include="Assets\Scripts\MainMenuControl.cs" />
+     <Compile Include="Assets\Scripts\StockList.cs" />
      <Compile Include="Assets\Scripts\InGameControl.cs" />
+     <Compile Include="Assets\Scripts\LoadControl.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

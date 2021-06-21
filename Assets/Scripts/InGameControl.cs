@@ -16,13 +16,50 @@ public class InGameControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        string pos;
+        int x = 0, z = 0;
+        //객체 생성
+        //foreach (KeyValuePair<string,  > item in )
+        for(int i = 0; i < 15; i++)
+        {
+            
+            GameObject a = (GameObject)Instantiate(Resources.Load("Prefabs/cube"));
+
+            //섹터확인
+            /*
+            if technology -> pos = tech
+            else if communication services -> pos = cs
+            else if consumer cyclical -> pos = cc
+            else if financial -> pos = fin
+             */
+
+            //섹터에 따른 것으로 조건문 수정하기
+            if (i < 4) 
+            {
+                x = -5;
+                z = -5;
+            }
+            else if(i >= 4 && i < 8)
+            {
+
+            }
+            else if (i >= 8 && i < 12)
+            {
+
+            }
+            else
+            {
+
+            }
+            a.transform.position = new Vector3(x, 1, z);
+
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 
     public void SubMenuBtnClick()
