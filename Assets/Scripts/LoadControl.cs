@@ -16,34 +16,14 @@ public class LoadControl : MonoBehaviour
     float totalStockCnt=0;
     //프로그래스 바
     public Slider LoadSlider;
-    //api키를 저장한 객체
+    //API키를 저장한 객체
     public API api;
-
-    //사용하는 주식종목코드 배열
-    List<string> codeList = new List<string>() { "MSFT", "ORCL" }; //"AAPL", "IBM", "GOOGL", "FB", "NFLX", "DIS", "AMZN", "TSLA", "HD", "LOW", "V", "PYPL", "BAC" };
-    //종목코드와 얻은 api 자료를 저장한 딕셔너리
-    Dictionary<string, APIData> apiInfo = new Dictionary<string, APIData>();
-    public class APIData //API에서 불러온 데이터 return 하기 위한 클래스
-    {
-        public float api_marketprice; //현재 시가
-        public string api_divDate; //배당일
-        public float api_divRate; //배당률
-        public string api_sector; //관련 업종별 분류
-        public float api_marketcap; //시가총액
-        public float api_per; //PER
-        public float api_52week; //시가 성장 변화(52 week change)
-
-        public APIData(float api_marketprice, string api_divDate, float api_divRate, string api_sector, float api_marketcap, float api_per, float api_52week)
-        {
-            this.api_marketprice = api_marketprice;
-            this.api_divDate = api_divDate;
-            this.api_divRate = api_divRate;
-            this.api_sector = api_sector;
-            this.api_marketcap = api_marketcap;
-            this.api_per = api_per;
-            this.api_52week = api_52week;
-        }
-    }
+    //주식 정보들을 저장한 객체
+    public StockList stockList;
+    
+    //사용하는 주식의 종목코드 배열
+    List<string> codeList = new List<string>() { "MSFT", "ORCL" }; 
+    //"AAPL", "IBM", "GOOGL", "FB", "NFLX", "DIS", "AMZN", "TSLA", "HD", "LOW", "V", "PYPL", "BAC" };
 
     void Start()
     {
@@ -98,6 +78,7 @@ public class LoadControl : MonoBehaviour
     }
     async Task BeginNetwork(string code)
     {
+        
         var client = new HttpClient();
         var request = new HttpRequestMessage
         {
@@ -136,7 +117,7 @@ public class LoadControl : MonoBehaviour
             //PER
             string tmp4 = (string)obj["summaryDetail"]["forwardPE"]["raw"];
             float.TryParse(tmp4, out float send_per);
-            ;
+            
             //시가 성장 변화(52 week change)
             string send_tmp4 = (string)obj["defaultKeyStatistics"]["52WeekChange"]["raw"];
             float.TryParse(send_tmp4, out float send_52);
@@ -145,21 +126,19 @@ public class LoadControl : MonoBehaviour
             totalStockCnt++;
             
             //apiInfo 정보 업데이트
-            if (apiInfo.ContainsKey(code))
+            if (stockList.apiInfo.ContainsKey(code))
             {
-                apiInfo[code].api_marketprice = send_price;
-                apiInfo[code].api_divDate = send_divdate;
-                apiInfo[code].api_divRate = send_divrate;
-                apiInfo[code].api_sector = send_sector;
-                apiInfo[code].api_marketcap = send_marketcap;
-                apiInfo[code].api_per = send_per;
-                apiInfo[code].api_52week = send_52;
-                Debug.Log("배당일:");
-                Debug.Log(send_divdate);
+                stockList.apiInfo[code].api_marketprice = send_price;
+                stockList.apiInfo[code].api_divDate = send_divdate;
+                stockList.apiInfo[code].api_divRate = send_divrate;
+                stockList.apiInfo[code].api_sector = send_sector;
+                stockList.apiInfo[code].api_marketcap = send_marketcap;
+                stockList.apiInfo[code].api_per = send_per;
+                stockList.apiInfo[code].api_52week = send_52;
             }
             else
             {
-                apiInfo.Add(code, new APIData(send_price, send_divdate, send_divrate, send_sector, send_marketcap, send_per, send_52));
+                stockList.add(code, send_price, send_divdate, send_divrate, send_sector, send_marketcap, send_per, send_52);
             }
         };
     }

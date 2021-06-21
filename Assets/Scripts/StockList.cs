@@ -2,36 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class stockData
-{
-    public float marketprice; //현재 시가
-    public string divDate; //배당일
-    public float divRate; //배당률
-    public string sector; //관련 업종별 분류
-    public float marketcap; //시가총액
-    public float per; //PER
-    public float week52; //시가 성장 변화(52 week change)
-}
 [CreateAssetMenu(menuName = "StockList")]
 public class StockList : ScriptableObject
 {
-    //주식코드와 정보를 딕셔너리에 저장
-    public Dictionary<string,stockData> list;
-    public void addStockList(string c, float mp, string dd, float dr, string s, float mc, float p, float w5)
+    //종목코드와 얻은 api 자료를 저장한 딕셔너리
+    public Dictionary<string, APIData> apiInfo = new Dictionary<string, APIData>();
+    public class APIData //API에서 불러온 데이터 return 하기 위한 클래스
     {
-        stockData stock1 = null;
-        stock1.marketprice = mp;
-        stock1.divDate = dd;
-        stock1.divRate = dr;
-        stock1.sector = s;
-        stock1.marketcap = mc;
-        stock1.per = p;
-        stock1.week52 = w5;
-        list.Add(c,stock1);
+        public float api_marketprice; //현재 시가
+        public string api_divDate; //배당일
+        public float api_divRate; //배당률
+        public string api_sector; //관련 업종별 분류
+        public float api_marketcap; //시가총액
+        public float api_per; //PER
+        public float api_52week; //시가 성장 변화(52 week change)
+
+        public APIData(float api_marketprice, string api_divDate, float api_divRate, string api_sector, float api_marketcap, float api_per, float api_52week)
+        {
+            this.api_marketprice = api_marketprice;
+            this.api_divDate = api_divDate;
+            this.api_divRate = api_divRate;
+            this.api_sector = api_sector;
+            this.api_marketcap = api_marketcap;
+            this.api_per = api_per;
+            this.api_52week = api_52week;
+        }
     }
-    public void delStockList(string c)
+    public void add(string code, float send_price, string send_divdate, float send_divrate, string send_sector,float send_marketcap,float send_per,float send_52)
     {
-        list.Remove(c);
+        apiInfo.Add(code,new APIData(send_price, send_divdate, send_divrate, send_sector, send_marketcap, send_per, send_52));
     }
 }
