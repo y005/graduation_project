@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SimpleSelectedItems:
     m_Keys:
-    - Assets/Resources/Prefabs/Materials/accent_1.mat
-    - Assets/Resources/Prefabs/Materials/blue_2.mat
+    - Assets/Resources/Prefabs/Buildings/payPal.prefab
+    - Assets/Scenes/InGame.unity
+    - Assets/Scripts/BuildingControl.cs
     - 
-    m_Values: 000000
+    m_Values: 00000000
   RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 

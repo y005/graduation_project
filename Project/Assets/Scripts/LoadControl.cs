@@ -88,7 +88,7 @@ public class LoadControl : MonoBehaviour
             RequestUri = new Uri("https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary?symbol=" + code + "&region=US"),
             Headers =
     {
-        { "x-rapidapi-key", api.key },
+        { "x-rapidapi-key", "bd2bc7360bmsha9dc79919d1c7e9p1641b7jsnb4bd1c60dbe6"},
         { "x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com" },
     },
         };

@@ -65,14 +65,14 @@ public class InGameControl : MonoBehaviour
     void Update()
     {
         //클릭한 객체 이름 출력
-       /* if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = getCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
                 thisSymbol.text = hit.collider.gameObject.name;
             }
-        }*/
+        }
     }
 
     public void SubMenuBtnClick()
