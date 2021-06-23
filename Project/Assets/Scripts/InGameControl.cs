@@ -16,36 +16,63 @@ public class InGameControl : MonoBehaviour
     public GameObject SubPage2;
     public GameObject SubPage3;
     public GameObject SubPage4;
-    public StockList list; 
+    public StockList list;
+    public Camera getCamera; //게임 시점 카메라
+    private RaycastHit hit; //마우스에 클릭된 객체 
+    public Text thisSymbol; //화면에 띄울 종목명
 
     // Start is called before the first frame update
     void Start()
     {
-        string pos;
+        string path = "";
         int x = 0, z = 0;
-        //객체 생성
+
+        //섹터별 배치
         foreach (string key in list.apiInfo.Keys)
         {
-            
-            //GameObject a = (GameObject)Instantiate(Resources.Load("Prefabs/Cube"));
-            Debug.Log(list.apiInfo[key].api_marketprice);
-            
-            //섹터확인
-            /*if technology -> pos = tech
-            else if communication services -> pos = cs
-            else if consumer cyclical -> pos = cc
-            else if financial -> pos = fin
-            */
-
-            //a.transform.position = new Vector3(2, 2, 2);
-
-       }
+            if (list.apiInfo[key].api_sector.Equals("Technology"))
+            {
+                path = "Prefabs/Buildings/cube1";
+                x = -5;
+                z = -5;
+            }
+            else if (list.apiInfo[key].api_sector.Equals("Communication Services"))
+            {
+                path = "Prefabs/Buildings/cube2";
+                x = 5;
+                z = -5;
+            }
+            else if (list.apiInfo[key].api_sector.Equals("Consumer Cyclical"))
+            {
+                path = "Prefabs/Buildings/cube3";
+                x = 5;
+                z = 5;
+            }
+            else if (list.apiInfo[key].api_sector.Equals("Financial Services"))
+            {
+                path = "Prefabs/Buildings/cube4";
+                x = -5;
+                z = 5;
+            }
+            GameObject a = (GameObject)Instantiate(Resources.Load(path));
+            a.name = key;
+            a.transform.position = new Vector3(x, 2, z);
+            Debug.Log(list.apiInfo[key].api_sector);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+        //클릭한 객체 이름 출력
+       /* if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = getCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                thisSymbol.text = hit.collider.gameObject.name;
+            }
+        }*/
     }
 
     public void SubMenuBtnClick()
@@ -66,6 +93,8 @@ public class InGameControl : MonoBehaviour
     {
         SubMenu.SetActive(false);
         SubPage1.SetActive(true);
+
+        /* symbol, 매매 수량, 매매 금액, BUY, SELL 버튼 선택*/
     }
 
     public void SubPage2BtnClick()

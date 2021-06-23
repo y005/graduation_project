@@ -22,11 +22,13 @@ public class LoadControl : MonoBehaviour
     public StockList stockList;
     
     //사용하는 주식의 종목코드 배열
-    List<string> codeList = new List<string>() { "MSFT", "ORCL" }; 
+    List<string> codeList = new List<string>() { "MSFT", "GOOGL", "HD", "PYPL" }; 
     //"AAPL", "IBM", "GOOGL", "FB", "NFLX", "DIS", "AMZN", "TSLA", "HD", "LOW", "V", "PYPL", "BAC" };
 
     void Start()
     {
+        //슬라이더 바 상태 초기화
+        LoadSlider.value = 0;
         //API 호출로 주식정보들 저장
         apiCall();
         //코루틴 함수 호출을 통해 로딩을 슬라이더 바로 보여줌
@@ -38,7 +40,7 @@ public class LoadControl : MonoBehaviour
     //전체 갯수에 대비 비례한 프로그레스 바를 표시
     //인게임 씬로드의 경우 50%까지 비율 표시
     //50~100%의 경우 주식정보 로드 진행비율로 반영 
-    //저장이 완료되면 인게임 씬을 로드하기
+    //로드가 완료되면 인게임 씬을 로드하기
 
     IEnumerator gameSetting() 
     {
@@ -48,14 +50,14 @@ public class LoadControl : MonoBehaviour
         while (!op.isDone)
         {
             yield return null;
-            float progress1 = Mathf.Clamp01(op.progress / .9f * .5f);
-            LoadSlider.value = progress1; 
-            if (progress1 >= 0.5)
+            float progress1 = Mathf.Clamp01(op.progress / .9f)*5f;
+            LoadSlider.value = progress1;
+            if (progress1 >= 5)
             {
                 while (totalStockCnt < codeList.Count)
                 {
-                    float progress2 = Mathf.Clamp01(totalStockCnt/ 10 * .5f);
-                    LoadSlider.value = 0.5f + progress2;
+                    float progress2 = Mathf.Clamp01(totalStockCnt / codeList.Count)*5f;
+                    LoadSlider.value = 5f+progress2;
                     yield return null;
                 }
                 op.allowSceneActivation = true;
