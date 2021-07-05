@@ -22,8 +22,6 @@ public class LoadControl : MonoBehaviour
     public StockList stockList;
 
     //사용하는 주식의 종목코드 배열
-    //List<string> codeList = new List<string>() { "MSFT"};
-    //List<string> codeList = new List<string>() { "MSFT", "IBM", "PYPL" };
     List<string> codeList = new List<string>() { "MSFT", "GOOGL", "SBUX", "PYPL" };
     //List<string> codeList = new List<string>() { "MSFT", "ORCL", "AAPL", "IBM", "GOOGL", "FB", "NFLX", "DIS", "AMZN", "TSLA", "SBUX", "NKE", "V", "PYPL", "BAC" };
 

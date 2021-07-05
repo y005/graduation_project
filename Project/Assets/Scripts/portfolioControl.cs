@@ -129,7 +129,6 @@ public class portfolioControl : MonoBehaviour
         {
             myPortfolio.Cash += float.Parse(cash.text);
       		Debug.Log("cash = " + myPortfolio.Cash);
-            //inputsClear();
             cash.text = "";
         }
         else
@@ -210,12 +209,5 @@ public class portfolioControl : MonoBehaviour
         date.text = "";
         share.text = "";
         costPerShare.text = "";
-
-       /* string[] stockInputs = { cash.text, date.text, share.text, costPerShare.text };
-        for (int i = 0; i < stockInputs.Length; i++)
-        {
-            Debug.Log(stockInputs[i]);
-            stockInputs[i] = "";
-        }*/
     }
 }

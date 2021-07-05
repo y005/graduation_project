@@ -20,23 +20,24 @@ public class BuildingControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      //  lightControl();
+       //lightControl();
     }
 
     void lightControl()
     {
         //업데이트 함수는 1초에 60번 정도로 호출되기 때문에(60프레임)
         //0.5초 주기로 밝기를 변화하기 위해서는 카운트 변수를 따로 만들고 확인
-        if (frame == 0)
+        /*if (frame == 0)
         {
             lightLevel = (lightLevel + 1) % 2;
         }
         transform.GetChild(0).gameObject.GetComponent<Light>().intensity = lightLevel;
-        frame = (frame + 1) % 60;
+        frame = (frame + 1) % 60;*/
 
-        //시가 변화율에 따라 조명 색상 변경
-        //float change = (list.apiInfo[transform.name].api_marketprice - list.apiInfo[transform.name].api_preclose) / list.apiInfo[transform.name].api_marketprice * 100;
-        //if (change >= 0) { transform.GetChild(0).gameObject.GetComponent<Light>().color = Color.red; } //전날대비 +
-        //else { transform.GetChild(0).gameObject.GetComponent<Light>().color = Color.blue; } //전날대비 -
+        //시가 변화율에 따라 조명 on/off
+        float change = (list.apiInfo[transform.name].api_marketprice - list.apiInfo[transform.name].api_preclose) / list.apiInfo[transform.name].api_marketprice * 100;
+        if (change >= 0) { transform.GetChild(0).gameObject.GetComponent<Light>().intensity = 15; } //전날대비 +
+        else { transform.GetChild(0).gameObject.GetComponent<Light>().intensity = 0; } //전날대비 -
+
     }
 }

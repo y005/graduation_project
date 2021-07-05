@@ -38,7 +38,7 @@ public class InGameControl : MonoBehaviour
              Ray ray = getCamera.ScreenPointToRay(Input.mousePosition);
              if (Physics.Raycast(ray, out hit))
              {
-                 if(!hit.collider.gameObject.CompareTag("ground"))//건물 오브젝트를 클릭한 경우
+                 if(hit.collider.gameObject.CompareTag("stock"))//건물 오브젝트를 클릭한 경우
                  {
                      tmpname = hit.collider.gameObject.name;
                      thisSymbol.text = tmpname;
