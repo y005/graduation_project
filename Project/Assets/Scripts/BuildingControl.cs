@@ -38,6 +38,5 @@ public class BuildingControl : MonoBehaviour
         float change = (list.apiInfo[transform.name].api_marketprice - list.apiInfo[transform.name].api_preclose) / list.apiInfo[transform.name].api_marketprice * 100;
         if (change >= 0) { transform.GetChild(0).gameObject.GetComponent<Light>().intensity = 15; } //전날대비 +
         else { transform.GetChild(0).gameObject.GetComponent<Light>().intensity = 0; } //전날대비 -
-
     }
 }

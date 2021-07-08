@@ -14,13 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SimpleSelectedItems:
     m_Keys:
-    - Assets/RainMaker/Demo/DemoScript.cs
-    - Assets/Scenes/InGame.unity
-    - Assets/Scripts/BuildingControl.cs
-    - Assets/Scripts/LoadControl.cs
-    - Assets/Scripts/portfolioControl.cs
     - 
-    m_Values: 000000000000
+    m_Values: 01
   RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 

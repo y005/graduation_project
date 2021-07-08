@@ -48,7 +48,8 @@ public class InGameControl : MonoBehaviour
                               + "  sector = " + list.apiInfo[tmpname].api_sector
                               + "  ½Ã°¡ÃÑ¾× = " + list.apiInfo[tmpname].api_marketcap
                               + "  PER = " + list.apiInfo[tmpname].api_per
-                              + "  52week = " + list.apiInfo[tmpname].api_52week);
+                              + "  52week = " + list.apiInfo[tmpname].api_52week
+                              + "  previous close = " + list.apiInfo[tmpname].api_preclose);
                  }
              }
          }

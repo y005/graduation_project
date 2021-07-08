@@ -126,7 +126,7 @@ public class LoadControl : MonoBehaviour
 
             //previous Close
             string send_tmp5 = (string)obj["price"]["regularMarketPreviousClose"]["raw"];
-            float.TryParse(send_tmp4, out float send_preclose);
+            float.TryParse(send_tmp5, out float send_preclose);
 
             //정보를 얻은 주식의 갯수 업데이트
             totalStockCnt++;
