@@ -9,12 +9,13 @@ public class InGameControl : MonoBehaviour
      public portfolio myPortfolio; //포트폴리오 정보 저장자료
      public GameObject SubMenu; //서브메뉴창
      public GameObject EditPage; //포트폴리오 정보 수정 페이지
+     public GameObject StockInfo; //서브메뉴창
      public Camera getCamera; //게임 시점 카메라
      public Text thisSymbol; //화면에 띄울 종목명
      public GameObject[] totalMode; //전체 주식시장 모드일때 나와야 되는 오브젝트 리스트
      public GameObject[] portfolioMode; //포트폴리오 모드일때 나와야 되는 오브젝트 리스트
      private RaycastHit hit; //마우스에 클릭된 객체 
-     private bool subMenuPopUp; //서브메뉴창이 떠있는지 확인하는 bool변수
+     public bool subMenuPopUp; //서브메뉴창이 떠있는지 확인하는 bool변수
 
     void Start()
      {
@@ -23,53 +24,21 @@ public class InGameControl : MonoBehaviour
          BuildingScaleSet();
      }
 
-     void Update()
-     {
-         clickCheck();
-     }
-
-     void clickCheck()
-     {
-         if (subMenuPopUp){return;}
-         //클릭한 객체 이름 출력
-         if (Input.GetMouseButtonDown(0))
-         {
-             string tmpname = "";
-             Ray ray = getCamera.ScreenPointToRay(Input.mousePosition);
-             if (Physics.Raycast(ray, out hit))
-             {
-                 if(hit.collider.gameObject.CompareTag("stock"))//건물 오브젝트를 클릭한 경우
-                 {
-                     tmpname = hit.collider.gameObject.name;
-                     thisSymbol.text = tmpname;
-
-                     Debug.Log("배당일 = " + list.apiInfo[tmpname].api_divDate
-                              + "  배당률 = " + list.apiInfo[tmpname].api_divRate
-                              + "  sector = " + list.apiInfo[tmpname].api_sector
-                              + "  시가총액 = " + list.apiInfo[tmpname].api_marketcap
-                              + "  PER = " + list.apiInfo[tmpname].api_per
-                              + "  52week = " + list.apiInfo[tmpname].api_52week
-                              + "  previous close = " + list.apiInfo[tmpname].api_preclose);
-                 }
-             }
-         }
-     }
      public void SubMenuBtnClick()
      {
-         //서브페이지 내리기
-         EditPage.SetActive(false);
+        EditPage.SetActive(false);
 
-         //서브메뉴가 화면에 있으면 창내리기
-         if (SubMenu.activeSelf)
+        //서브메뉴와 종목정보창이 화면에 없으면 창열기
+        if (!SubMenu.activeSelf && !GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().StockInfoMenuPopUp)
          {
-             SubMenu.SetActive(false);
-             subMenuPopUp = false;
-         }
-         //서브메뉴가 화면에 없으면 창열기
-         else
-         {
-             SubMenu.SetActive(true);
-             subMenuPopUp = true;
+            SubMenu.SetActive(true);
+            subMenuPopUp = true;
+        }
+        //서브메뉴가 화면에 있으면 창내리기
+        else
+        {
+            SubMenu.SetActive(false);
+            subMenuPopUp = false;
         }
      }
      //total버튼을 누르면 인게임이 전체 주식시장 모드로 전환됨
@@ -116,7 +85,7 @@ public class InGameControl : MonoBehaviour
     //portfolio버튼을 누르면 인게임이 포트폴리오 모드로 전환됨
     public void portfolioBtnClick()
     {
-        thisSymbol.text = "";
+        //thisSymbol.text = "";
 
         //totalMode 태그가 달린 객체를 전부 비활성화(포트폴리오 UI 버튼이랑 Building 부모 객체)
         for (int i = 0; i < totalMode.Length; i++)
