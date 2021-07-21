@@ -6,7 +6,8 @@ using System.Collections;
 namespace DigitalRuby.RainMaker
 {
     public class DemoScript : MonoBehaviour
-    {   
+    {
+        public portfolio myPortfolio; //포트폴리오 정보 저장자료
         public StockList list;//주식 api정보를 이용하기 위한 stockList
         private RaycastHit hit; //마우스에 클릭된 객체
         public RainScript RainScript;//날씨 제어를 위한 오브젝트
@@ -15,11 +16,16 @@ namespace DigitalRuby.RainMaker
         public bool StockInfoMenuPopUp; //종목정보창이 띄워져있는지 확인하는 변수
         public Image StockPicture; //종목정보UI 페이지에 올릴 로고 이미지
         public Text infomation; //종목정보UI 페이지에 올릴 정보(시가,시가총액,전일종가 등)
+        public Text infomation1; //종목정보UI 페이지에 올릴 정보(보유 종목인 경우 평가금액과 보유 수량 등)
         public Text thisSymbol; //화면에 띄울 종목이름 정보 텍스트 UI
         public Text SectorName; //화면에 띄울 섹터 정보 텍스트 UI
-        private Vector3[] SectorPos = { new Vector3(8.5f, 84f, -8f), new Vector3(36f, 71f, -5.7f), new Vector3(66.4f, 59f, 22f), new Vector3(-21f, 58f, -52f), new Vector3(8f, 44f, -38f), new Vector3(39f, 33f, -20f) };
-        private string[] SectorNames = { "Industrial", "Consumer", "Real Estate", "IT", "Health Care", "Financial" };
+        private Vector3[] SectorPos = { new Vector3(-25.7f, 53f, 25.8f), new Vector3(17.4f, 53f, 25.8f), new Vector3(60.4f, 53f, 25.8f), new Vector3(-26f, 53f, -48f), new Vector3(18f, 53f, -48f), new Vector3(59.9f, 53f, -47f) };
+        private string[] SectorNames = { "Industrial", "Consumer", "Health Care", "Financial", "IT", "Real Estate" };
         private int SectorIndex;
+        public Toggle WeatherOpt;//날씨 반영 옵션
+        public Toggle TimeOpt;//시간 연동 옵션
+        bool isDay; //화창한지 저장한 상태변수
+        bool isRain; //비가 와야 되는지 저장한 상태변수
 
         private void Start()
         {
@@ -28,8 +34,8 @@ namespace DigitalRuby.RainMaker
             RainScript.RainIntensity = 0f;
             RainScript.EnableWind = true;
             StockInfoMenuPopUp = false;
-            marketTimeCheck();
-            UpdateRain();
+            isDay = marketTimeCheck();
+            isRain = marketMoodCheck();
         }
         // Update is called once per frame
         private void Update()
@@ -37,6 +43,22 @@ namespace DigitalRuby.RainMaker
             UpdateKeyboard();
             UpdateSectorName();
             clickCheck();
+            optCheck();
+        }
+        //옵션 체크에 따라 제어되는 이펙트(날씨,시간)
+        void optCheck()
+        {
+            if (!TimeOpt.isOn) { Sun.GetComponent<Light>().intensity = 1f; }
+            if (TimeOpt.isOn){
+                if (isDay){ Sun.GetComponent<Light>().intensity = 1f; }
+                else{ Sun.GetComponent<Light>().intensity = 0f; }
+            }
+            if (!WeatherOpt.isOn) { RainScript.RainIntensity = 0.0f; }
+            if (WeatherOpt.isOn)
+            {
+                if (isRain){RainScript.RainIntensity = 5.0f;}
+                else{RainScript.RainIntensity = 0.0f;}
+            }
         }
         void clickCheck()
         {
@@ -123,22 +145,25 @@ namespace DigitalRuby.RainMaker
             StockPicture.sprite = Resources.Load("Sprites/" + code, typeof(Sprite)) as Sprite;
             //종목 정보 페이지에서 정보 띄움(이미지도 코드에 해당하는 기업정보로 자동 전달되기)
             infomation.text = "Code: " + code;
-            infomation.text = "\nMarket Price: " + list.apiInfo[code].api_marketprice.ToString("F3") + "$";
-            infomation.text += "\nPER: " + list.apiInfo[code].api_per.ToString("F3");
+            infomation1.text = "";
+            if (!list.apiInfo.ContainsKey(code)) { return; }
+            infomation.text = "\nMarket Price: " + list.apiInfo[code].api_marketprice.ToString("F2") + "$";
+            infomation.text += "\nPER: " + list.apiInfo[code].api_per.ToString("F2");
             infomation.text += "\nSector: " + list.apiInfo[code].api_sector;
-            infomation.text += "\nMarket Cap: " + list.apiInfo[code].api_marketcap.ToString("F3");
+            infomation.text += "\nMarket Cap: " + list.apiInfo[code].api_marketcap.ToString();
             infomation.text += "\n52week: " + list.apiInfo[code].api_52week;
-            infomation.text += "\nPrevious Close: " + list.apiInfo[code].api_preclose.ToString("F3") + "$";
-        }
-        private void UpdateRain()
-        {
-            //전날 종가에 대한 현재 시장가의 평균 변화율이 양수인 경우 화창
-            if (marketMoodCheck()) { RainScript.RainIntensity = 0.0f; }
-            //전날 종가에 대한 현재 시장가의 평균 변화율이 음수인 경우 비
-            else { RainScript.RainIntensity = 0.5f; }
+            infomation.text += "\nPrevious Close: " + list.apiInfo[code].api_preclose.ToString("F2") + "$";
+            //자신의 보유한 종목 정보일 경우에 평가금액과 수량 표시
+            if (myPortfolio.stockInfo.ContainsKey(code))
+            {
+                if (myPortfolio.stockInfo[code].shares==0) { return; }
+                infomation1.text += "\nShares: " + myPortfolio.stockInfo[code].shares;
+                infomation1.text += "\nTotal: " + myPortfolio.updateGain(code) + "$";
+            }
         }
         private void UpdateKeyboard()
         {
+            if (GameObject.Find("InGameControl").GetComponent<InGameControl>().subMenuPopUp || StockInfoMenuPopUp) { return; }
             float speed = 10.0f * Time.deltaTime;
             float XSpeed = 0f;
             float YSpeed = 0f;
@@ -151,15 +176,14 @@ namespace DigitalRuby.RainMaker
             else if (Input.GetKey(KeyCode.E)) { Camera.main.orthographicSize = 13; }
             Camera.main.transform.Translate(XSpeed, YSpeed, 0.0f);
         }
-
-        private void marketTimeCheck()
+        private bool marketTimeCheck()
         {
             //미국 시장 기준으로 23:30~6:00까지 열림
             //장이 열린 시간에는 낮시간으로 장마감 이후는 밤시간으로 표현
             string h = DateTime.Now.ToString(("HH"));
             int hour = Int32.Parse(h);
-            if ((hour> 23) || (hour <7)) {Sun.transform.rotation = Quaternion.Euler(90f, 0.0f, 0.0f);}
-            else{ Sun.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f); }
+            if ((hour> 23) || (hour <7)) { return true;}
+            else{ return false; }
         }
         private bool marketMoodCheck()
         {
@@ -174,7 +198,7 @@ namespace DigitalRuby.RainMaker
             }
             Debug.Log(avgMood/list.apiInfo.Count);
             //전날 종가에 대한 현재 시장가의 평균 변화율이 양수인지 반환
-            return avgMood > 0;
+            return avgMood < 0;
         }
     }
 }

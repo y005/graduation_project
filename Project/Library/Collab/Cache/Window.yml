@@ -14,14 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SimpleSelectedItems:
     m_Keys:
-    - Assets/RainMaker/Demo/DemoScript.cs
-    - Assets/Resources/Sprites/eqiux.png
-    - Assets/Resources/Sprites/eqiux.png.meta
-    - "Assets/\uAE30\uD0C0/Map.prefab.meta"
     - 
-    m_Values: 0000000000
-  RevisionSummary: 
+    m_Values: 01
+  RevisionSummary: "\uD3EC\uD2B8\uD3F4\uB9AC\uC624 \uC624\uB958 \uC218\uC815, \uB9F5,\uC870\uBA85
+    \uC218\uC815"
   ChangesSearchValue: 
   SelectedHistoryRevision: 
   HistoryPageNumber: 0
-  TabIndex: 1
+  TabIndex: 0

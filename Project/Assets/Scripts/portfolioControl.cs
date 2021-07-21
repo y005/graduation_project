@@ -22,25 +22,29 @@ public class portfolioControl : MonoBehaviour
     public portfolio myPortfolio;//보유 종목 저장 데이터
     //포트폴리오의 산업별 종목 갯수
     public Dictionary<string, int> sectorCnt = new Dictionary<string, int>();
+
+    public GameObject[] totalMode;
+
     void Start()
     {
         myPortfolio.renew =false;//포트폴리오 갱신 플래그 false
         //산업별 보유 종목 갯수 초기화
-        sectorCnt.Add("Technology", 0);
-        sectorCnt.Add("Communication Services", 0);
-        sectorCnt.Add("Consumer Cyclical", 0);
-        sectorCnt.Add("Financial Services", 0);
-        
+        sectorCnt.Add("Health Care", 0);
+        sectorCnt.Add("Financial", 0);
+        sectorCnt.Add("Real Estate", 0);
+        sectorCnt.Add("IT", 0);
+        sectorCnt.Add("Consumer", 0);
+        sectorCnt.Add("Industrial", 0);
     }
     // Update is called once per frame
     void Update()
     {
         //포트폴리오가 갱신된 경우 객체 배치 반영
-        if (myPortfolio.renew)
+        /*if (myPortfolio.renew)
         {
-            settingPortfolio();
+           settingPortfolio();
             myPortfolio.renew = false;
-        }
+        }*/
     }
 
     //자신의 보유 종목을 객체로 배치하기
@@ -49,8 +53,8 @@ public class portfolioControl : MonoBehaviour
         float total = 0;//전체 주식평가금액 저장변수
         float myinvest = 0; //전체 투자금 저장변수
         string path = "";//프리팹 로드 경로
-        float x = 0, z = 0;
-        int loc = 0;//건물 객체를 설치할 y좌표
+        //float x = 0, z = 0;
+        //int loc = 0;//건물 객체를 설치할 y좌표
 
         //"myStock" 태그가 달린 객체(포트폴리오 배치된 건물)를 전부 삭제(갱신이 될때 마다 반복)
         foreach(GameObject tmp in myPortfolio.myStocks){Destroy(tmp);}
@@ -74,53 +78,43 @@ public class portfolioControl : MonoBehaviour
             myinvest += myPortfolio.stockInfo[key].shares * myPortfolio.stockInfo[key].avgCostPerShare;
         }
         //전체 수익금 = 전체 평가금액 - 나의 전체 투자금액
-        totalGain.text = (total - myinvest).ToString();
-        //전체 평가금액 UI에 표시
-        //totalGain.text = total.ToString();
+        //totalGain.text = (total - myinvest).ToString();
 
         //해당하는 섹터 위치에 차례대로 일정 간격으로 정렬시키기
         foreach (var key in myPortfolio.stockInfo.Keys.ToList())
         {
+            //기존 건물 위치 반환
+            Vector3 pos;
+            pos = totalMode[0].transform.Find(key).position;
+
             //개별 종목의 보유수량이 0개인 경우 배치에서 제외
-            if (myPortfolio.stockInfo[key].shares == 0) { continue; }
-            if (list.apiInfo[key].api_sector.Equals("Technology"))
-            {
-                x = -8.7f;
-                z = -0.7f;
-            }
-            else if (list.apiInfo[key].api_sector.Equals("Communication Services"))
-            {
-                x = 0.2f;
-                z = -0.7f;
-            }
-            else if (list.apiInfo[key].api_sector.Equals("Consumer Cyclical"))
-            {
-                x = 0.2f;
-                z = 8f;
-            }
-            else if (list.apiInfo[key].api_sector.Equals("Financial Services"))
-            {
-                x = -8.7f;
-                z = 8f;
-            }
-            path = "Prefabs/Buildings/" + key;
-            loc = ++sectorCnt[list.apiInfo[key].api_sector];
+            /*if (myPortfolio.stockInfo[key].shares == 0) { continue; }
+            if (list.apiInfo[key].api_sector.Equals("Technology")) { x = -8.7f; z = -0.7f; }
+            else if (list.apiInfo[key].api_sector.Equals("Communication Services")) { x = 0.2f; z = -0.7f; }
+            else if (list.apiInfo[key].api_sector.Equals("Consumer Cyclical")) { x = 0.2f; z = 8f; }
+            else if (list.apiInfo[key].api_sector.Equals("Financial Services")) { x = -8.7f; z = 8f; }*/
+
+            //loc = ++sectorCnt[list.apiInfo[key].api_sector];
+
+            //건물 설치
+            path = "Prefabs/Buildings/" + key;      
             GameObject a = (GameObject)Instantiate(Resources.Load(path));
             a.name = key;
             a.gameObject.tag = "myStock";
             myPortfolio.myStocks.Add(a);
-            //한 행에 4칸을 배치를 계획한 배치 
-            a.transform.position = new Vector3(x + (loc % 4) * 2.5f, 1.15f, z - (loc / 4) * 2f);
-            //자산 대비 스케일 비율 정하기(1~4단계로 비율 정함)
-            float ratio = myPortfolio.updateGain(key) / total;
-            float scale = 1f;
-            if (ratio < 0.25){ scale = 0.75f; }
-            else if (ratio < 0.5){ scale = 1f; }
-            else if (ratio < 0.75){ scale = 1.25f; }
-            else if (ratio < 1){ scale = 1.75f; }
-            //단계에 따라 정해진 비율만큼 객체 스케일 조정하기
-            a.transform.localScale = new Vector3(scale * a.transform.localScale.x, scale * a.transform.localScale.y, scale * a.transform.localScale.z);
+
+            //기존과 같은 위치에 건물 배치
+            a.transform.position = new Vector3(pos.x, pos.y, pos.z);
             
+            //자산 대비 스케일 비율 정하기(1~3단계)
+            float ratio = myPortfolio.updateGain(key) / total * 100; //전체 평가금액 중 해당 종목 평가금액 비율
+            float scale = 1f;
+            if (ratio < 30) { scale = 0.75f; }
+            else if (ratio >= 30 && ratio < 70) { scale = 1f; }
+            else if(ratio >= 70 && ratio <= 100){ scale = 1.25f; }
+            
+            //단계에 따라 정해진 비율만큼 객체 스케일 조정하기
+            a.transform.localScale = new Vector3(scale * a.transform.localScale.x, scale * a.transform.localScale.y, scale * a.transform.localScale.z);        
         }
     }
     public void CashPlusBtnClick()

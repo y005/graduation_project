@@ -9,25 +9,35 @@ public class InGameControl : MonoBehaviour
      public portfolio myPortfolio; //포트폴리오 정보 저장자료
      public GameObject SubMenu; //서브메뉴창
      public GameObject EditPage; //포트폴리오 정보 수정 페이지
+     public GameObject OptPage; //정보범위 수정 페이지
      public GameObject StockInfo; //서브메뉴창
-     public Camera getCamera; //게임 시점 카메라
+     public bool subMenuPopUp; //서브메뉴창이 떠있는지 확인하는 bool변수
+     public Toggle myStockOpt; //내 종목만 표시하는 bool변수
      public Text thisSymbol; //화면에 띄울 종목명
      public GameObject[] totalMode; //전체 주식시장 모드일때 나와야 되는 오브젝트 리스트
      public GameObject[] portfolioMode; //포트폴리오 모드일때 나와야 되는 오브젝트 리스트
-     private RaycastHit hit; //마우스에 클릭된 객체 
-     public bool subMenuPopUp; //서브메뉴창이 떠있는지 확인하는 bool변수
 
     void Start()
      {
          subMenuPopUp = false;
          totalBtnClick();
-         BuildingScaleSet();
+         //BuildingScaleSet();
      }
-
+    void Update()
+    {
+        if (myStockOpt.isOn)
+        {
+            portfolioBtnClick();
+        }
+        else
+        {
+            totalBtnClick();
+        }
+    }
      public void SubMenuBtnClick()
      {
         EditPage.SetActive(false);
-
+        OptPage.SetActive(false);
         //서브메뉴와 종목정보창이 화면에 없으면 창열기
         if (!SubMenu.activeSelf && !GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().StockInfoMenuPopUp)
          {
@@ -70,7 +80,6 @@ public class InGameControl : MonoBehaviour
         //totalMode[0]에 Building있음(종목주식들의 부모 객체에 있는 자식 객체들의 gameObject.transform.localScale 조절) 
         for (int i = 0; i < totalMode[0].transform.childCount; i++)
         {
-
             tmp_cap = list.apiInfo[totalMode[0].transform.GetChild(i).name].api_marketcap / 1000000000000;
             if (tmp_cap >= 0.9) { scale = 1.25f; }
             else if (tmp_cap < 0.9 && tmp_cap >= 0.3) { scale = 1f; }
@@ -109,11 +118,18 @@ public class InGameControl : MonoBehaviour
         SubMenu.SetActive(false);
         EditPage.SetActive(true);
     }
+    //option버튼을 누르면 인게임내 정보범위 설정 페이지로 전환됨
+    public void OptBtnClick()
+    {
+        SubMenu.SetActive(false);
+        OptPage.SetActive(true);
+    }
     //서브페이지에서의 Back버튼을 누르면 서브메뉴 페이지로 전환됨
     public void QuitBtnClick()
     {
         //서브메뉴 화면으로 이동
         EditPage.SetActive(false);
+        OptPage.SetActive(false);
         SubMenu.SetActive(true);
     }
 }

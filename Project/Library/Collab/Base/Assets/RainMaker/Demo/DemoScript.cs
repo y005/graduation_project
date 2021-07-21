@@ -8,16 +8,23 @@ namespace DigitalRuby.RainMaker
     public class DemoScript : MonoBehaviour
     {   
         public StockList list;//주식 api정보를 이용하기 위한 stockList
-        public RainScript RainScript;//날씨 제어를 위한 오브젝트
         private RaycastHit hit; //마우스에 클릭된 객체
+        public RainScript RainScript;//날씨 제어를 위한 오브젝트
         public GameObject Sun;//낮/밤 제어를 위한 방향광 오브젝트
-        public GameObject StockInfo; //종목정보창
-        public bool StockInfoMenuPopUp; //객체정보창이 띄워져있는지 확인하는 변수
-        public Text infomation; //종목정보창에 올릴 정보
-        public Text thisSymbol; //화면에 띄울 종목명
+        public GameObject StockInfo; //종목정보UI 페이지
+        public bool StockInfoMenuPopUp; //종목정보창이 띄워져있는지 확인하는 변수
+        public Image StockPicture; //종목정보UI 페이지에 올릴 로고 이미지
+        public Text infomation; //종목정보UI 페이지에 올릴 정보(시가,시가총액,전일종가 등)
+        public Text thisSymbol; //화면에 띄울 종목이름 정보 텍스트 UI
+        public Text SectorName; //화면에 띄울 섹터 정보 텍스트 UI
+        private Vector3[] SectorPos = { new Vector3(-25.7f, 53f, 25.8f), new Vector3(17.4f, 53f, 25.8f), new Vector3(60.4f, 53f, 25.8f), new Vector3(-27.1f, 56.1f, -46.7f), new Vector3(17.4f, 56.1f, -46.7f), new Vector3(59.7f, 56.1f, -46.7f) };
+        private string[] SectorNames = { "Industrial", "Consumer", "Health Care", "Financial", "IT", "Real Estate" };
+        private int SectorIndex;
 
         private void Start()
         {
+            SectorName.text = "";
+            SectorIndex = 0;
             RainScript.RainIntensity = 0f;
             RainScript.EnableWind = true;
             StockInfoMenuPopUp = false;
@@ -27,7 +34,8 @@ namespace DigitalRuby.RainMaker
         // Update is called once per frame
         private void Update()
         {
-            UpdateMovement();
+            UpdateKeyboard();
+            UpdateSectorName();
             clickCheck();
         }
         void clickCheck()
@@ -37,6 +45,9 @@ namespace DigitalRuby.RainMaker
             //클릭한 객체 이름 출력
             if (Input.GetMouseButtonDown(0))
             {
+                //Debug.Log(Input.mousePosition);
+                //클릭 인식범위에서 벗어나는 경우 바로 반환
+                if ((Input.mousePosition.x < 300) || (Input.mousePosition.x > 1600) || (Input.mousePosition.y < 300) || (Input.mousePosition.y > 900)) { return; }
                 string tmpname = "";
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit))
@@ -46,16 +57,9 @@ namespace DigitalRuby.RainMaker
                         StockInfo.SetActive(true);
                         StockInfoMenuPopUp = true;
                         tmpname = hit.collider.gameObject.name;
-                        thisSymbol.text = tmpname;
+                        //thisSymbol.text = tmpname;
                         settingStockInfo(tmpname);
-                        /*Debug.Log("배당일 = " + list.apiInfo[tmpname].api_divDate
-                                 + "  배당률 = " + list.apiInfo[tmpname].api_divRate
-                                 + "  sector = " + list.apiInfo[tmpname].api_sector
-                                 + "  시가총액 = " + list.apiInfo[tmpname].api_marketcap
-                                 + "  PER = " + list.apiInfo[tmpname].api_per
-                                 + "  52week = " + list.apiInfo[tmpname].api_52week
-                                 + "  previous close = " + list.apiInfo[tmpname].api_preclose);
-
+                        /*
                         //클릭한 위치에 해당하는 평면을 생성(법선벡터 y축) 
                         Plane plane = new Plane(Vector3.up, Vector3.zero);
                         Vector3 v3Center = new Vector3(0.5f, 0.5f, 0.0f);
@@ -79,22 +83,52 @@ namespace DigitalRuby.RainMaker
                 }
             }
         }
+        public void SectorUpBtnClick()
+        {
+            SectorIndex = (SectorIndex + 1) % 6;
+            SectorName.text = SectorNames[SectorIndex];
+            Camera.main.transform.position = SectorPos[SectorIndex];
+        }
+        public void SectorDownBtnClick()
+        {
+            SectorIndex = (SectorIndex - 1);
+            if (SectorIndex < 0) { SectorIndex = 5; }
+            SectorName.text = SectorNames[SectorIndex];
+            Camera.main.transform.position = SectorPos[SectorIndex];
+        }
         public void ExitBtnClick()
         {
             StockInfo.SetActive(false);
             StockInfoMenuPopUp = false;
         }
+        private void UpdateSectorName()
+        {
+            float minDist = 100000000000;
+            float dist = 0f;
+            int minIdx = 0;
+            for(int i = 0; i < 6; i++)
+            {
+                dist = Vector3.Distance(Camera.main.transform.position, SectorPos[i]);
+                if (minDist > dist) {
+                    minIdx = i;
+                    minDist = dist;
+                }
+            }
+            SectorName.text = SectorNames[minIdx];
+            return;
+        }
         private void settingStockInfo(string code)
         {
-            //객체 정보창에서 정보 띄움(이미지도 코드에 해당하는 기업정보로 자동 전달되기)
-            infomation.text = "Market Price: " + list.apiInfo[code].api_marketprice.ToString("F3") + "$\n";
+            //종목에 해당하는 로고 사진 종목 정보 페이지에 첨부하기
+            StockPicture.sprite = Resources.Load("Sprites/" + code, typeof(Sprite)) as Sprite;
+            //종목 정보 페이지에서 정보 띄움(이미지도 코드에 해당하는 기업정보로 자동 전달되기)
+            infomation.text = "Code: " + code;
+            infomation.text = "\nMarket Price: " + list.apiInfo[code].api_marketprice.ToString("F3") + "$";
             infomation.text += "\nPER: " + list.apiInfo[code].api_per.ToString("F3");
-            /*"배당일 = "list.apiInfo[code].api_divDate + "  배당률 = " + list.apiInfo[tmpname].api_divRate
-            + "  sector = " + list.apiInfo[code].api_sector
-            + "  시가총액 = " + list.apiInfo[code].api_marketcap
-            + "  PER = " + list.apiInfo[code].api_per
-            + "  52week = " + list.apiInfo[code].api_52week
-            + "  previous close = " + list.apiInfo[code].api_preclose);*/
+            infomation.text += "\nSector: " + list.apiInfo[code].api_sector;
+            infomation.text += "\nMarket Cap: " + list.apiInfo[code].api_marketcap.ToString("F3");
+            infomation.text += "\n52week: " + list.apiInfo[code].api_52week;
+            infomation.text += "\nPrevious Close: " + list.apiInfo[code].api_preclose.ToString("F3") + "$";
         }
         private void UpdateRain()
         {
@@ -103,7 +137,7 @@ namespace DigitalRuby.RainMaker
             //전날 종가에 대한 현재 시장가의 평균 변화율이 음수인 경우 비
             else { RainScript.RainIntensity = 0.5f; }
         }
-        private void UpdateMovement()
+        private void UpdateKeyboard()
         {
             float speed = 10.0f * Time.deltaTime;
             float XSpeed = 0f;
@@ -113,16 +147,11 @@ namespace DigitalRuby.RainMaker
             else if (Input.GetKey(KeyCode.S)){YSpeed = -speed;}
             else if (Input.GetKey(KeyCode.A)){XSpeed = -speed;}
             else if (Input.GetKey(KeyCode.D)){XSpeed = speed;}
+            else if (Input.GetKey(KeyCode.Q)){ Camera.main.orthographicSize = 6; }
+            else if (Input.GetKey(KeyCode.E)) { Camera.main.orthographicSize = 13; }
             Camera.main.transform.Translate(XSpeed, YSpeed, 0.0f);
         }
-        public void CameraZoomIn()
-        {
-            Camera.main.orthographicSize = 5;
-        }
-        public void CameraZoomOut()
-        {
-            Camera.main.orthographicSize = 10;
-        }
+
         private void marketTimeCheck()
         {
             //미국 시장 기준으로 23:30~6:00까지 열림
