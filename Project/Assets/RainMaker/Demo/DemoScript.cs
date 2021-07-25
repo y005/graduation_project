@@ -141,6 +141,13 @@ namespace DigitalRuby.RainMaker
         }
         private void settingStockInfo(string code)
         {
+            //시가총액 표기법
+            float tmp = list.apiInfo[code].api_marketcap;
+            string marketcap = "";
+            if (tmp >= 1000000000000) { marketcap = (tmp / 1000000000000).ToString("F3") + " T"; } //trillion
+            else if (tmp >= 100000000000) { marketcap = (tmp / 100000000000).ToString("F3") + " B"; } //billion
+            else { marketcap = tmp + ""; } //T, B 외의 단위 있다면 추가하기
+
             //종목에 해당하는 로고 사진 종목 정보 페이지에 첨부하기
             StockPicture.sprite = Resources.Load("Sprites/" + code, typeof(Sprite)) as Sprite;
             //종목 정보 페이지에서 정보 띄움(이미지도 코드에 해당하는 기업정보로 자동 전달되기)
@@ -150,9 +157,10 @@ namespace DigitalRuby.RainMaker
             infomation.text = "\nMarket Price: " + list.apiInfo[code].api_marketprice.ToString("F2") + "$";
             infomation.text += "\nPER: " + list.apiInfo[code].api_per.ToString("F2");
             infomation.text += "\nSector: " + list.apiInfo[code].api_sector;
-            infomation.text += "\nMarket Cap: " + list.apiInfo[code].api_marketcap.ToString();
+            infomation.text += "\nMarket Cap: " + marketcap;
             infomation.text += "\n52week: " + list.apiInfo[code].api_52week;
             infomation.text += "\nPrevious Close: " + list.apiInfo[code].api_preclose.ToString("F2") + "$";
+
             //자신의 보유한 종목 정보일 경우에 평가금액과 수량 표시
             if (myPortfolio.stockInfo.ContainsKey(code))
             {

@@ -1,6 +1,6 @@
 Using pre-set license
 Built from '2020.3/staging' branch; Version is '2020.3.6f1 (338bb68529b2) revision 3378102'; Using compiler version '192528614'; Build Type 'Release'
-OS: 'Windows 10 Education; OS build 19041.1052; Version 2004; 64bit' Language: 'ko' Physical Memory: 7600 MB
+OS: 'Windows 10 Education; OS build 19041.1083; Version 2004; 64bit' Language: 'ko' Physical Memory: 7600 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
 
  COMMAND LINE ARGUMENTS:
@@ -15,11 +15,11 @@ C:/Users/82102/Desktop/project1
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-64792
+54109
 Successfully changed project path to: C:/Users/82102/Desktop/project1
 C:/Users/82102/Desktop/project1
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 74.72 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 45.15 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.6f1 (338bb68529b2)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Resources/UnitySubsystems
@@ -36,294 +36,60 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.6f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.6f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56124
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56560
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.6f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.002956 seconds.
+Registered in 0.002939 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 67.09 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 42.35 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  3.456 seconds
+- Completed reload, in  1.937 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.002435 seconds.
+Registered in 0.001902 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.55 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 0.56 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.504 seconds
+- Completed reload, in  0.896 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Shader 'Custom/RainShader': fallback shader 'Particles/Alpha Blended' not found
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
-Refreshing native plugins compatible for Editor in 0.54 ms, found 0 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 0.46 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1133 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 75.6 MB.
-System memory in use after: 75.7 MB.
+Unloading 1135 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.7 MB.
+System memory in use after: 77.8 MB.
 
-Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 1594.
-Total: 3.900100 ms (FindLiveObjects: 0.611900 ms CreateObjectMapping: 0.122800 ms MarkObjects: 2.944100 ms  DeleteObjects: 0.218800 ms)
+Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 1603.
+Total: 2.940000 ms (FindLiveObjects: 0.301300 ms CreateObjectMapping: 0.063400 ms MarkObjects: 2.433400 ms  DeleteObjects: 0.139300 ms)
 
 ========================================================================
 Received Import Request.
-  path: Assets/Scripts/portfolioControl.cs
-  artifactKey: Guid(bdc0711110143d942848c87533e3dc24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/portfolioControl.cs using Guid(bdc0711110143d942848c87533e3dc24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '43e29a2ae571a687128e80081ce273d3') in 0.040576 seconds
-  Import took 0.047054 seconds .
+  path: Assets/Resources/StockMaterial/O.mat
+  artifactKey: Guid(cc48dbf977e70e249993744d808a0a98) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/StockMaterial/O.mat using Guid(cc48dbf977e70e249993744d808a0a98) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a93cabc77a2a7b21ecd03cd8a6c723aa') in 0.145532 seconds
+  Import took 0.148077 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 241.949453 seconds.
-  path: Assets/Scripts/portfolioControl.cs
-  artifactKey: Guid(bdc0711110143d942848c87533e3dc24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/portfolioControl.cs using Guid(bdc0711110143d942848c87533e3dc24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd7df8a0c19f53df27fea912f3f0282ff') in 0.005046 seconds
-  Import took 0.013109 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002014 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.83 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.310 seconds
-Platform modules already initialized, skipping
-Shader 'Custom/RainShader': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 0.75 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1126 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 75.4 MB.
-System memory in use after: 75.5 MB.
-
-Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1597.
-Total: 3.350100 ms (FindLiveObjects: 0.250400 ms CreateObjectMapping: 0.069800 ms MarkObjects: 2.999400 ms  DeleteObjects: 0.027500 ms)
+  Time since last request: 0.000420 seconds.
+  path: Assets/Resources/StockMaterial/PLD.mat
+  artifactKey: Guid(2da84ef71ef3ce14082a675ee5fe5686) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/StockMaterial/PLD.mat using Guid(2da84ef71ef3ce14082a675ee5fe5686) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3f9259e8415ef98b98f4bc445359c045') in 0.017295 seconds
+  Import took 0.019995 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 43.771095 seconds.
-  path: Assets/Scripts/portfolioControl.cs
-  artifactKey: Guid(bdc0711110143d942848c87533e3dc24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/portfolioControl.cs using Guid(bdc0711110143d942848c87533e3dc24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1b5d3bbea181374b2031eb01fd0c79ea') in 0.017821 seconds
-  Import took 0.023901 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002629 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.02 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.430 seconds
-Platform modules already initialized, skipping
-Shader 'Custom/RainShader': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 0.74 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1126 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 75.4 MB.
-System memory in use after: 75.5 MB.
-
-Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1600.
-Total: 3.724300 ms (FindLiveObjects: 0.586900 ms CreateObjectMapping: 0.063700 ms MarkObjects: 3.037300 ms  DeleteObjects: 0.033000 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 176.586469 seconds.
-  path: Assets/Scripts/portfolio.cs
-  artifactKey: Guid(5c39e953225e07c48bdd87da3b33ee1e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/portfolio.cs using Guid(5c39e953225e07c48bdd87da3b33ee1e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fc0fff2b4e07479b79583b99acaac646') in 0.016295 seconds
-  Import took 0.020110 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.001710 seconds.
-  path: Assets/Scripts/portfolio.cs
-  artifactKey: Guid(5c39e953225e07c48bdd87da3b33ee1e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/portfolio.cs using Guid(5c39e953225e07c48bdd87da3b33ee1e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fc0fff2b4e07479b79583b99acaac646') in 0.011327 seconds
-  Import took 0.014199 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002345 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.85 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.907 seconds
-Platform modules already initialized, skipping
-Shader 'Custom/RainShader': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 0.51 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1126 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 75.4 MB.
-System memory in use after: 75.5 MB.
-
-Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1603.
-Total: 3.001800 ms (FindLiveObjects: 0.439500 ms CreateObjectMapping: 0.066500 ms MarkObjects: 2.473700 ms  DeleteObjects: 0.020200 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002140 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.93 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.984 seconds
-Platform modules already initialized, skipping
-Shader 'Custom/RainShader': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 0.98 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1126 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 75.4 MB.
-System memory in use after: 75.5 MB.
-
-Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1606.
-Total: 3.864300 ms (FindLiveObjects: 0.475400 ms CreateObjectMapping: 0.044200 ms MarkObjects: 3.310000 ms  DeleteObjects: 0.030500 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002684 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.56 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.282 seconds
-Platform modules already initialized, skipping
-Shader 'Custom/RainShader': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 0.56 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1126 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 75.4 MB.
-System memory in use after: 75.5 MB.
-
-Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1609.
-Total: 2.196500 ms (FindLiveObjects: 0.212200 ms CreateObjectMapping: 0.042900 ms MarkObjects: 1.917300 ms  DeleteObjects: 0.020600 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 396.887923 seconds.
-  path: Assets/Scenes/InGame.unity
-  artifactKey: Guid(9fc0d4010bbf28b4594072e72b8655ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scenes/InGame.unity using Guid(9fc0d4010bbf28b4594072e72b8655ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5ddc8423477ad48f7dc2299785fbb349') in 0.030625 seconds
-  Import took 0.036707 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002861 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.56 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.276 seconds
-Platform modules already initialized, skipping
-Shader 'Custom/RainShader': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 1.00 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1126 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 75.4 MB.
-System memory in use after: 75.5 MB.
-
-Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1612.
-Total: 3.736400 ms (FindLiveObjects: 0.412500 ms CreateObjectMapping: 0.119800 ms MarkObjects: 3.173000 ms  DeleteObjects: 0.029300 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001998 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.55 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.202 seconds
-Platform modules already initialized, skipping
-Shader 'Custom/RainShader': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 0.79 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1126 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 75.4 MB.
-System memory in use after: 75.5 MB.
-
-Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1615.
-Total: 3.917700 ms (FindLiveObjects: 0.274100 ms CreateObjectMapping: 0.071600 ms MarkObjects: 3.546100 ms  DeleteObjects: 0.023600 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002095 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.56 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.171 seconds
-Platform modules already initialized, skipping
-Shader 'Custom/RainShader': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 0.57 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1126 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 75.4 MB.
-System memory in use after: 75.5 MB.
-
-Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1618.
-Total: 3.028700 ms (FindLiveObjects: 0.417400 ms CreateObjectMapping: 0.072400 ms MarkObjects: 2.514100 ms  DeleteObjects: 0.022500 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001969 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.55 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.291 seconds
-Platform modules already initialized, skipping
-Shader 'Custom/RainShader': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 0.79 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1126 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 75.5 MB.
-System memory in use after: 75.6 MB.
-
-Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1621.
-Total: 4.381800 ms (FindLiveObjects: 0.274300 ms CreateObjectMapping: 0.070000 ms MarkObjects: 4.005400 ms  DeleteObjects: 0.029400 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002681 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.56 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.366 seconds
-Platform modules already initialized, skipping
-Shader 'Custom/RainShader': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 0.56 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1126 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 75.5 MB.
-System memory in use after: 75.6 MB.
-
-Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1624.
-Total: 3.374200 ms (FindLiveObjects: 0.420800 ms CreateObjectMapping: 0.089300 ms MarkObjects: 2.839900 ms  DeleteObjects: 0.021300 ms)
+  Time since last request: 31.063464 seconds.
+  path: Assets/Resources/StockMaterial/O.mat
+  artifactKey: Guid(cc48dbf977e70e249993744d808a0a98) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/StockMaterial/O.mat using Guid(cc48dbf977e70e249993744d808a0a98) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a93cabc77a2a7b21ecd03cd8a6c723aa') in 0.015950 seconds
+  Import took 0.018952 seconds .
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file

@@ -61,10 +61,10 @@ public class portfolioControl : MonoBehaviour
         myPortfolio.myStocks.Clear();
 
         //섹터 갯수를 위한 카운트 저장 초기화
-        foreach (var key in sectorCnt.Keys.ToList())
+        /*foreach (var key in sectorCnt.Keys.ToList())
         {
             sectorCnt[key] = 0;
-        }
+        }*/
         //전체 평가금액 계산
         foreach (var key in myPortfolio.stockInfo.Keys.ToList())
         {
@@ -83,18 +83,21 @@ public class portfolioControl : MonoBehaviour
         //해당하는 섹터 위치에 차례대로 일정 간격으로 정렬시키기
         foreach (var key in myPortfolio.stockInfo.Keys.ToList())
         {
+            //개별 종목의 보유수량이 0개인 경우 배치에서 제외
+            if (myPortfolio.stockInfo[key].shares == 0) { continue; }
+
             //기존 건물 위치 반환
             Vector3 pos;
             pos = totalMode[0].transform.Find(key).position;
 
-            //개별 종목의 보유수량이 0개인 경우 배치에서 제외
-            /*if (myPortfolio.stockInfo[key].shares == 0) { continue; }
+            /*
             if (list.apiInfo[key].api_sector.Equals("Technology")) { x = -8.7f; z = -0.7f; }
             else if (list.apiInfo[key].api_sector.Equals("Communication Services")) { x = 0.2f; z = -0.7f; }
             else if (list.apiInfo[key].api_sector.Equals("Consumer Cyclical")) { x = 0.2f; z = 8f; }
-            else if (list.apiInfo[key].api_sector.Equals("Financial Services")) { x = -8.7f; z = 8f; }*/
-
-            //loc = ++sectorCnt[list.apiInfo[key].api_sector];
+            else if (list.apiInfo[key].api_sector.Equals("Financial Services")) { x = -8.7f; z = 8f; }
+            
+            loc = ++sectorCnt[list.apiInfo[key].api_sector];
+            */
 
             //건물 설치
             path = "Prefabs/Buildings/" + key;      

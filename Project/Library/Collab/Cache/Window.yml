@@ -14,10 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SimpleSelectedItems:
     m_Keys:
+    - Assets/Resources/Prefabs/Buildings/logo_imgs/Materials/ko.mat
+    - Assets/Resources/Prefabs/Buildings/logo_imgs/Materials/o.mat
+    - Assets/Resources/Prefabs/Buildings/logo_imgs/Materials/pep.mat
+    - Assets/Resources/Prefabs/Buildings/logo_imgs/Materials/pld 2.mat
+    - Assets/Resources/Prefabs/Buildings/logo_imgs/Materials/v.mat
+    - Assets/Resources/StockMaterial/O.mat
+    - Assets/Resources/StockMaterial/PLD.mat
+    - Assets/Scenes/InGame.unity
+    - Assets/SimpleTown/Materials/Building02_Drug.mat
+    - Assets/SimpleTown/Materials/Building03_Grey.mat
+    - "Assets/\uAE30\uD0C0/New Material.mat"
+    - "Assets/\uAE30\uD0C0/New Material.mat.meta"
     - 
-    m_Values: 01
-  RevisionSummary: "\uD3EC\uD2B8\uD3F4\uB9AC\uC624 \uC624\uB958 \uC218\uC815, \uB9F5,\uC870\uBA85
-    \uC218\uC815"
+    m_Values: 00000000000000000000000000
+  RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 
   HistoryPageNumber: 0

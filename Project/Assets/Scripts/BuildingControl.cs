@@ -39,6 +39,8 @@ public class BuildingControl : MonoBehaviour
             if (myPortfolio.stockInfo[this.gameObject.name].shares == 0) { myPortfolio.renew = false; return; }
 
             transform.GetChild(0).gameObject.GetComponent<Light>().intensity = 3f;
+
+            /*
             //전체 평가금액 계산
             float total = 0;
             foreach (var key in myPortfolio.stockInfo.Keys.ToList())
@@ -58,6 +60,7 @@ public class BuildingControl : MonoBehaviour
             //단계에 따라 정해진 비율만큼 객체 스케일 조정하기
             transform.localScale = new Vector3(scale * transform.localScale.x, scale * transform.localScale.y, scale * transform.localScale.z);
             myPortfolio.renew = false;
+            */
         }
     }
 
