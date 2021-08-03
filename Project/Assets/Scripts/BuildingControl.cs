@@ -9,6 +9,8 @@ public class BuildingControl : MonoBehaviour
     public StockList list;
     public portfolio myPortfolio; //포트폴리오 정보 저장자료
     public Toggle myStockOpt; //내 종목만 표시하는 bool변수
+    public Toggle layerOpt; //내 종목만 표시하는 bool변수
+
     //최대 밝기 저장 변수
     //int lightLevel = 0;
     //프레임수 저장 변수
@@ -23,22 +25,78 @@ public class BuildingControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(this.gameObject.name);
         //lightControl();
         //함수 내부에서 myPortfolio.renew = false로 바꿔야 스케일 조정과 조명이 적용이 된다.(순차적 실행이 안되는듯)
         if (myPortfolio.renew){
             updateBuilding();
         }
+        checkLayer();
+    }
+    void checkLayer()
+    {
+        Material[] mats = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().materials;
+        //레이어를 옵션이 켜진 경우 보유 종목이 아닌지 확인하고 레이어를 켠다
+        if (layerOpt.isOn)
+        {
+            //보유 종목이 아닌 경우 레이어를 켠다
+            if (!myPortfolio.stockInfo.ContainsKey(this.gameObject.name))
+            {
+                for (int j = 0; j < mats.Length; j++)
+                {
+                    Color tempcolor;
+                    tempcolor = mats[j].color;
+                    tempcolor.a = 0.5f;
+                    mats[j].color = tempcolor;
+                }
+            }
+            else
+            {
+                //실제 보유 수량이 0인 경우 레이어를 켠다
+                if (myPortfolio.stockInfo[this.gameObject.name].shares == 0)
+                {
+                    for (int j = 0; j < mats.Length; j++)
+                    {
+                        Color tempcolor;
+                        tempcolor = mats[j].color;
+                        tempcolor.a = 0.5f;
+                        mats[j].color = tempcolor;
+                    }
+                }
+                //보유 수량이 1개 이상인 경우 레이어를 끈다.
+                else
+                {
+                    for (int j = 0; j < mats.Length; j++)
+                    {
+                        Color tempcolor;
+                        tempcolor = mats[j].color;
+                        tempcolor.a = 0f;
+                        mats[j].color = tempcolor;
+                    }
+                }
+            }
+        }   
+        //레이어 옵션이 꺼진 경우 레이어를 끈다
+        else
+        {
+            for (int j = 0; j < mats.Length; j++)
+            {
+                Color tempcolor;
+                tempcolor = mats[j].color;
+                tempcolor.a = 0f;
+                mats[j].color = tempcolor;
+            }
+        }
     }
     void updateBuilding()
     {
-        //보유종목인 경우 조명을 키고 평가금액의 비중에 따라 스케일링 작업 
+        //보유종목인 경우 평가금액의 비중에 따라 스케일링 작업 
         if (myPortfolio.stockInfo.ContainsKey(this.gameObject.name))
         {
             //수량이 0인 경우 보유 종목이 아니기 때문에 넘어감
-            if (myPortfolio.stockInfo[this.gameObject.name].shares == 0) { myPortfolio.renew = false; return; }
-
-            transform.GetChild(0).gameObject.GetComponent<Light>().intensity = 3f;
+            if (myPortfolio.stockInfo[this.gameObject.name].shares == 0) { 
+                myPortfolio.renew = false;
+                return; 
+            }
 
             /*
             //전체 평가금액 계산

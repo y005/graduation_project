@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
@@ -12,13 +13,21 @@ namespace DigitalRuby.RainMaker
         private RaycastHit hit; //마우스에 클릭된 객체
         public RainScript RainScript;//날씨 제어를 위한 오브젝트
         public GameObject Sun;//낮/밤 제어를 위한 방향광 오브젝트
-        public GameObject StockInfo; //종목정보UI 페이지
+        public TextMeshProUGUI SectorName; //화면에 띄울 섹터 정보 텍스트 UI
+
         public bool StockInfoMenuPopUp; //종목정보창이 띄워져있는지 확인하는 변수
-        public Image StockPicture; //종목정보UI 페이지에 올릴 로고 이미지
-        public Text infomation; //종목정보UI 페이지에 올릴 정보(시가,시가총액,전일종가 등)
-        public Text infomation1; //종목정보UI 페이지에 올릴 정보(보유 종목인 경우 평가금액과 보유 수량 등)
-        public Text thisSymbol; //화면에 띄울 종목이름 정보 텍스트 UI
-        public Text SectorName; //화면에 띄울 섹터 정보 텍스트 UI
+        public GameObject StockInfo; //종목정보UI 페이지
+        public Image StockPicture; //종목 로고 이미지
+        public TextMeshProUGUI stockCode; //종목 코드
+        public TextMeshProUGUI stockMarketPrice; // 종목 현재 시가
+        public TextMeshProUGUI stockPreviousClose; // 종목 전날 종가
+        public TextMeshProUGUI stockPer; // 종목 전날 종가
+        public TextMeshProUGUI stockSector; // 종목의 섹터
+        public TextMeshProUGUI stockMarketCap; // 종목의 시총
+        public TextMeshProUGUI stock52Week; // 종목의 시총
+        public TextMeshProUGUI stockShares; // 종목의 보유 수
+        public TextMeshProUGUI stockTotal; // 총 평가 금액
+
         private Vector3[] SectorPos = { new Vector3(-25.7f, 53f, 25.8f), new Vector3(17.4f, 53f, 25.8f), new Vector3(60.4f, 53f, 25.8f), new Vector3(-26f, 53f, -48f), new Vector3(18f, 53f, -48f), new Vector3(59.9f, 53f, -47f) };
         private string[] SectorNames = { "Industrial", "Consumer", "Health Care", "Financial", "IT", "Real Estate" };
         private int SectorIndex;
@@ -141,32 +150,42 @@ namespace DigitalRuby.RainMaker
         }
         private void settingStockInfo(string code)
         {
+
+            //종목에 해당하는 로고 사진 종목 정보 페이지에 첨부하기
+            StockPicture.sprite = Resources.Load("Sprites/" + code, typeof(Sprite)) as Sprite;
+            
+            //종목 정보 페이지에서 정보 띄움(이미지도 코드에 해당하는 기업정보로 자동 전달되기)
+            stockCode.text = code;
+            stockMarketPrice.text = "";
+            stockPreviousClose.text = "";
+            stockPer.text = "";
+            stockSector.text = "";
+            stock52Week.text = "";
+            stockMarketCap.text = "";
+            stockShares.text = "";
+            stockTotal.text = "";
+
+            if (!list.apiInfo.ContainsKey(code)) { return; }
+            stockMarketPrice.text = "Market Price: " + list.apiInfo[code].api_marketprice.ToString("F2") + "$";
+            stockPreviousClose.text = "Previous Close: " + list.apiInfo[code].api_preclose.ToString("F2") + "$";
+            stockPer.text = "PER: " + list.apiInfo[code].api_per.ToString("F2");
+            stockSector.text = "Sector: " + list.apiInfo[code].api_sector;
+            stock52Week.text = "52week: " + list.apiInfo[code].api_52week;
+
             //시가총액 표기법
             float tmp = list.apiInfo[code].api_marketcap;
             string marketcap = "";
             if (tmp >= 1000000000000) { marketcap = (tmp / 1000000000000).ToString("F3") + " T"; } //trillion
             else if (tmp >= 100000000000) { marketcap = (tmp / 100000000000).ToString("F3") + " B"; } //billion
             else { marketcap = tmp + ""; } //T, B 외의 단위 있다면 추가하기
-
-            //종목에 해당하는 로고 사진 종목 정보 페이지에 첨부하기
-            StockPicture.sprite = Resources.Load("Sprites/" + code, typeof(Sprite)) as Sprite;
-            //종목 정보 페이지에서 정보 띄움(이미지도 코드에 해당하는 기업정보로 자동 전달되기)
-            infomation.text = "Code: " + code;
-            infomation1.text = "";
-            if (!list.apiInfo.ContainsKey(code)) { return; }
-            infomation.text = "\nMarket Price: " + list.apiInfo[code].api_marketprice.ToString("F2") + "$";
-            infomation.text += "\nPER: " + list.apiInfo[code].api_per.ToString("F2");
-            infomation.text += "\nSector: " + list.apiInfo[code].api_sector;
-            infomation.text += "\nMarket Cap: " + marketcap;
-            infomation.text += "\n52week: " + list.apiInfo[code].api_52week;
-            infomation.text += "\nPrevious Close: " + list.apiInfo[code].api_preclose.ToString("F2") + "$";
-
+            stockMarketCap.text = "Market Cap: " + marketcap;
+            
             //자신의 보유한 종목 정보일 경우에 평가금액과 수량 표시
             if (myPortfolio.stockInfo.ContainsKey(code))
             {
                 if (myPortfolio.stockInfo[code].shares==0) { return; }
-                infomation1.text += "\nShares: " + myPortfolio.stockInfo[code].shares;
-                infomation1.text += "\nTotal: " + myPortfolio.updateGain(code) + "$";
+                stockShares.text = "\nShares: " + myPortfolio.stockInfo[code].shares;
+                stockTotal.text = "\nTotal: " + myPortfolio.updateGain(code) + "$";
             }
         }
         private void UpdateKeyboard()

@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ActionText
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: Standalone
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 4
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: e00095045a5b24ae5a0dc48e5d12d451, type: 3}
+    totalSpriteSurfaceArea: 704415
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: ea12c85169ec74122a439d2680cb6d64, type: 3}
+  - {fileID: 21300000, guid: 710b0ee108e8d4d35903edfafd95244d, type: 3}
+  - {fileID: 21300000, guid: 497a401256523438b9eba97c10d2ad88, type: 3}
+  - {fileID: 21300000, guid: 36c7ba1273f6b4990aa3c220c8b80371, type: 3}
+  - {fileID: 21300000, guid: 23b7f46204e704fa391ad7c75374566a, type: 3}
+  - {fileID: 21300000, guid: 58daa99225b2244039484b91540820ee, type: 3}
+  - {fileID: 21300000, guid: bba68603293ed42b3948eb8fa6796d61, type: 3}
+  - {fileID: 21300000, guid: 658524134ca0d48a885b721da773cf94, type: 3}
+  - {fileID: 21300000, guid: 4d7419d36f23e4f86aa22f5f43df0f99, type: 3}
+  - {fileID: 21300000, guid: ca323c7431ce34a53ba9551d23df3c32, type: 3}
+  - {fileID: 21300000, guid: 093aec362e16d4828a1f7690f4bb0f6b, type: 3}
+  - {fileID: 21300000, guid: 1b164946a3a0642b6b6318a4f9a9835e, type: 3}
+  - {fileID: 21300000, guid: 15dafaa6f48614ad8bd3b16e071a7bae, type: 3}
+  - {fileID: 21300000, guid: 77a89ce664dfa435b9c0b0cebf635663, type: 3}
+  - {fileID: 21300000, guid: abb5cd375c84c4d888cb5467d6717e02, type: 3}
+  - {fileID: 21300000, guid: 9a815de879d584d178047e459f69cda7, type: 3}
+  - {fileID: 21300000, guid: beb803d95576c4a33be04cce78e460d2, type: 3}
+  - {fileID: 21300000, guid: f9dff31a95897448d96a243afb41c666, type: 3}
+  - {fileID: 21300000, guid: 2ba0ac7ab05704e9a8aae82fd01c8027, type: 3}
+  - {fileID: 21300000, guid: 798b203bcd3ad44ffb18803461f20be6, type: 3}
+  - {fileID: 21300000, guid: 1d1ce96ba5c9347ac8ed5bcec418acee, type: 3}
+  - {fileID: 21300000, guid: e66542ac779da4f669f2e5f009023cd0, type: 3}
+  - {fileID: 21300000, guid: 3c6fae0d6adb846378186369e601bc65, type: 3}
+  - {fileID: 21300000, guid: 628a5d8dea52f4b15870e809d7f80789, type: 3}
+  - {fileID: 21300000, guid: 378843ed78f074046adf4e7bd5a925f2, type: 3}
+  - {fileID: 21300000, guid: 0b41854e44c5a4f648f0db26b8eb0d6a, type: 3}
+  - {fileID: 21300000, guid: f719740fd32ca4afb8a73414ac44ad1d, type: 3}
+  - {fileID: 21300000, guid: b11e979f17cdd41edbfbadcb2bf0e53f, type: 3}
+  - {fileID: 21300000, guid: a408b3ef897614c65841c8d3f4137e23, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - txt_nice
+  - txt_bonus_time_01
+  - txt_times_up_01
+  - txt_times_up_icon
+  - txt_game_over_02
+  - txt_level_up_01
+  - txt_awesome
+  - txt_level_up_02
+  - deco_03
+  - txt_wow
+  - deco_05
+  - txt_bonus_time_icon
+  - txt_great
+  - txt_ready
+  - txt_game_over_01
+  - txt_mission_clear_01
+  - txt_good
+  - deco_02
+  - txt_perfect
+  - txt_times_up_02
+  - txt_bonus_time_02
+  - txt_complete
+  - txt_mission_clear_02
+  - txt_go
+  - deco_06
+  - deco_04
+  - deco_01
+  - txt_combo
+  - txt_level_up_icon
+  m_Tag: ActionText
+  m_IsVariant: 0

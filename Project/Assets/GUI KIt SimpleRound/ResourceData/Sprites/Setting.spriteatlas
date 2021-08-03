@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Setting
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: Standalone
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 4
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 9c0439e7c6a0e4344937a482bc537e7f, type: 3}
+    totalSpriteSurfaceArea: 131406
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 66b4b8318ad3849ada5ecc8b6b1ed8b1, type: 3}
+  - {fileID: 21300000, guid: 060ea2d3d3827439ca0e643625d2f3f1, type: 3}
+  - {fileID: 21300000, guid: 0a9ec814aea01443c921148d65e0d49d, type: 3}
+  - {fileID: 21300000, guid: 55076a6456992472cb4d8a346707ce7e, type: 3}
+  - {fileID: 21300000, guid: 96da4cf47a06e4724b6748472b003557, type: 3}
+  - {fileID: 21300000, guid: ae04eb352ed4146b1921fed03713c1d1, type: 3}
+  - {fileID: 21300000, guid: c1481945781804f888a9fa30492d66ac, type: 3}
+  - {fileID: 21300000, guid: 82863e457242a47ab9bc12c072da7e45, type: 3}
+  - {fileID: 21300000, guid: 38bdf1a5759eb485086aa79e0739aac2, type: 3}
+  - {fileID: 21300000, guid: 8f96e1a77445a457cad612ef5b55b039, type: 3}
+  - {fileID: 21300000, guid: f6543f48c45e14a9991994b8dba5c4d1, type: 3}
+  - {fileID: 21300000, guid: 339c3a6831dd34c20abae7b8f639abf2, type: 3}
+  - {fileID: 21300000, guid: 7476eca831c69445784aeb8f7138e66f, type: 3}
+  - {fileID: 21300000, guid: 046f0609607c14c18a38d293ad64042d, type: 3}
+  - {fileID: 21300000, guid: 3d4c215a86a484c9192f12858761c570, type: 3}
+  - {fileID: 21300000, guid: 7ac1007ae83f442f3b20bb93320dbf09, type: 3}
+  - {fileID: 21300000, guid: 9808867c4508342e8924290fe0b85dbc, type: 3}
+  - {fileID: 21300000, guid: a854533d62ff8417cb287796e51f4c22, type: 3}
+  - {fileID: 21300000, guid: f809073e9123041bc87cb97ec00067d0, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - setting_icon_notice
+  - toggle_icon_on
+  - setting_btn_green_n
+  - slider_icon_down
+  - setting_btn_gray
+  - setting_icon_music
+  - setting_icon_guide
+  - setting_btn_green_f
+  - toggle_handle
+  - setting_btn_blue_n
+  - setting_icon_sound
+  - toggle_icon_off
+  - setting_icon_push
+  - setting_title_icon
+  - slider_bar
+  - setting_btn_blue_f
+  - slider_handle_gray
+  - slider_handle_blue
+  - slider_icon_up
+  m_Tag: Setting
+  m_IsVariant: 0

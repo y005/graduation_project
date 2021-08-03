@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Stage
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: Standalone
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 4
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 669433f76f0054e1bbe3f9276fd87ef6, type: 3}
+    totalSpriteSurfaceArea: 252574
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 0a14fe30367bc46b3a8846e95784e94f, type: 3}
+  - {fileID: 21300000, guid: b6b2386257e86412f974998f0b833ef2, type: 3}
+  - {fileID: 21300000, guid: 5fd432721c7a74a3e892b9ef6cc0f6a1, type: 3}
+  - {fileID: 21300000, guid: 5c13cd448b7384b429bb3f0276e218e7, type: 3}
+  - {fileID: 21300000, guid: 35242794b86db49469f41d69de0efe8f, type: 3}
+  - {fileID: 21300000, guid: 7aaaa235b6a894f1b9a281231a9beb51, type: 3}
+  - {fileID: 21300000, guid: 890c34571dba342a0944b14edc7f036b, type: 3}
+  - {fileID: 21300000, guid: 4e760229253ee48a8ac61881cac55aee, type: 3}
+  - {fileID: 21300000, guid: ef3756cb2063d4f4284457207e50929b, type: 3}
+  - {fileID: 21300000, guid: 900e7d5dccba44c3d84c307b6a233f97, type: 3}
+  - {fileID: 21300000, guid: dcc4d15f1852d4a679555d7ccce02d05, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - stage_frame_select
+  - stage_star_0
+  - stage_star_3
+  - stage_star_1
+  - stage_frame_result
+  - stage_frame_default
+  - stage_frame_lock
+  - stage_star_empty
+  - stage_frame_lock_icon
+  - stage_star_2
+  - stage_info_bg
+  m_Tag: Stage
+  m_IsVariant: 0

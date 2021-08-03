@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System;
+using TMPro;
 
 public class LoadControl : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class LoadControl : MonoBehaviour
     //주식 정보들을 저장한 객체
     public StockList stockList;
 
+    public TextMeshProUGUI progress1; // 진행사항 문구 UI
+    public TextMeshProUGUI progress2; // 진행사항 문구 UI
+
     //사용하는 주식의 종목코드 배열
     List<string> codeList = new List<string>() { "MSFT" }; //"GOOGL", "SBUX", "PYPL" };
     //List<string> codeList = new List<string>() { "MSFT", "ORCL", "AAPL", "IBM", "GOOGL", "FB", "NFLX", "DIS", "AMZN", "TSLA", "SBUX", "NKE", "V", "PYPL", "BAC" };
@@ -29,6 +33,9 @@ public class LoadControl : MonoBehaviour
     {
         //슬라이더 바 상태 초기화
         LoadSlider.value = 0;
+        progress1.text = "0%";
+        progress2.text = "DOWNLODING...(0/10)";
+
         //API 호출로 주식정보들 저장
         apiCall();
         //코루틴 함수 호출을 통해 로딩을 슬라이더 바로 보여줌
@@ -50,14 +57,19 @@ public class LoadControl : MonoBehaviour
         while (!op.isDone)
         {
             yield return null;
-            float progress1 = Mathf.Clamp01(op.progress / .9f)*5f;
-            LoadSlider.value = progress1;
-            if (progress1 >= 5)
+            float prog = Mathf.Clamp01(op.progress / .9f)*5f;
+            LoadSlider.value = prog;
+            progress1.text = (prog*10).ToString()+"%";
+            progress2.text = "DOWNLODING...("+ prog.ToString()+ "/10)";
+
+            if (prog >= 5)
             {
                 while (totalStockCnt < codeList.Count)
                 {
-                    float progress2 = Mathf.Clamp01(totalStockCnt / codeList.Count)*5f;
-                    LoadSlider.value = 5f+progress2;
+                    float prog2 = Mathf.Clamp01(totalStockCnt / codeList.Count)*5f;
+                    LoadSlider.value = 5f+prog2;
+                    progress1.text = ((5f + prog2) * 10).ToString() + "%";
+                    progress2.text = "DOWNLODING...(" + (5f + prog2).ToString() + "/10)";
                     yield return null;
                 }
                 op.allowSceneActivation = true;

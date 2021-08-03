@@ -26,7 +26,7 @@ public class transparent1 : MonoBehaviour
         ;
         if ((i % 60) == 0)
         {
-            Material[] mats = transform.GetChild(2).gameObject.GetComponent<MeshRenderer>().materials;
+            Material[] mats = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().materials;
             for (int j = 0; j < mats.Length; j++)
             {
                 Color tempcolor;

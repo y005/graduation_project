@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Login
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: Standalone
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 4
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 1797fc69b35124086bdb3c7bdcb4307a, type: 3}
+    totalSpriteSurfaceArea: 97032
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 26ab1e90df916426b82497e3a2ea306a, type: 3}
+  - {fileID: 21300000, guid: 5c403f017831545a1902d33ce8d136dc, type: 3}
+  - {fileID: 21300000, guid: 5de5e4813d2284a8dbe51cc3b5c2b15a, type: 3}
+  - {fileID: 21300000, guid: c6d023c48bf814d8fb5202f7236d8968, type: 3}
+  - {fileID: 21300000, guid: d4054ef7acac84ea7a2803d54c578e75, type: 3}
+  - {fileID: 21300000, guid: 9596ae09731674f6eac162fad8653c9d, type: 3}
+  - {fileID: 21300000, guid: 25e9913ce76be436e86b21ed6d3de81e, type: 3}
+  - {fileID: 21300000, guid: 0837d56cd5cce426daa8eb1dc41af182, type: 3}
+  - {fileID: 21300000, guid: 7fdab7bea8523492b8a1d7e6d22ceeb0, type: 3}
+  - {fileID: 21300000, guid: 2dd8f62f0ddfd4790866c5a4d33d71b5, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - txt_input_f
+  - login_icon_email_f
+  - txt_input_n
+  - login_btn_fb
+  - login_icon_password_n
+  - login_avatar_girl
+  - login_icon_password_f
+  - login_icon_email_n
+  - login_avatar_boy
+  - login_icon_fb
+  m_Tag: Login
+  m_IsVariant: 0

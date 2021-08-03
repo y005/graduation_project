@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Message
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: Standalone
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 4
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: c59b112bd5607430f960cba41d6752e2, type: 3}
+    totalSpriteSurfaceArea: 239252
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 014d54422f40e485fa7beceb35bab2ba, type: 3}
+  - {fileID: 21300000, guid: 9c9f7fb20f24d4e65a78e0ae00a67b11, type: 3}
+  - {fileID: 21300000, guid: f266f9f4444064cadb9b03e876a10efa, type: 3}
+  - {fileID: 21300000, guid: 12f6e0070eae6473fa1e01813f48042f, type: 3}
+  - {fileID: 21300000, guid: 50b6e6e798d694c0bb3718140f1a5be3, type: 3}
+  - {fileID: 21300000, guid: 0b59ed3886ac6412a924c477d07e2b29, type: 3}
+  - {fileID: 21300000, guid: d3c564c9fb8fa466fab168de6f2cc0dc, type: 3}
+  - {fileID: 21300000, guid: 481b7eecb670340d282b68390ddb8a92, type: 3}
+  - {fileID: 21300000, guid: 0489456e4fc44475c81351dc8dff70b1, type: 3}
+  - {fileID: 21300000, guid: 955f8e4f6989f470b93218514b7909f3, type: 3}
+  - {fileID: 21300000, guid: dafd28af74c3749c184381a8fb8dbfde, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - message_img_user
+  - message_life
+  - message_bg
+  - message_coin
+  - message_gem
+  - message_title_icon
+  - message_bottom_shadow
+  - message_img_user_boy
+  - message_key
+  - message_img_user_girl
+  - message_img_user_mask
+  m_Tag: Message
+  m_IsVariant: 0

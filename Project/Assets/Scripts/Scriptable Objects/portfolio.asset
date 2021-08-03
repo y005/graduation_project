@@ -15,5 +15,5 @@ MonoBehaviour:
   myStocks: []
   list: {fileID: 11400000, guid: b0090097de4ad7e40a1a387f4b706dba, type: 2}
   totalGain: 0
-  Cash: 18000
+  Cash: 27998
   renew: 0

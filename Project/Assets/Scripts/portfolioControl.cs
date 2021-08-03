@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,19 +8,20 @@ using System.Linq;
 
 public class portfolioControl : MonoBehaviour
 {
-    public Text totalGain;//전체 수익 텍스트 UI
-    public Text divGain;//배당 수익 텍스트 UI
+    public TextMeshProUGUI totalGain;//전체 수익 텍스트 UI
+    public TextMeshProUGUI divGain; //배당 수익 텍스트 UI
 
     //edit페이지에 있는 입력필드
-    public InputField cash;// 현금 입력
-    public InputField code;// 종목코드 입력
-    public InputField date;// 매매날짜 입력
-    public InputField share;// 매매종목수 입력
-    public InputField costPerShare;// 평단가 입력 
+    public TMP_InputField cash;// 현금 입력
+    public TMP_InputField code;// 종목코드 입력
+    public TMP_InputField date;// 매매날짜 입력
+    public TMP_InputField share;// 매매종목수 입력
+    public TMP_InputField costPerShare;// 평단가 입력 
     
     //포트폴리오 모드에서 활성화시키는 오브젝트의 실행 스크립트입니다.
     public StockList list;//api주식 정보 저장 데이터
     public portfolio myPortfolio;//보유 종목 저장 데이터
+
     //포트폴리오의 산업별 종목 갯수
     public Dictionary<string, int> sectorCnt = new Dictionary<string, int>();
 

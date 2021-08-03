@@ -11,10 +11,8 @@ public class InGameControl : MonoBehaviour
      public GameObject SubMenu; //서브메뉴창
      public GameObject EditPage; //포트폴리오 정보 수정 페이지
      public GameObject OptPage; //정보범위 수정 페이지
-     public GameObject StockInfo; //서브메뉴창
      public bool subMenuPopUp; //서브메뉴창이 떠있는지 확인하는 bool변수
      public Toggle myStockOpt; //내 종목만 표시하는 bool변수
-     public Text thisSymbol; //화면에 띄울 종목명
      public GameObject[] totalMode; //전체 주식시장 모드일때 나와야 되는 오브젝트 리스트
      public GameObject[] portfolioMode; //포트폴리오 모드일때 나와야 되는 오브젝트 리스트
 
