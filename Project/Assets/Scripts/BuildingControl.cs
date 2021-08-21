@@ -3,40 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System;
 public class BuildingControl : MonoBehaviour
 {
-    //주식 api정보를 이용하기 위한 stockList
-    public StockList list;
+    public StockList list;//주식 api정보를 이용하기 위한 stockList
     public portfolio myPortfolio; //포트폴리오 정보 저장자료
-    public Toggle myStockOpt; //내 종목만 표시하는 bool변수
-    public Toggle layerOpt; //내 종목만 표시하는 bool변수
+    private Camera cam; //게임 화면 카메라
+    private GameObject effect; //이벤트 조건별 발생하는 이펙트UI
+    private bool apiFlag; //api정보 갱신 확인
 
-    //최대 밝기 저장 변수
-    //int lightLevel = 0;
-    //프레임수 저장 변수
-    //int frame = 0;
     // Start is called before the first frame update
     void Start()
     {
-        //예제 객체의 이름을 코드로 해야 해당하는 주식정보를 읽어올 수 있습니다.
-        //Debug.Log(list.apiInfo[transform.name].api_marketprice);
+        apiFlag = true;
+
+        //게임 오브젝트(카메라,UI)들 연결작업 실행
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        effect = GameObject.Find("Canvas").transform.Find("effectUI").gameObject.transform.Find(transform.name + "Effect").gameObject;
+        effect.SetActive(true);
+        effectOff();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //lightControl();
-        //함수 내부에서 myPortfolio.renew = false로 바꿔야 스케일 조정과 조명이 적용이 된다.(순차적 실행이 안되는듯)
-        if (myPortfolio.renew){
-            updateBuilding();
-        }
+        //종목에 대한 api요청 정보가 있는 경우 조건 확인 후 UI 표시
+        if (list.apiInfo.ContainsKey(transform.name)) { settingUI(); }
+        if (myPortfolio.renew) { checkCloseDiv(); }
         checkLayer();
     }
     void checkLayer()
     {
         Material[] mats = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().materials;
         //레이어를 옵션이 켜진 경우 보유 종목이 아닌지 확인하고 레이어를 켠다
-        if (layerOpt.isOn)
+        if (GameObject.Find("InGameControl").GetComponent<InGameControl>().layerFlag)
         {
             //보유 종목이 아닌 경우 레이어를 켠다
             if (!myPortfolio.stockInfo.ContainsKey(this.gameObject.name))
@@ -87,55 +86,54 @@ public class BuildingControl : MonoBehaviour
             }
         }
     }
-    void updateBuilding()
+    //이펙트 발생 조건을 확인하고 UI 선택하는 함수
+    void settingUI()
     {
-        //보유종목인 경우 평가금액의 비중에 따라 스케일링 작업 
-        if (myPortfolio.stockInfo.ContainsKey(this.gameObject.name))
-        {
-            //수량이 0인 경우 보유 종목이 아니기 때문에 넘어감
-            if (myPortfolio.stockInfo[this.gameObject.name].shares == 0) { 
-                myPortfolio.renew = false;
-                return; 
-            }
-
-            /*
-            //전체 평가금액 계산
-            float total = 0;
-            foreach (var key in myPortfolio.stockInfo.Keys.ToList())
+        var wantedPos = cam.WorldToScreenPoint(transform.position);
+        //종목의 상태 UI 배치하기
+        for (int i=0;i< effect.transform.childCount; i++)
+         {
+            //카메라에서 보이는 종목에 대한 상태 UI 위치 재조정
+            effect.transform.GetChild(i).gameObject.transform.position = new Vector3(wantedPos.x+20f, wantedPos.y + 375f, wantedPos.z);
+            //API로 정보를 새로 가져온 경우에만 이펙트 발생 조건 확인하고 해당하는 상태 ui만 활성화
+            if (!apiFlag) { continue; }
+            //이펙트 UI 발생 조건 확인
+            //1. 관심도 상위
+            //2. 거래량 급등
+            //3. 종가 대비 시가 변화 급등락
+            float volumeChange = list.apiInfo[transform.name].api_volume - list.apiInfo[transform.name].api_avgVolume;
+            float priceChange = 100f * (list.apiInfo[transform.name].api_marketprice - list.apiInfo[transform.name].api_preclose) / list.apiInfo[transform.name].api_preclose;
+            switch (i)
             {
-                //개별 종목의 보유수량이 0개인 경우 카운트에서 제외
-                if (myPortfolio.stockInfo[key].shares == 0) { continue; }
-                total += myPortfolio.updateGain(key);
+                case 0:
+                    //관심도 지표 높은지 확인(유튜브 api 정보 연결해서 수정하기)
+                    if (volumeChange == 0f) { effect.transform.GetChild(i).gameObject.SetActive(true); }
+                    break;
+                case 1:
+                    //거래량 급등 확인(10일 평균 거래량 대비 증가한지 확인)
+                    if(volumeChange > 0f) { effect.transform.GetChild(i).gameObject.SetActive(true); }
+                    break;
+                case 2:
+                    //전날 종가 대비 시가 급등 확인
+                    if (priceChange > 0f){effect.transform.GetChild(i).gameObject.SetActive(true);}
+                    break;
+                case 3:
+                    //전날 종가 대비 시가 급락 확인 
+                    if (priceChange < 0f){effect.transform.GetChild(i).gameObject.SetActive(true);}
+                    break;
             }
-            //자산 대비 스케일 비율 정하기(1~3단계)
-            float ratio = myPortfolio.updateGain(this.gameObject.name) / total * 100; //전체 평가금액 중 해당 종목 평가금액 비율
-            float scale = 1f;
-            if (ratio < 30) { scale = 0.75f; }
-            else if (ratio >= 30 && ratio < 70) { scale = 1f; }
-            else if (ratio >= 70 && ratio <= 100) { scale = 1.25f; }
-            Debug.Log(myPortfolio.updateGain(this.gameObject.name));
-            Debug.Log(ratio);
-            //단계에 따라 정해진 비율만큼 객체 스케일 조정하기
-            transform.localScale = new Vector3(scale * transform.localScale.x, scale * transform.localScale.y, scale * transform.localScale.z);
-            myPortfolio.renew = false;
-            */
+         }
+        if (apiFlag) { apiFlag = false; }
+    }
+    void effectOff()
+    {
+        for (int i = 0; i < effect.transform.childCount; i++)
+        {
+            effect.transform.GetChild(i).gameObject.SetActive(false);
         }
     }
-
-    void lightControl()
+    void checkCloseDiv()
     {
-        //업데이트 함수는 1초에 60번 정도로 호출되기 때문에(60프레임)
-        //0.5초 주기로 밝기를 변화하기 위해서는 카운트 변수를 따로 만들고 확인
-        /*if (frame == 0)
-        {
-            lightLevel = (lightLevel + 1) % 2;
-        }
-        transform.GetChild(0).gameObject.GetComponent<Light>().intensity = lightLevel;
-        frame = (frame + 1) % 60;*/
-
-        //시가 변화율에 따라 조명 on/off
-        //float change = (list.apiInfo[transform.name].api_marketprice - list.apiInfo[transform.name].api_preclose) / list.apiInfo[transform.name].api_marketprice * 100;
-        //if (change >= 0) { transform.GetChild(0).gameObject.GetComponent<Light>().intensity = 15; } //전날대비 +
-        //else { transform.GetChild(0).gameObject.GetComponent<Light>().intensity = 0; } //전날대비 -
+        //포트폴리오 보유 종목 중 가장 가까운 배당일인 종목 이름과 게이지를 나타냄
     }
 }

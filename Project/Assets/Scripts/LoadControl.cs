@@ -26,15 +26,20 @@ public class LoadControl : MonoBehaviour
     public TextMeshProUGUI progress2; // 진행사항 문구 UI
 
     //사용하는 주식의 종목코드 배열
-    List<string> codeList = new List<string>() { "MSFT" }; //"GOOGL", "SBUX", "PYPL" };
-    //List<string> codeList = new List<string>() { "MSFT", "ORCL", "AAPL", "IBM", "GOOGL", "FB", "NFLX", "DIS", "AMZN", "TSLA", "SBUX", "NKE", "V", "PYPL", "BAC" };
+    List<string> codeList = new List<string>() { "PEP","KO","SBUX","NKE"};
+    /*List<string> codeList = new List<string>() { "MSFT", "ORCL", "AAPL", "IBM", "GOOGL", "FB", "NFLX", "DIS",
+                                                 "AMZN", "TSLA", "SBUX", "NKE", "WMT", "COST", "KO", "PEP",
+                                                  "V", "PYPL", "BAC", "C", "WFC",
+                                                  "JNJ","PFE", "UNH", "AMGN", "LLY",
+                                                  "HON", "UNP", "MMM", "TT", "LMT",
+                                                  "AMT", "EQIX", "PLD", "O" };*/
 
     void Start()
     {
         //슬라이더 바 상태 초기화
         LoadSlider.value = 0;
         progress1.text = "0%";
-        progress2.text = "DOWNLODING...(0/10)";
+        progress2.text = "게임 맵 세팅 중...";//"DOWNLODING...(0/10)";
 
         //API 호출로 주식정보들 저장
         apiCall();
@@ -60,7 +65,7 @@ public class LoadControl : MonoBehaviour
             float prog = Mathf.Clamp01(op.progress / .9f)*5f;
             LoadSlider.value = prog;
             progress1.text = (prog*10).ToString()+"%";
-            progress2.text = "DOWNLODING...("+ prog.ToString()+ "/10)";
+            progress2.text = "게임 맵 세팅 중...";//"DOWNLODING...("+ prog.ToString()+ "/10)";
 
             if (prog >= 5)
             {
@@ -69,7 +74,7 @@ public class LoadControl : MonoBehaviour
                     float prog2 = Mathf.Clamp01(totalStockCnt / codeList.Count)*5f;
                     LoadSlider.value = 5f+prog2;
                     progress1.text = ((5f + prog2) * 10).ToString() + "%";
-                    progress2.text = "DOWNLODING...(" + (5f + prog2).ToString() + "/10)";
+                    progress2.text = "주식 정보 다운로드 중...";//"DOWNLODING...(" + (5f + prog2).ToString() + "/10)";
                     yield return null;
                 }
                 op.allowSceneActivation = true;
@@ -92,7 +97,6 @@ public class LoadControl : MonoBehaviour
     }
     async Task BeginNetwork(string code)
     {
-        
         var client = new HttpClient();
         var request = new HttpRequestMessage
         {
@@ -109,13 +113,14 @@ public class LoadControl : MonoBehaviour
             response.EnsureSuccessStatusCode();
             var body = await response.Content.ReadAsStringAsync();
             JObject obj = JObject.Parse(body);
-
+            //Debug.Log(obj["financialData"]["currentPrice"]["raw"]);
+            
             //현재 시가
             string tmp1 = (string)obj["financialData"]["currentPrice"]["raw"];
             float.TryParse(tmp1, out float send_price);
 
             //배당일
-            string send_divdate = (string)obj["calendarEvents"]["dividendDate"]["fmt"];
+            string send_divdate = (string)obj["calendarEvents"]["exDividendDate"]["fmt"];
 
             //배당률
             string tmp2 = (string)obj["summaryDetail"]["dividendRate"]["raw"];
@@ -139,6 +144,14 @@ public class LoadControl : MonoBehaviour
             //previous Close
             string send_tmp5 = (string)obj["price"]["regularMarketPreviousClose"]["raw"];
             float.TryParse(send_tmp5, out float send_preclose);
+            
+            //volume
+            string send_tmp6 = (string)obj["summaryDetail"]["volume"]["raw"];
+            float.TryParse(send_tmp6, out float send_volume);
+
+            //avg Volume(10day)
+            string send_tmp7 = (string)obj["price"]["averageDailyVolume10Day"]["raw"];
+            float.TryParse(send_tmp7, out float send_avgVolume);
 
             //정보를 얻은 주식의 갯수 업데이트
             totalStockCnt++;
@@ -153,11 +166,13 @@ public class LoadControl : MonoBehaviour
                 stockList.apiInfo[code].api_marketcap = send_marketcap;
                 stockList.apiInfo[code].api_per = send_per;
                 stockList.apiInfo[code].api_52week = send_52;
-                stockList.apiInfo[code].api_preclose = send_preclose;
+                stockList.apiInfo[code].api_preclose = send_preclose; 
+                stockList.apiInfo[code].api_volume = send_volume;
+                stockList.apiInfo[code].api_avgVolume = send_avgVolume;
             }
             else
             {
-                stockList.add(code, send_price, send_divdate, send_divrate, send_sector, send_marketcap, send_per, send_52, send_preclose);
+                stockList.add(code, send_price, send_divdate, send_divrate, send_sector, send_marketcap, send_per, send_52, send_preclose, send_volume, send_avgVolume);
             }
         };
     }

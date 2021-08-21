@@ -49,19 +49,22 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\API.cs" />
      <Compile Include="Assets\GUI KIt SimpleRound\Scripts\PanelControl.cs" />
+     <Compile Include="Assets\Scripts\uiControl4.cs" />
      <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
      <Compile Include="Assets\Scripts\MainMenuControl.cs" />
-     <Compile Include="Assets\Scripts\transparent.cs" />
+     <Compile Include="Assets\Scripts\uiControl2.cs" />
+     <Compile Include="Assets\Scripts\uiControl3.cs" />
      <Compile Include="Assets\RainMaker\Demo\DemoScriptStartRainOnSpaceBar.cs" />
-     <Compile Include="Assets\RainMaker\Demo\DemoScript.cs" />
+     <Compile Include="Assets\Scripts\DemoScript.cs" />
      <Compile Include="Assets\RainMaker\Prefab\RainScript.cs" />
      <Compile Include="Assets\RainMaker\Prefab\RainCollision.cs" />
      <Compile Include="Assets\Scripts\StockList.cs" />
-     <Compile Include="Assets\Scripts\transparent1.cs" />
+     <Compile Include="Assets\Scripts\uiControl1.cs" />
      <Compile Include="Assets\GUI KIt SimpleRound\Scripts\Panel.cs" />
      <Compile Include="Assets\RainMaker\Demo\DemoScript2D.cs" />
      <Compile Include="Assets\Scripts\portfolioControl.cs" />
      <Compile Include="Assets\Scripts\InGameControl.cs" />
+     <Compile Include="Assets\Scripts\dividendCtrl.cs" />
      <Compile Include="Assets\RainMaker\Prefab\RainScript2D.cs" />
      <Compile Include="Assets\Scripts\portfolio.cs" />
      <Compile Include="Assets\Scripts\LoadControl.cs" />

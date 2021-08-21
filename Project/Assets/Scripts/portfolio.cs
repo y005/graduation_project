@@ -7,10 +7,10 @@ public class portfolio : ScriptableObject
 {
     public List<GameObject>  myStocks; // 포트폴리오 내의 건물오브젝트 저장 리스트 
     public StockList list; //주식정보API
-    public float totalGain = 0; //전체 수익
-    public float Cash = 0; //현금
     //포트폴리오 정보가 갱신됐는지 확인하는 변수(갱신되면 배치갱신)
     public bool renew = false;
+
+    public float Cash = 0; //보유 현금 금액
     
     //종목별에 대한 갯수, 평단가를 하나의 딕셔너리로 저장
     public Dictionary<string, StockStat> stockInfo = new Dictionary<string, StockStat>();
