@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Complete
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: Standalone
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 4
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: f1cccb7f213df4dcd956c8a0cf39775a, type: 3}
+    totalSpriteSurfaceArea: 450911
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 222cb200ba86c435ab7025db70a7220e, type: 3}
+  - {fileID: 21300000, guid: fbfb0c208ab1c433fa010d0e2b3ebc97, type: 3}
+  - {fileID: 21300000, guid: bcbd9bb22827a482aa5c002fc750b7a2, type: 3}
+  - {fileID: 21300000, guid: 98c565d28f78a4b11a629d6eaa39ef05, type: 3}
+  - {fileID: 21300000, guid: 12e07523469e64d6caa13edb3ec3ee6e, type: 3}
+  - {fileID: 21300000, guid: 56e869244601f47748fb0e345d4c91ac, type: 3}
+  - {fileID: 21300000, guid: 0eb4bc082258a432593f9e4d01c7f341, type: 3}
+  - {fileID: 21300000, guid: 4c423858cd4c141dd972e85e6278de53, type: 3}
+  - {fileID: 21300000, guid: 511814dbf1f804839a76046dce91ccda, type: 3}
+  - {fileID: 21300000, guid: 040260bc31aca49d7a146a916035bd92, type: 3}
+  - {fileID: 21300000, guid: 84c4dc3d5454a4c0a9252b3b3b965ea2, type: 3}
+  - {fileID: 21300000, guid: bead59bd1bcbe466e8dcb865f6f9b286, type: 3}
+  - {fileID: 21300000, guid: dab7d12e97c344c03bee78fe395000d5, type: 3}
+  - {fileID: 21300000, guid: af467dce1414e4536bf360c7f5f01e98, type: 3}
+  - {fileID: 21300000, guid: 20360ece04be94540b1903b8e82f03af, type: 3}
+  - {fileID: 21300000, guid: e0d24fded91794b75a903b34fae5b43f, type: 3}
+  - {fileID: 21300000, guid: 34008fde67a0546ac9d68dffbf7a6946, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - complete_star_bg
+  - complete_bg
+  - complete_star3
+  - bottom_btn_left_n
+  - bottom_btn_center_f
+  - complete_result_info_bg
+  - bottom_btn_left_f
+  - complete_star2
+  - complete_ribbon
+  - bottom_btn_right_f
+  - bottom_btn_center_n
+  - complete_coin
+  - bottom_icon_home
+  - bottom_btn_right_n
+  - bottom_icon_restart
+  - complete_star1
+  - bottom_icon_resume
+  m_Tag: Complete
+  m_IsVariant: 0

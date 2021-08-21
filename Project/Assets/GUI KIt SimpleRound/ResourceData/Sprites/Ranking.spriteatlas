@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Ranking
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: Standalone
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 4
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 765d7e55b8ef948f7b5b320739d4fb34, type: 3}
+    totalSpriteSurfaceArea: 97808
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: e7cdee51c49e341cf90256fd21edbc06, type: 3}
+  - {fileID: 21300000, guid: ec785024d14a144b987121d6214f4a3f, type: 3}
+  - {fileID: 21300000, guid: 331d408428ba94703bbc2a368618b45e, type: 3}
+  - {fileID: 21300000, guid: db317656842b64c57b92f0820891a688, type: 3}
+  - {fileID: 21300000, guid: 87a9a2965162e484c9bb44b8336fb80b, type: 3}
+  - {fileID: 21300000, guid: 4ff95f0803f4d4a569b2ac79bb5c5e66, type: 3}
+  - {fileID: 21300000, guid: 8a81c919f20e444e39161c13f65b85ff, type: 3}
+  - {fileID: 21300000, guid: 9d010abbab8b84451a0625cd4c3e05a1, type: 3}
+  - {fileID: 21300000, guid: 733c623c1657d4359a091394505c18c6, type: 3}
+  - {fileID: 21300000, guid: c6622f0e052d944bab3972f1626e6313, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - ranking_user_img
+  - icon_rank_bn
+  - icon_rank_gd
+  - icon_rank_sr
+  - ranking_user_img_mask
+  - rank_btn_send_life
+  - ranking_user_boy
+  - ranking_user_girl
+  - ranking_left_time
+  - ranking_title_icon
+  m_Tag: Ranking
+  m_IsVariant: 0

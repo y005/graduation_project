@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shop
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: Standalone
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 4
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: f064e12aa38d747c8a9842e1368436a5, type: 3}
+    totalSpriteSurfaceArea: 270802
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: ddfdf6c0f558f465a801575224992b92, type: 3}
+  - {fileID: 21300000, guid: 3f46ba02a411d4f26b519c71ae94a39d, type: 3}
+  - {fileID: 21300000, guid: ed439b32581d7436f96fbf4b95f6a31a, type: 3}
+  - {fileID: 21300000, guid: ec8274e20e81043a5b01e6f4b5255721, type: 3}
+  - {fileID: 21300000, guid: 94b641a4416ae49679d4ea3a1e255e6d, type: 3}
+  - {fileID: 21300000, guid: 601400d5ff2ad4d31b0f4682baa39e20, type: 3}
+  - {fileID: 21300000, guid: c0d1af97c2cec449a8b954fbff3e0e41, type: 3}
+  - {fileID: 21300000, guid: 017391cbd2d924a909cd8a260e62f6e2, type: 3}
+  - {fileID: 21300000, guid: ac570badffad24333a948941c75218d8, type: 3}
+  - {fileID: 21300000, guid: 4ba7c9bd6a37042d8b7adbb9a5ee2cc1, type: 3}
+  - {fileID: 21300000, guid: bc914feebcc5441e093b3f14746eaf8e, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - shop_label
+  - shop_img_gem_01
+  - shop_img_coin_02
+  - shop_img_coin_03
+  - shop_img_gem_03
+  - shop_img_coin_04
+  - shop_life
+  - shop_title_icon
+  - shop_img_coin_01
+  - shop_img_gem_02
+  - shop_img_gem_04
+  m_Tag: Shop
+  m_IsVariant: 0

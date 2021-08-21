@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: LeverlUp
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: Standalone
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 4
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 21ec68a895f7645e5aefe8ca58f6173e, type: 3}
+    totalSpriteSurfaceArea: 3450927
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 299709a01c09a4b478e30093b42f8e1b, type: 3}
+  - {fileID: 21300000, guid: c2a1945191eeb4a40b84ed39ada4f3ab, type: 3}
+  - {fileID: 21300000, guid: d06bdc615607b4e0eb19b90235e51475, type: 3}
+  - {fileID: 21300000, guid: fe2584b134f714273b9c1b0b5faa4a91, type: 3}
+  - {fileID: 21300000, guid: 02ebeae1adde2415a810e4970ee1cddf, type: 3}
+  - {fileID: 21300000, guid: 7ae1c4a2408704a71840cda05c3a1c54, type: 3}
+  - {fileID: 21300000, guid: c0786d3411be64832881d49f5605047e, type: 3}
+  - {fileID: 21300000, guid: 4f0b6fb8008c64b43a561e6212f84e2e, type: 3}
+  - {fileID: 21300000, guid: 4ce852d995d984174b7477eb91a184eb, type: 3}
+  - {fileID: 21300000, guid: 17e5cfe96a87d455dbcaa519dad30503, type: 3}
+  - {fileID: 21300000, guid: 80cc90aac236b44d296d8465f36a8308, type: 3}
+  - {fileID: 21300000, guid: 602d691bfe35e43ccb7dd76641a5aea6, type: 3}
+  - {fileID: 21300000, guid: c62c0bdbaa86841d18f85231d21595b1, type: 3}
+  - {fileID: 21300000, guid: f1f2181c6a99a4ab59f763cbb63f0782, type: 3}
+  - {fileID: 21300000, guid: 7f8783edfe37a4948a69bc14f332685a, type: 3}
+  - {fileID: 21300000, guid: 31aff46f6789e44f8b07536093542dfe, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - levelup_effect_02
+  - levelup_particle_09
+  - levelup_particle_10
+  - levelup_particle_04
+  - levelup_effect_04
+  - levelup_ribbon
+  - levelup_unlocked_item_bg
+  - levelup_particle_06
+  - levelup_star
+  - levelup_particle_05
+  - levelup_effect_03
+  - levleup_bg_blue
+  - levelup_effect_01
+  - levelup_particle_02
+  - levelup_particle_01
+  - levelup_unlocked_title
+  m_Tag: LeverlUp
+  m_IsVariant: 0
