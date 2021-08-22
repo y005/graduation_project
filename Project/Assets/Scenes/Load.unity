@@ -182,8 +182,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uAC8C\uC784 \uB9F5 \uC138\uD305 \uC911..."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3e5be8a1cd7f8dd4aa79f571bab35cc9, type: 2}
-  m_sharedMaterial: {fileID: -3629134052959126774, guid: 3e5be8a1cd7f8dd4aa79f571bab35cc9, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2b85063c1a1a3f448b887961925daa63, type: 2}
+  m_sharedMaterial: {fileID: -4584225608978627059, guid: 2b85063c1a1a3f448b887961925daa63, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 0
   m_fontSizeMax: 28
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

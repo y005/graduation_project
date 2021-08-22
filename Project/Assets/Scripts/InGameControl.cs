@@ -13,12 +13,23 @@ public class InGameControl : MonoBehaviour
 
     public GameObject SubMenu; //서브메뉴창
     public GameObject EditPage; //포트폴리오 정보 수정 페이지
+    public GameObject InfoOptPage; //정보범위 수정 페이지
     public GameObject OptPage; //정보범위 수정 페이지
+
+    public Toggle priceOpt; //주가 정보 표시하는 옵션
+    public Toggle volumeOpt; //거래량 정보 표시하는 옵션
+    public Toggle divOpt; //배당 정보 표시하는 옵션
+    public Toggle interestOpt; // 관심도 지수 표시하는 옵션
 
     public Toggle myStockOpt; //내 종목만 표시하는 옵션
     public Toggle layerOpt; //내 종목만 투명하게 표시하는 옵션
     public Toggle weatherOpt; //포트폴리오 이익과 연동되는 날씨 옵션
     public Toggle marketTimeOpt; //주식 시장 시간과 연동하는 시간 옵션 
+
+    public bool priceFlag;
+    public bool volumeFlag;
+    public bool divFlag;
+    public bool interestFlag;
 
     public bool myStockFlag;
     public bool layerFlag;
@@ -35,6 +46,10 @@ public class InGameControl : MonoBehaviour
         checkOpt();
         subMenuPopUp = false;
         totalBtnClick();
+        priceOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(priceOpt);});
+        volumeOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(volumeOpt); });
+        divOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(divOpt); });
+        interestOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(interestOpt); });
     }
     void Update()
     {
@@ -59,10 +74,54 @@ public class InGameControl : MonoBehaviour
         layerFlag = layerOpt.isOn;
         weatherFlag = weatherOpt.isOn;
         marketTimeFlag = marketTimeOpt.isOn;
+
+        priceFlag = priceOpt.isOn; 
+        volumeFlag = volumeOpt.isOn; 
+        divFlag = divOpt.isOn; 
+        interestFlag = interestOpt.isOn;
+    }
+    void ToggleValueChanged(Toggle change)
+    {
+        if (change.isOn)
+        {
+            offToggleExcept(change);
+        }
+    }
+    void offToggleExcept(Toggle change)
+    {
+        if (change == priceOpt)
+        {
+            volumeOpt.isOn = false;
+            divOpt.isOn = false;
+            interestOpt.isOn = false;
+            priceOpt.isOn = true;
+        }
+        else if (change == volumeOpt)
+        {
+            priceOpt.isOn = false;
+            divOpt.isOn = false;
+            interestOpt.isOn = false;
+            volumeOpt.isOn = true;
+        }
+        else if (change == divOpt)
+        {
+            volumeOpt.isOn = false;
+            priceOpt.isOn = false;
+            interestOpt.isOn = false;
+            divOpt.isOn = true;
+        }
+        else
+        { 
+            volumeOpt.isOn = false;
+            divOpt.isOn = false;
+            priceOpt.isOn = false;
+            interestOpt.isOn = true;
+        }
     }
     public void SubMenuBtnClick()
     {
         EditPage.SetActive(false);
+        InfoOptPage.SetActive(false);
         OptPage.SetActive(false);
         //서브메뉴와 종목정보창이 화면에 없으면 창열기
         if (!SubMenu.activeSelf && !GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().StockInfoMenuPopUp)
@@ -198,21 +257,25 @@ public class InGameControl : MonoBehaviour
             Debug.Log(key + " - 배당 날짜 : " + divDate + ", " + "배당금 : " + dividend);
         }
         myPortfolio.renew = false;
-        //포트폴리오가 갱신되면 가장 가까운 배당일을 갱신하고 배당일 게이지에 표현
-        GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().divDateSet();
-        //포트폴리오가 갱신되면 평가금액을 갱신하고 평가금액 텍스트 UI에 표현
+       //포트폴리오가 갱신되면 평가금액을 갱신하고 평가금액 텍스트 UI에 표현
         GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().totalGainSet();
         //포트폴리오가 갱신되면 배당익을 갱신하고 텍스트 UI에 표현
         GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().divGainSet();
     }
 
-    //edit버튼을 누르면 인게임이 보유종목 수정 페이지로 전환됨
+    //종목 추가버튼을 누르면 인게임이 보유종목 수정 페이지로 전환됨
     public void EditBtnClick()
     {
         SubMenu.SetActive(false);
         EditPage.SetActive(true);
     }
-    //option버튼을 누르면 인게임내 정보범위 설정 페이지로 전환됨
+    //정보 설정버튼을 누르면 인게임내 정보표시 설정 페이지로 전환됨
+    public void InfoOptBtnClick()
+    {
+        SubMenu.SetActive(false);
+        InfoOptPage.SetActive(true);
+    }
+    //옵션 버튼을 누르면 인게임내 설정 페이지로 전환됨
     public void OptBtnClick()
     {
         SubMenu.SetActive(false);
@@ -224,6 +287,7 @@ public class InGameControl : MonoBehaviour
         //서브메뉴 화면으로 이동
         EditPage.SetActive(false);
         OptPage.SetActive(false);
+        InfoOptPage.SetActive(false);
         SubMenu.SetActive(true);
     }
     public void ExitBtnClick()

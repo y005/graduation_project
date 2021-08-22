@@ -406,10 +406,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC8FC\uC2DD \uC2DC\uC7A5 \uC2DC\uAC01\uD654"
+  m_text: "\uC8FC\uC2DD \uC2DC\uC7A5 \uB3D9\uC801 \uC2DC\uAC01\uD654"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3e5be8a1cd7f8dd4aa79f571bab35cc9, type: 2}
-  m_sharedMaterial: {fileID: -3629134052959126774, guid: 3e5be8a1cd7f8dd4aa79f571bab35cc9, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2b85063c1a1a3f448b887961925daa63, type: 2}
+  m_sharedMaterial: {fileID: -4584225608978627059, guid: 2b85063c1a1a3f448b887961925daa63, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -439,7 +439,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 0
   m_fontSizeMax: 130
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

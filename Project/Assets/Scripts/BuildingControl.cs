@@ -19,16 +19,15 @@ public class BuildingControl : MonoBehaviour
 
         //게임 오브젝트(카메라,UI)들 연결작업 실행
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
-        effect = GameObject.Find("Canvas").transform.Find("effectUI").gameObject.transform.Find(transform.name + "Effect").gameObject;
-        effect.SetActive(true);
-        effectOff();
+        //effect = GameObject.Find("Canvas").transform.Find("effectUI").gameObject.transform.Find(transform.name + "Effect").gameObject;
+        //effect.SetActive(true);
+        //effectOff();
     }
 
     void Update()
     {
         //종목에 대한 api요청 정보가 있는 경우 조건 확인 후 UI 표시
-        if (list.apiInfo.ContainsKey(transform.name)) { settingUI(); }
-        if (myPortfolio.renew) { checkCloseDiv(); }
+        //if (list.apiInfo.ContainsKey(transform.name)) { settingUI(); }
         checkLayer();
     }
     void checkLayer()
@@ -131,9 +130,5 @@ public class BuildingControl : MonoBehaviour
         {
             effect.transform.GetChild(i).gameObject.SetActive(false);
         }
-    }
-    void checkCloseDiv()
-    {
-        //포트폴리오 보유 종목 중 가장 가까운 배당일인 종목 이름과 게이지를 나타냄
     }
 }

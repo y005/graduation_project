@@ -63,6 +63,7 @@
      <Compile Include="Assets\GUI KIt SimpleRound\Scripts\Panel.cs" />
      <Compile Include="Assets\RainMaker\Demo\DemoScript2D.cs" />
      <Compile Include="Assets\Scripts\portfolioControl.cs" />
+     <Compile Include="Assets\Scripts\mouseCtrl.cs" />
      <Compile Include="Assets\Scripts\InGameControl.cs" />
      <Compile Include="Assets\Scripts\dividendCtrl.cs" />
      <Compile Include="Assets\RainMaker\Prefab\RainScript2D.cs" />

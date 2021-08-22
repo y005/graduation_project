@@ -59,7 +59,6 @@ namespace DigitalRuby.RainMaker
             isDay = marketTimeCheck();
             //전날 대비 포트폴리오 평가금액 변화에 따라 날씨 제어(데이터 로드시 확인됨)
             isRain = 0f;
-            divDate1.value = 0f;
             totalGain.text = "0";
             divGain.text = "0";
         }
@@ -184,20 +183,19 @@ namespace DigitalRuby.RainMaker
             stockTotal.text = "";
             stockDiv.text = "";
             stockDivDate.text = "";
-            divDate2.SetActive(false);
 
             if (!list.apiInfo.ContainsKey(code)) { return; }
             stockMarketPrice.text = "현재 주가: " + list.apiInfo[code].api_marketprice.ToString("F2") + "$";
             stockPreviousClose.text = "전날 종가: " + list.apiInfo[code].api_preclose.ToString("F2") + "$";
             stockPer.text = "주가 수익 비율: " + list.apiInfo[code].api_per.ToString("F2");
             stockSector.text = "산업군: " + list.apiInfo[code].api_sector;
-            stock52Week.text = "52주 간 변화율: " + list.apiInfo[code].api_52week;
+            stock52Week.text = "52주 간 변화율: " + list.apiInfo[code].api_52week.ToString("F2")+"%";
 
             //시가총액 표기
             float tmp = list.apiInfo[code].api_marketcap;
             string marketcap = "";
-            if (tmp >= 1000000000000) { marketcap = (tmp / 1000000000000).ToString("F3") + " T"; } //trillion
-            else if (tmp >= 100000000000) { marketcap = (tmp / 100000000000).ToString("F3") + " B"; } //billion
+            if (tmp >= 1000000000000) { marketcap = (tmp / 1000000000000).ToString("F2") + " T"; } //trillion
+            else if (tmp >= 100000000000) { marketcap = (tmp / 100000000000).ToString("F2") + " B"; } //billion
             else { marketcap = tmp + ""; } //T, B 외의 단위 있다면 추가하기
             stockMarketCap.text = "시가 총액: " + marketcap;
 
@@ -274,51 +272,13 @@ namespace DigitalRuby.RainMaker
                 return "";
             }
         }
-        private float divDateCheck(string date1)
-        {
-            //유효한 배당일까지의 기간을 비례하여 프로그레스바에 표현될 소수값 반환 
-            TimeSpan dateDiff = DateTime.Parse(date1) - DateTime.Now;
-            int diffDay = dateDiff.Days;
-            float ans = 1 - (float)diffDay / 365;
-            return ans;
-        }
-        private float dividend(string code)
+
+        public float dividend(string code)
         {
             //보유 주식수에 따라 얻게되는 배당금 표시
             return myPortfolio.stockInfo[code].shares * list.apiInfo[code].api_divRate;
         }
-        private string closestDivDate()
-        {
-            //보유한 주식 종목 중 가장 가까운 배당일을 가진 종목코드 반환
-            string ans = "";
-            float tmp;
-            float maxVal = -1f;
-            foreach (var key in myPortfolio.stockInfo.Keys.ToList())
-            {
-                //개별 종목의 보유수량이 0개인 경우 카운트에서 제외
-                if (myPortfolio.stockInfo[key].shares == 0) { continue; }
-                string tmpDate = divDate(key);
-                if (tmpDate.Length > 0)
-                {
-                    tmp = divDateCheck(tmpDate);
-                    if (maxVal < tmp)
-                    {
-                        maxVal = tmp;
-                        ans = key;
-                    }
-                }
-            }
-            return ans;
-        }
-        //가까운 배당날짜와 종목 정보를 메인화면에 표시
-        public void divDateSet(){
-            divCode.text = "";
-            divDate1.value = 0f;
-            string tmpName = closestDivDate();
-            if(tmpName == "") { return; }
-            divCode.text = tmpName;
-            divDate1.value = divDateCheck(divDate(tmpName));
-        }
+
         //총 평가 금액을 계산 
         public void totalGainSet()
         {
@@ -327,7 +287,7 @@ namespace DigitalRuby.RainMaker
             {
                 sum += myPortfolio.updateGain(key);
             }
-            totalGain.text = sum.ToString();
+            totalGain.text = sum.ToString()+"$";
         }
         //배당익 합산
         public void divGainSet()
@@ -337,7 +297,7 @@ namespace DigitalRuby.RainMaker
             {
                 sum += dividend(key);
             }
-            divGain.text = sum.ToString();
+            divGain.text = sum.ToString()+"$";
         }
     }
 }

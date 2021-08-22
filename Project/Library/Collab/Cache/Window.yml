@@ -14,8 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SimpleSelectedItems:
     m_Keys:
+    - Assets/Scenes/InGame.unity
+    - Assets/Scripts/BuildingControl.cs
+    - Assets/Scripts/mouseCtrl.cs
+    - Assets/user1.Json
+    - Assets/user1.Json.meta
     - 
-    m_Values: 01
+    m_Values: 000000000000
   RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 
