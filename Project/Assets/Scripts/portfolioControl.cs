@@ -21,19 +21,6 @@ public class portfolioControl : MonoBehaviour
     //포트폴리오 모드에서 활성화시키는 오브젝트의 실행 스크립트입니다.
     public StockList list;//api주식 정보 저장 데이터
     public portfolio myPortfolio;//보유 종목 저장 데이터
-
-    public GameObject[] totalMode;
-
-    void Start()
-    {
-        myPortfolio.renew =false;//포트폴리오 갱신 플래그 false
-    }
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void CashPlusBtnClick()
     {
         if (checkCashEditInput())

@@ -6,6 +6,7 @@ using System.Linq;
 using System.IO;
 using System;
 using UnityEngine.SceneManagement;
+using TMPro;
 public class InGameControl : MonoBehaviour
 {
     public StockList list; //종목API정보 저장자료
@@ -15,6 +16,10 @@ public class InGameControl : MonoBehaviour
     public GameObject EditPage; //포트폴리오 정보 수정 페이지
     public GameObject InfoOptPage; //정보범위 수정 페이지
     public GameObject OptPage; //정보범위 수정 페이지
+
+    public GameObject totalGainPage; //포트폴리오 정보 페이지
+    public GameObject content; //포트폴리오 정보를 넣는 오브젝트
+    public TextMeshProUGUI totalGainInfo; //자산 정보를 입력하는 텍스트 UI
 
     public Toggle priceOpt; //주가 정보 표시하는 옵션
     public Toggle volumeOpt; //거래량 정보 표시하는 옵션
@@ -35,17 +40,27 @@ public class InGameControl : MonoBehaviour
     public bool layerFlag;
     public bool weatherFlag;
     public bool marketTimeFlag;
-    public bool subMenuPopUp; //서브메뉴창이 떠있는지 확인하는 bool변수
+    public bool pagePopUp; //창이 현재 게임화면에 떠있는지 확인하는 bool변수
+    public TextMeshProUGUI optInfo; //선택한 레이어 정보 표시창
 
-    public GameObject[] totalMode; //전체 주식시장 모드일때 나와야 되는 오브젝트 리스트
-    public GameObject[] portfolioMode; //포트폴리오 모드일때 나와야 되는 오브젝트 리스트
+    public GameObject building;
+
+    private List<Vector3> scales = new List<Vector3>();//종목의 초기 디폴트 스케일 설정 저장 배열
 
     void Start()
     {
+        optInfo.text = "";
+        //종목의 스케일 정보 저장
+        for (int i = 0; i < building.transform.childCount; i++)
+        {
+            Vector3 tmp = building.transform.GetChild(i).gameObject.transform.localScale;
+            scales.Add(new Vector3(tmp.x, tmp.y, tmp.z));
+        }
         Load();//저장된 데이터를 불러온 뒤 날씨 제어
         checkOpt();
-        subMenuPopUp = false;
+        pagePopUp = false;
         totalBtnClick();
+        myStockOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(myStockOpt); });
         priceOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(priceOpt);});
         volumeOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(volumeOpt); });
         divOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(divOpt); });
@@ -54,19 +69,6 @@ public class InGameControl : MonoBehaviour
     void Update()
     {
         checkOpt(); //켜진 옵션 확인
-        if (myPortfolio.renew)//포트폴리오 갱신이 되면 보유 종목 재설치 작업 실행
-        {
-            settingPortfolio(); 
-        }
-        //보유 종목만 보는 옵션에 설정된 경우 포트폴리오 모드를 실행
-        if (myStockFlag)
-        {
-            portfolioBtnClick();
-        }
-        else
-        {
-            totalBtnClick();
-        }
     }
     void checkOpt()//매번 옵션 선택 확인
     {
@@ -82,8 +84,21 @@ public class InGameControl : MonoBehaviour
     }
     void ToggleValueChanged(Toggle change)
     {
+        if (change == myStockOpt)
+        {
+            if (change.isOn)//내 보유 종목만 보는 설정
+            {
+                portfolioBtnClick();
+            }
+            else//전체 주식 시장 종목들만 보는 설정 
+            {
+                totalBtnClick();
+            }
+            return;
+        }
         if (change.isOn)
         {
+            optInfo.text = "";
             offToggleExcept(change);
         }
     }
@@ -91,6 +106,7 @@ public class InGameControl : MonoBehaviour
     {
         if (change == priceOpt)
         {
+            optInfo.text = "수익률";
             volumeOpt.isOn = false;
             divOpt.isOn = false;
             interestOpt.isOn = false;
@@ -98,6 +114,7 @@ public class InGameControl : MonoBehaviour
         }
         else if (change == volumeOpt)
         {
+            optInfo.text = "거래량";
             priceOpt.isOn = false;
             divOpt.isOn = false;
             interestOpt.isOn = false;
@@ -105,13 +122,15 @@ public class InGameControl : MonoBehaviour
         }
         else if (change == divOpt)
         {
+            optInfo.text = "배당일";
             volumeOpt.isOn = false;
             priceOpt.isOn = false;
             interestOpt.isOn = false;
             divOpt.isOn = true;
         }
         else
-        { 
+        {
+            optInfo.text = "관심도";
             volumeOpt.isOn = false;
             divOpt.isOn = false;
             priceOpt.isOn = false;
@@ -120,147 +139,109 @@ public class InGameControl : MonoBehaviour
     }
     public void SubMenuBtnClick()
     {
-        EditPage.SetActive(false);
-        InfoOptPage.SetActive(false);
-        OptPage.SetActive(false);
-        //서브메뉴와 종목정보창이 화면에 없으면 창열기
-        if (!SubMenu.activeSelf && !GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().StockInfoMenuPopUp)
+        if (EditPage.activeSelf || InfoOptPage.activeSelf || OptPage.activeSelf)
         {
+            EditPage.SetActive(false);
+            InfoOptPage.SetActive(false);
+            OptPage.SetActive(false);
+            pagePopUp = false;
+            return;
+        }
+        //서브메뉴가 화면에 없으면 창 띄우기
+        if (!SubMenu.activeSelf)
+        {
+            totalGainPage.SetActive(false);
+            GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().StockInfo.SetActive(false);
+
             SubMenu.SetActive(true);
-            subMenuPopUp = true;
+            pagePopUp = true;
         }
         //서브메뉴가 화면에 있으면 창내리기
         else
         {
             SubMenu.SetActive(false);
-            subMenuPopUp = false;
+            pagePopUp = false;
         }
     }
     //total버튼을 누르면 인게임이 전체 주식시장 모드로 전환됨
     public void totalBtnClick()
     {
-        //포트폴리오맵에 설치된 건물 객체들 비활성화
-        foreach (GameObject tmp in myPortfolio.myStocks)
-        {
-            tmp.SetActive(false);
-        }
-        //portfolioMode 태그가 달린 객체를 전부 비활성화(total UI버튼, edit UI 버튼, totalGain,divGain 텍스트 UI)
-        for (int i = 0; i < portfolioMode.Length; i++)
-        {
-            portfolioMode[i].SetActive(false);
-        }
-        //totalMode 태그가 달린 객체를 전부 활성화(포트폴리오 UI 버튼이랑 Building 부모 객체)
-        for (int i = 0; i < totalMode.Length; i++)
-        {
-            totalMode[i].SetActive(true);
-        }
-        //BuildingScaleSet();
-    }
-
-    //total모드인 경우 시가총액에 따라 스케일 조정작업
-    void BuildingScaleSet()
-    {
+        GameObject stock;
+        GameObject effect;
+        string key;
         float tmp_cap = 0;
         float scale = 1f;
 
-        //totalMode[0]에 Building있음(종목주식들의 부모 객체에 있는 자식 객체들의 gameObject.transform.localScale 조절) 
-        for (int i = 0; i < totalMode[0].transform.childCount; i++)
+        //보유한 종목만 말풍선과 객체 활성화
+        for (int i = 0; i < building.transform.childCount; i++)
         {
-            tmp_cap = list.apiInfo[totalMode[0].transform.GetChild(i).name].api_marketcap / 1000000000000;
-            if (tmp_cap >= 0.9) { scale = 1.25f; }
-            else if (tmp_cap < 0.9 && tmp_cap >= 0.3) { scale = 1f; }
-            else if (tmp_cap < 0.3) { scale = 0.75f; }
-            totalMode[0].transform.GetChild(i).gameObject.transform.localScale
-                = new Vector3(scale * totalMode[i].transform.localScale.x,
-                scale * totalMode[i].transform.localScale.y,
-                scale * totalMode[i].transform.localScale.z);
+            stock = building.transform.GetChild(i).gameObject;
+            key = stock.transform.name;
+            effect = GameObject.Find("Canvas").transform.Find("effectUI").gameObject.transform.Find(key + "Effect").gameObject;
+
+            stock.SetActive(true);
+            effect.SetActive(true);
+            //총 자산 대비 종목 비중 만큼 객체 스케일 조정하기
+            if (list.apiInfo.ContainsKey(key))
+            {
+                tmp_cap = list.apiInfo[key].api_marketcap / 1000000000000;
+                if (tmp_cap >= 0.9) { scale = 1.25f; }
+                else if (tmp_cap < 0.9 && tmp_cap >= 0.3) { scale = 1f; }
+                else if (tmp_cap < 0.3) { scale = 0.75f; }
+                stock.transform.localScale = new Vector3(scale * scales[i].x,scale * scales[i].y,scale * scales[i].z);
+            }
+            else
+            {
+                stock.transform.localScale = new Vector3(scales[i].x, scales[i].y, scales[i].z);
+            }
         }
     }
 
     //portfolio모드인 경우 인게임이 포트폴리오 모드로 전환됨
     public void portfolioBtnClick()
     {
-        //totalMode 태그가 달린 객체를 전부 비활성화(포트폴리오 UI 버튼이랑 Building 부모 객체)
-        for (int i = 0; i < totalMode.Length; i++)
-        {
-            totalMode[i].SetActive(false);
-        }
-        //portfolioMode 태그가 달린 객체를 전부 활성화(total UI버튼, edit UI 버튼, totalGain,divGain 텍스트 UI)
-        for (int i = 0; i < portfolioMode.Length; i++)
-        {
-            portfolioMode[i].SetActive(true);
-        }
-        //포트폴리오맵에 설치된 건물 객체들 활성화
-        foreach (GameObject tmp in myPortfolio.myStocks)
-        {
-            tmp.SetActive(true);
-        }
-    }
-
-    //포트폴리오 건물 설치
-    void settingPortfolio()
-    {
+        GameObject stock;
+        GameObject effect;
         float total = 0;//전체 주식평가금액 저장변수
-        float myinvest = 0; //전체 투자금 저장변수
-        string path = "";//프리팹 로드 경로
-
-        //"myStock" 태그가 달린 객체(포트폴리오 배치된 건물)를 전부 삭제(갱신이 될때 마다 반복)
-        foreach (GameObject tmp in myPortfolio.myStocks) { Destroy(tmp); }
-        myPortfolio.myStocks.Clear();
+        string key;
 
         //전체 평가금액 계산
-        foreach (var key in myPortfolio.stockInfo.Keys.ToList())
+        foreach (var key1 in myPortfolio.stockInfo.Keys.ToList())
         {
             //개별 종목의 보유수량이 0개인 경우 카운트에서 제외
-            if (myPortfolio.stockInfo[key].shares == 0) { continue; }
-            total += myPortfolio.updateGain(key);
+            if (myPortfolio.stockInfo[key1].shares == 0) { continue; }
+            total += myPortfolio.updateGain(key1);
         }
-        //나의 전체 투자금액 계산
-        foreach (var key in myPortfolio.stockInfo.Keys.ToList())
+        //보유한 종목만 말풍선과 객체 활성화
+        for (int i = 0; i < building.transform.childCount; i++)
         {
-            myinvest += myPortfolio.stockInfo[key].shares * myPortfolio.stockInfo[key].avgCostPerShare;
+            stock = building.transform.GetChild(i).gameObject;
+            key = stock.transform.name;
+            effect = GameObject.Find("Canvas").transform.Find("effectUI").gameObject.transform.Find(key + "Effect").gameObject;
+
+            //보유하지 않는 경우 비활성화
+            if(!myPortfolio.stockInfo.ContainsKey(key)){
+                stock.SetActive(false);
+                effect.SetActive(false);
+            }
+            else
+            {
+                if (myPortfolio.stockInfo[key].shares == 0) {
+                    stock.SetActive(false);
+                    effect.SetActive(false); 
+                    continue; 
+                }
+                stock.SetActive(true);
+                effect.SetActive(true);
+                //총 자산 대비 종목 비중 만큼 객체 스케일 조정하기
+                float ratio = myPortfolio.updateGain(key) / total * 100;
+                float scale = 1f;
+                if (ratio < 30) { scale = 0.75f; }
+                else if (ratio >= 30 && ratio < 70) { scale = 1f; }
+                else if (ratio >= 70 && ratio <= 100) { scale = 1.25f; }
+                stock.transform.localScale = new Vector3(scale * scales[i].x, scale * scales[i].y, scale * scales[i].z);
+            }
         }
-
-        //종목의 위치에 보유 종목 건물을 설치(평가금액 비중에 따라 스케일링)
-        foreach (var key in myPortfolio.stockInfo.Keys.ToList())
-        {
-            //개별 종목의 보유수량이 0개인 경우 배치에서 제외
-            if (myPortfolio.stockInfo[key].shares == 0) { continue; }
-
-            //기존 건물 위치 반환
-            Vector3 pos;
-            pos = totalMode[0].transform.Find(key).position;
-
-            //건물 설치
-            path = "Prefabs/Buildings/" + key;
-            GameObject a = (GameObject)Instantiate(Resources.Load(path));
-            a.name = key;
-            a.gameObject.tag = "stock";
-            myPortfolio.myStocks.Add(a);
-
-            //기존과 같은 위치에 건물 배치
-            a.transform.position = new Vector3(pos.x, pos.y, pos.z);
-
-            //자산 대비 스케일 비율 정하기(1~3단계)
-            float ratio = myPortfolio.updateGain(key) / total * 100; //전체 평가금액 중 해당 종목 평가금액 비율
-            float scale = 1f;
-            if (ratio < 30) { scale = 0.75f; }
-            else if (ratio >= 30 && ratio < 70) { scale = 1f; }
-            else if (ratio >= 70 && ratio <= 100) { scale = 1.25f; }
-
-            //단계에 따라 정해진 비율만큼 객체 스케일 조정하기
-            a.transform.localScale = new Vector3(scale * a.transform.localScale.x, scale * a.transform.localScale.y, scale * a.transform.localScale.z);
-
-            //DEBUG ::: 배당정보 체크
-            string divDate = GameObject.Find("portfolioControl").GetComponent<dividendCtrl>().divDate(key);
-            float dividend = GameObject.Find("portfolioControl").GetComponent<dividendCtrl>().dividend(key);
-            Debug.Log(key + " - 배당 날짜 : " + divDate + ", " + "배당금 : " + dividend);
-        }
-        myPortfolio.renew = false;
-       //포트폴리오가 갱신되면 평가금액을 갱신하고 평가금액 텍스트 UI에 표현
-        GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().totalGainSet();
-        //포트폴리오가 갱신되면 배당익을 갱신하고 텍스트 UI에 표현
-        GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().divGainSet();
     }
 
     //종목 추가버튼을 누르면 인게임이 보유종목 수정 페이지로 전환됨
@@ -280,6 +261,78 @@ public class InGameControl : MonoBehaviour
     {
         SubMenu.SetActive(false);
         OptPage.SetActive(true);
+    }
+    //나의 포트폴리오 종목 정보를 리스트뷰로 볼 수 있는 정보창이 나옴
+    public void myPortfolioBtnClick()
+    {
+
+        if (totalGainPage.activeSelf)//이미 켜져있으면 꺼지고 꺼져있으면 켜지도록 제어
+        {
+            totalGainPage.SetActive(false);
+            pagePopUp = false;
+        }
+        else
+        {
+            //다른 창을 다 내리기
+            SubMenu.SetActive(false);
+            EditPage.SetActive(false);
+            InfoOptPage.SetActive(false);
+            OptPage.SetActive(false);
+            totalGainPage.SetActive(false);
+            GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().StockInfo.SetActive(false);
+
+            pagePopUp = true;
+            totalGainPage.SetActive(true);
+            for (int i = 0; i < content.transform.childCount; i++)
+            {
+                Destroy(content.transform.GetChild(i).gameObject);
+            }
+            GameObject tmp = (GameObject)Instantiate(Resources.Load("Prefabs/etc/empty"));
+            tmp.transform.SetParent(content.transform, false);
+
+            float gainSum = GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().totalGainSet();
+            float tmp1 = 0;
+            foreach (var key in myPortfolio.stockInfo.Keys.ToList())
+            {
+                tmp1 += myPortfolio.stockInfo[key].avgCostPerShare * myPortfolio.stockInfo[key].shares;
+            }
+            if (tmp1 != 0) { tmp1 = (gainSum - tmp1) / tmp1 * 100; }
+            totalGainInfo.text = "자산: $" + gainSum.ToString("F2");
+            totalGainInfo.text += " 수익률: " + tmp1.ToString("F2")+"%";
+
+            foreach (var key in myPortfolio.stockInfo.Keys.ToList())
+            {
+                //개별 종목의 보유수량이 0개인 경우 배치에서 제외
+                if (myPortfolio.stockInfo[key].shares == 0) { continue; }
+                tmp = (GameObject)Instantiate(Resources.Load("Prefabs/etc/logo"));
+                tmp.transform.SetParent(content.transform, false);
+                tmp.GetComponent<Image>().sprite = Resources.Load("Sprites/" + key, typeof(Sprite)) as Sprite;
+
+                tmp = (GameObject)Instantiate(Resources.Load("Prefabs/etc/empty"));
+                tmp.transform.SetParent(content.transform, false);
+
+                tmp = (GameObject)Instantiate(Resources.Load("Prefabs/etc/totalGainList"));
+                tmp.transform.SetParent(content.transform, false);
+                int cnt = myPortfolio.stockInfo[key].shares;//보유수량
+                float market = myPortfolio.updateGain(key);//현재 평가금액
+                float apc = myPortfolio.stockInfo[key].avgCostPerShare;//평균 단가
+                
+                float current = list.apiInfo[key].api_marketprice;//현재 주가
+                float gainPercent = (market - apc*cnt)/(apc*cnt)*100;//수익률
+
+                TextMeshProUGUI info = tmp.GetComponent<TextMeshProUGUI>();
+
+                info.text = "종목 코드: "+key+"\n";
+                info.text += "현재 주가: $" + current.ToString("F2") + "\n";
+                info.text += "평균 단가: $" + apc.ToString("F2") + "\n";
+                info.text += "보유 수량: "+ cnt.ToString() + "개\n";
+                info.text += "수익률: "+ gainPercent.ToString("F2") + "%\n";
+                info.text += "평가금액: $" + market.ToString("F2");
+
+                tmp = (GameObject)Instantiate(Resources.Load("Prefabs/etc/empty"));
+                tmp.transform.SetParent(content.transform, false);
+            }
+        }
     }
     //서브페이지에서의 Back버튼을 누르면 서브메뉴 페이지로 전환됨
     public void QuitBtnClick()

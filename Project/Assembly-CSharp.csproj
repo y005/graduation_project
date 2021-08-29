@@ -67,6 +67,7 @@
      <Compile Include="Assets\Scripts\InGameControl.cs" />
      <Compile Include="Assets\Scripts\dividendCtrl.cs" />
      <Compile Include="Assets\RainMaker\Prefab\RainScript2D.cs" />
+     <Compile Include="Assets\Scripts\mouseOn.cs" />
      <Compile Include="Assets\Scripts\portfolio.cs" />
      <Compile Include="Assets\Scripts\LoadControl.cs" />
      <Compile Include="Assets\Scripts\BuildingControl.cs" />

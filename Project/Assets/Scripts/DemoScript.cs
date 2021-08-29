@@ -16,15 +16,11 @@ namespace DigitalRuby.RainMaker
         public RainScript RainScript;//날씨 제어를 위한 오브젝트
         public GameObject Sun;//낮/밤 제어를 위한 방향광 오브젝트
         public TextMeshProUGUI SectorName; //화면에 띄울 섹터 정보 텍스트 UI
-        
-        public TextMeshProUGUI divCode; //근접한 배당일을 가진 종목 코드 텍스트 UI 
-        public TextMeshProUGUI totalGain; //평가 수익 텍스트 UI
-        public TextMeshProUGUI divGain; //배당익 텍스트 UI
-        public Slider divDate1;//근접한 배당일을 표시하는 게이지 
 
         public bool StockInfoMenuPopUp; //종목정보창이 띄워져있는지 확인하는 변수
         public GameObject StockInfo; //종목정보UI 페이지
         public Image StockPicture; //종목 로고 이미지
+        public Image SectorIcon; //섹터별 아이콘
         public TextMeshProUGUI stockCode; //종목 코드
         public TextMeshProUGUI stockMarketPrice; // 종목 현재 시가
         public TextMeshProUGUI stockPreviousClose; // 종목 전날 종가
@@ -36,17 +32,25 @@ namespace DigitalRuby.RainMaker
         public TextMeshProUGUI stockTotal; // 총 평가 금액
         public TextMeshProUGUI stockDiv; // 예상 배당액
         public TextMeshProUGUI stockDivDate; // 배당 예정일 
-        public GameObject divDate2;//종목 정보창의 배당일 게이지 오브젝트 
+
+        public Text timeAlarm; //개장 시간 정보
 
         private Vector3[] SectorPos = { new Vector3(-25.7f, 53f, 25.8f), new Vector3(17.4f, 53f, 25.8f), new Vector3(60.4f, 53f, 25.8f), new Vector3(-26f, 53f, -48f), new Vector3(18f, 53f, -48f), new Vector3(59.9f, 53f, -47f) };
-        private string[] SectorNames = { "산업", "소비재", "헬스 케어", "경제", "IT", "부동산" };
-        private int SectorIndex;
+        private string[] SectorNames = { "산업", "소비재", "헬스케어", "금융", "기술", "부동산" };
+        Dictionary<string, string> dic = new Dictionary<string, string>(){{ "Technology","기술"},{ "Communication Service","기술"}, { "Real Estate" , "부동산"},
+                                                                            { "Industrials","산업" },{ "Consumer Defensive","소비재" }, { "Consumer Cyclical","소비재" } ,
+                                                                               { "Financial Services","금융"},{ "Healthcare", "헬스케어" } };
         bool isDay; //화창한지 저장한 상태변수
         public float isRain; //비의 세기를 저장한 변수
         bool cameraMove; //카메라가 이동하는 지 확인하는 상태변수
-
+        public bool cityView; //전체 주식 시장 뷰를 보는지 확인하는 상태변수
         public AudioSource moveBgm;
 
+        private int SectorIndex;
+        private bool posChange;//종목 위치 변경을 선택했는지 확인
+        private string pos; //선택된 종목명 저장변수
+        private string prePos; //위치를 바꾸고 싶은 종목명 저장 변수
+        public TextMeshProUGUI posTxt; // 버튼 텍스트 
 
         private void Start()
         {
@@ -56,11 +60,11 @@ namespace DigitalRuby.RainMaker
             RainScript.EnableWind = true;
             StockInfoMenuPopUp = false;
             cameraMove = false;
+            cityView = false;
+            posChange = false;
             isDay = marketTimeCheck();
-            //전날 대비 포트폴리오 평가금액 변화에 따라 날씨 제어(데이터 로드시 확인됨)
+            //전날 대비 포트폴리오 평가금액 변화에 따라 날씨 제어(데이터 로드시 확인)
             isRain = 0f;
-            totalGain.text = "0";
-            divGain.text = "0";
         }
         // Update is called once per frame
         private void FixedUpdate()
@@ -69,6 +73,7 @@ namespace DigitalRuby.RainMaker
             UpdateSectorName();
             clickCheck();
             optCheck();
+            marketTimeCheck();
             if (cameraMove)
             {
                 //이동하는 효과음이 실행되지 않고 있으면 실행한다.
@@ -101,8 +106,8 @@ namespace DigitalRuby.RainMaker
         }
         void clickCheck()
         {
-            //종목 정보창 또는 서브메뉴창이 화면에 떠있는 경우 실행되지 않도록 리턴
-            if (GameObject.Find("InGameControl").GetComponent<InGameControl>().subMenuPopUp || StockInfoMenuPopUp) { return; }
+            //다른 창이 화면에 떠있는 경우 실행되지 않도록 리턴
+            if (GameObject.Find("InGameControl").GetComponent<InGameControl>().pagePopUp) { return; }
             //클릭한 객체 이름 출력
             if (Input.GetMouseButtonDown(0))
             {
@@ -115,8 +120,9 @@ namespace DigitalRuby.RainMaker
                 {
                     if (hit.collider.gameObject.CompareTag("stock"))//건물 오브젝트를 클릭한 경우
                     {
+                        pos = hit.collider.gameObject.transform.name;
                         StockInfo.SetActive(true);
-                        StockInfoMenuPopUp = true;
+                        GameObject.Find("InGameControl").GetComponent<InGameControl>().pagePopUp = true;
                         tmpname = hit.collider.gameObject.name;
                         settingStockInfo(tmpname);
                     }
@@ -145,10 +151,32 @@ namespace DigitalRuby.RainMaker
         public void ExitBtnClick()
         {
             StockInfo.SetActive(false);
-            StockInfoMenuPopUp = false;
+            GameObject.Find("InGameControl").GetComponent<InGameControl>().pagePopUp = false;
+        }
+        //종목 위치를 변경하는 버튼
+        public void posChangeBtnClick()
+        {
+            Vector3 tmp;
+            if (!posChange)//위치 변경할 한 개의 건물을 선택한 경우
+            {
+                prePos = pos;
+                posTxt.text = "이 위치와 변경";
+                posChange = true;
+            }
+            else//위치 변경할 두 개의 건물을 선택한 경우
+            {
+                tmp = GameObject.Find(pos).gameObject.transform.position;
+                //두 개의 위치를 서로 바꾼다.
+                GameObject.Find(pos).gameObject.transform.position = GameObject.Find(prePos).gameObject.transform.position;
+                GameObject.Find(prePos).gameObject.transform.position = tmp;
+                posTxt.text = "종목 위치 변경";
+                posChange = false;
+            }
         }
         private void UpdateSectorName()
         {
+            //카메라가 이동하면 섹터 정보를 표시하지 않는다
+            if (cameraMove) { SectorName.text = ""; return; }
             float minDist = 100000000000;
             float dist = 0f;
             int minIdx = 0;
@@ -167,7 +195,6 @@ namespace DigitalRuby.RainMaker
         }
         private void settingStockInfo(string code)
         {
-
             //종목에 해당하는 로고 사진 첨부
             StockPicture.sprite = Resources.Load("Sprites/" + code, typeof(Sprite)) as Sprite;
 
@@ -185,11 +212,14 @@ namespace DigitalRuby.RainMaker
             stockDivDate.text = "";
 
             if (!list.apiInfo.ContainsKey(code)) { return; }
-            stockMarketPrice.text = "현재 주가: " + list.apiInfo[code].api_marketprice.ToString("F2") + "$";
-            stockPreviousClose.text = "전날 종가: " + list.apiInfo[code].api_preclose.ToString("F2") + "$";
-            stockPer.text = "주가 수익 비율: " + list.apiInfo[code].api_per.ToString("F2");
-            stockSector.text = "산업군: " + list.apiInfo[code].api_sector;
-            stock52Week.text = "52주 간 변화율: " + list.apiInfo[code].api_52week.ToString("F2")+"%";
+            //섹터 아이콘 변경
+            SectorIcon.sprite = Resources.Load("Prefabs/Sector Sign/ic_" + dic[list.apiInfo[code].api_sector], typeof(Sprite)) as Sprite;
+
+            stockMarketPrice.text = "현재 주가: $" + list.apiInfo[code].api_marketprice.ToString("F2");
+            stockPreviousClose.text = "전날 종가: $" + list.apiInfo[code].api_preclose.ToString("F2");
+            stockPer.text = "주가 수익 비율: " + list.apiInfo[code].api_per.ToString("F2") + "%";
+            stockSector.text = "산업군: " + dic[list.apiInfo[code].api_sector];
+            stock52Week.text = "52주 간 변화율: " + list.apiInfo[code].api_52week.ToString("F2") + "%";
 
             //시가총액 표기
             float tmp = list.apiInfo[code].api_marketcap;
@@ -204,39 +234,101 @@ namespace DigitalRuby.RainMaker
             {
                 if (myPortfolio.stockInfo[code].shares == 0) { return; }
                 stockShares.text = "보유 수량: " + myPortfolio.stockInfo[code].shares;
-                stockTotal.text = "평가 금액: " + myPortfolio.updateGain(code) + "$";
+                stockTotal.text = "평가 금액: $" + myPortfolio.updateGain(code);
                 //배당 정보가 유효한 경우에만 정보 표시하기
                 string result = divDate(code);
                 if (result.Length > 0)
                 {
-                    stockDiv.text = "배당금: " + dividend(code) + "$";
+                    stockDiv.text = "배당금: $" + dividend(code);
                     stockDivDate.text = "예정 배당일: " + result;
                 }
             }
         }
         private void UpdateKeyboard()
         {
-            if (GameObject.Find("InGameControl").GetComponent<InGameControl>().subMenuPopUp || StockInfoMenuPopUp) { return; }
+            if (GameObject.Find("InGameControl").GetComponent<InGameControl>().pagePopUp) { return; }
             float speed = 10.0f * Time.deltaTime;
             float XSpeed = 0f;
             float YSpeed = 0f;
 
-            if (Input.GetKey(KeyCode.W)) { YSpeed = speed; }
-            else if (Input.GetKey(KeyCode.S)) { YSpeed = -speed; }
-            else if (Input.GetKey(KeyCode.A)) { XSpeed = -speed; }
-            else if (Input.GetKey(KeyCode.D)) { XSpeed = speed; }
-            else if (Input.GetKey(KeyCode.Q)) { Camera.main.orthographicSize = 6; }
-            else if (Input.GetKey(KeyCode.E)) { Camera.main.orthographicSize = 13; }
-            Camera.main.transform.Translate(XSpeed, YSpeed, 0.0f);
+            if (Input.GetKey(KeyCode.Q))
+            {
+                cityView = false;
+                Camera.main.orthographicSize = 6;
+            }
+            else if (Input.GetKey(KeyCode.E))
+            {
+                Camera.main.orthographicSize = 13;
+                cityView = false;
+            }
+            else if (Input.GetKey(KeyCode.R))
+            { //시티 뷰일 경우 카메라 시점 고정과 카메라 움직임 X
+                Camera.main.orthographicSize = 45;
+                Camera.main.transform.position = new Vector3(31.3f, 67.7f, -26.2f);
+                cityView = true;
+            }
+            if (cityView) { return; }
+            else
+            {
+                if (Input.GetKey(KeyCode.W)) { YSpeed = speed; }
+                else if (Input.GetKey(KeyCode.S)) { YSpeed = -speed; }
+                else if (Input.GetKey(KeyCode.A)) { XSpeed = -speed; }
+                else if (Input.GetKey(KeyCode.D)) { XSpeed = speed; }
+                Camera.main.transform.Translate(XSpeed, YSpeed, 0.0f);
+            }
         }
         private bool marketTimeCheck()
         {
             //미국 시장 기준으로 23:30~6:00까지 열림
-            //장이 열린 시간에는 낮시간으로 장마감 이후는 밤시간으로 표현
-            string h = DateTime.Now.ToString(("HH"));
-            int hour = Int32.Parse(h);
-            if ((hour > 23) || (hour < 7)) { return true; }
-            else { return false; }
+
+            DateTime now = DateTime.Now; //현재 시간
+            DateTime openTime = new DateTime(now.Year, now.Month, now.Day, 23, 30, 00); //개장 : 23:30
+            DateTime closeTime = new DateTime(now.Year, now.Month, now.Day, 06, 01, 00); //마감 : 6:01
+            TimeSpan timer; //남은 시간
+
+            string ck = "";
+
+            //Debug.Log("현재시간 : " + now.Hour + "시 " + now.Minute + "분");
+
+            //시간 체크
+            if (now.Hour == 6)
+            {
+                if (now.Minute == 0) { ck = "open"; }
+                else { ck = "close"; }
+            }
+            else if (now.Hour == 23)
+            {
+                if (now.Minute >= 30)
+                {
+                    closeTime = closeTime.AddDays(1);
+                    ck = "open";
+                }
+                else { ck = "close"; }
+            }
+            else
+            {
+                if ((now.Hour >= 7) && (now.Hour <= 22)) { ck = "close"; }
+                else { ck = "open"; }
+            }
+
+            //text setting
+            if (ck.Equals("open"))
+            {
+                timer = closeTime - now;
+                //Debug.Log("남은 시간 : " + timer.ToString(@"hh\:mm\:ss"));
+                timeAlarm.text = "마감까지 " + timer.ToString(@"hh\:mm\:ss");
+
+                return true;
+            }
+            else
+            {
+                timer = openTime - now;
+                //Debug.Log("남은 시간 : " + timer.ToString(@"hh\:mm\:ss"));
+                timeAlarm.text = "개장까지 " + timer.ToString(@"hh\:mm\:ss");
+
+                return false;
+            }
+
         }
         public string divDate(string code)
         {
@@ -280,24 +372,24 @@ namespace DigitalRuby.RainMaker
         }
 
         //총 평가 금액을 계산 
-        public void totalGainSet()
+        public float totalGainSet()
         {
             float sum = 0;
             foreach (var key in myPortfolio.stockInfo.Keys.ToList())
             {
                 sum += myPortfolio.updateGain(key);
             }
-            totalGain.text = sum.ToString()+"$";
+            return sum;
         }
         //배당익 합산
-        public void divGainSet()
+        public float divGainSet()
         {
             float sum = 0;
             foreach (var key in myPortfolio.stockInfo.Keys.ToList())
             {
                 sum += dividend(key);
             }
-            divGain.text = sum.ToString()+"$";
+            return sum;
         }
     }
 }

@@ -15,12 +15,13 @@ MonoBehaviour:
   SimpleSelectedItems:
     m_Keys:
     - Assets/Scenes/InGame.unity
-    - Assets/Scripts/BuildingControl.cs
+    - Assets/Scripts/DemoScript.cs
+    - Assets/Scripts/InGameControl.cs
     - Assets/Scripts/mouseCtrl.cs
+    - Assets/Scripts/portfolio.cs
     - Assets/user1.Json
-    - Assets/user1.Json.meta
     - 
-    m_Values: 000000000000
+    m_Values: 00000000000000
   RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 

@@ -5,10 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "portfolio")]
 public class portfolio : ScriptableObject
 {
-    public List<GameObject>  myStocks; // 포트폴리오 내의 건물오브젝트 저장 리스트 
     public StockList list; //주식정보API
-    //포트폴리오 정보가 갱신됐는지 확인하는 변수(갱신되면 배치갱신)
-    public bool renew = false;
 
     public float Cash = 0; //보유 현금 금액
     
@@ -61,11 +58,17 @@ public class portfolio : ScriptableObject
 
                     //개별종목의 보유 갯수와 전체 평단가 재계산하기(새로 매도한 금액을 이전 총 매도 금액에서 뺀 후 보유한 종목갯수로 나눔)
                     StockStat tmp = stockInfo[code];
-                    tmp.avgCostPerShare = (tmp.avgCostPerShare * tmp.shares - Shares * CostPerShare) / (tmp.shares - Shares);
+                    if (tmp.shares == Shares)
+                    {
+                        tmp.avgCostPerShare = 0;
+                    }
+                    else
+                    {
+                        tmp.avgCostPerShare = (tmp.avgCostPerShare * tmp.shares - Shares * CostPerShare) / (tmp.shares - Shares);
+                    }
                     tmp.shares -= Shares;
                     stockInfo[code] = tmp;
                     Cash += Shares * CostPerShare;
-                    renew = true;
                 }
             }
             //매수인 경우
@@ -83,7 +86,6 @@ public class portfolio : ScriptableObject
                     tmp.shares += Shares;
                     stockInfo[code] = tmp;
                     Cash -= Shares * CostPerShare;
-                    renew = true;
                 }
                 else
                 {
@@ -116,7 +118,6 @@ public class portfolio : ScriptableObject
                     tmp.avgCostPerShare = CostPerShare;
                     stockInfo[code] = tmp;
                     Cash -= Shares * CostPerShare;
-                    renew = true;
                 }
                 else
                 {

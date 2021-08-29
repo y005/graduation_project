@@ -26,7 +26,7 @@ public class LoadControl : MonoBehaviour
     public TextMeshProUGUI progress2; // 진행사항 문구 UI
 
     //사용하는 주식의 종목코드 배열
-    List<string> codeList = new List<string>() { "PEP","KO","SBUX","NKE"};
+    List<string> codeList = new List<string>() { "KO", "PEP" };//, "TSLA", "PYPL", "UNH", "TT", "PLD" };//"PEP","KO","SBUX","NKE"};
     /*List<string> codeList = new List<string>() { "MSFT", "ORCL", "AAPL", "IBM", "GOOGL", "FB", "NFLX", "DIS",
                                                  "AMZN", "TSLA", "SBUX", "NKE", "WMT", "COST", "KO", "PEP",
                                                   "V", "PYPL", "BAC", "C", "WFC",
@@ -104,7 +104,7 @@ public class LoadControl : MonoBehaviour
             RequestUri = new Uri("https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary?symbol=" + code + "&region=US"),
             Headers =
     {
-        { "x-rapidapi-key", "3473a4204dmsh3c2017b9c74173bp17eebbjsn6cfd3058fce6"},
+        { "x-rapidapi-key", "bd2bc7360bmsha9dc79919d1c7e9p1641b7jsnb4bd1c60dbe6"},
         { "x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com" },
     },
         };
