@@ -131,4 +131,9 @@ public class portfolio : ScriptableObject
         //해당 종목의 평가금액을 계산(시장가격 X 수량)
         return stockInfo[code].shares * list.apiInfo[code].api_marketprice;   
     }
+    public void eraseData()
+    {
+        stockInfo.Clear();
+        tradeList.Clear();
+    }
 }

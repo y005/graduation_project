@@ -16,15 +16,25 @@ public class InGameControl : MonoBehaviour
     public GameObject EditPage; //포트폴리오 정보 수정 페이지
     public GameObject InfoOptPage; //정보범위 수정 페이지
     public GameObject OptPage; //정보범위 수정 페이지
+    public GameObject StockInfoPage; //종목 상세 정보 페이지
+
+    public Slider fearAndGreedIndex;//공포와 탐욕 지수 
+    public Image stateImg; //상태별 아이콘 이미지
+    public Image fill; //게이지 색상
 
     public GameObject totalGainPage; //포트폴리오 정보 페이지
     public GameObject content; //포트폴리오 정보를 넣는 오브젝트
     public TextMeshProUGUI totalGainInfo; //자산 정보를 입력하는 텍스트 UI
 
+    public GameObject totalRankPage; //인기 순위 정보 페이지
+    public GameObject content1; //포트폴리오 정보를 넣는 오브젝트
+    
     public Toggle priceOpt; //주가 정보 표시하는 옵션
+    public Toggle gainOpt; //주가 정보 표시하는 옵션
     public Toggle volumeOpt; //거래량 정보 표시하는 옵션
     public Toggle divOpt; //배당 정보 표시하는 옵션
-    public Toggle interestOpt; // 관심도 지수 표시하는 옵션
+    public Toggle vidCntOpt; // 영상 갯수 기준 등수 표시하는 옵션
+    public Toggle viewCntOpt; // 영상 조회수 기준 등수 표시하는 옵션
 
     public Toggle myStockOpt; //내 종목만 표시하는 옵션
     public Toggle layerOpt; //내 종목만 투명하게 표시하는 옵션
@@ -32,9 +42,11 @@ public class InGameControl : MonoBehaviour
     public Toggle marketTimeOpt; //주식 시장 시간과 연동하는 시간 옵션 
 
     public bool priceFlag;
+    public bool gainFlag;
     public bool volumeFlag;
     public bool divFlag;
-    public bool interestFlag;
+    public bool vidCntFlag;
+    public bool viewCntFlag;
 
     public bool myStockFlag;
     public bool layerFlag;
@@ -46,10 +58,11 @@ public class InGameControl : MonoBehaviour
     public GameObject building;
 
     private List<Vector3> scales = new List<Vector3>();//종목의 초기 디폴트 스케일 설정 저장 배열
+    private float totalGainChange;//이전 총 자산 대비 총 자산 비율
 
     void Start()
     {
-        optInfo.text = "";
+        optInfo.text = "레이어를 선택하세요";
         //종목의 스케일 정보 저장
         for (int i = 0; i < building.transform.childCount; i++)
         {
@@ -58,17 +71,37 @@ public class InGameControl : MonoBehaviour
         }
         Load();//저장된 데이터를 불러온 뒤 날씨 제어
         checkOpt();
+        list.rankUpdate();
         pagePopUp = false;
         totalBtnClick();
+        weatherOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(weatherOpt); });
         myStockOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(myStockOpt); });
-        priceOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(priceOpt);});
+        priceOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(priceOpt); });
+        gainOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(gainOpt);});
         volumeOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(volumeOpt); });
         divOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(divOpt); });
-        interestOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(interestOpt); });
+        vidCntOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(vidCntOpt); });
+        viewCntOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(viewCntOpt); });
     }
     void Update()
     {
+        checkIndex();//공포와 탐욕지수 게이지 표시
         checkOpt(); //켜진 옵션 확인
+    }
+    void checkIndex()
+    {
+        if (list.fearAndGreed < 50) {
+            //종목에 해당하는 로고 사진 첨부
+            stateImg.sprite = Resources.Load("Prefabs/etc/fearIcon", typeof(Sprite)) as Sprite;
+            fill.sprite = Resources.Load("Prefabs/etc/fear", typeof(Sprite)) as Sprite;
+        }
+        else
+        {
+            //종목에 해당하는 로고 사진 첨부
+            stateImg.sprite = Resources.Load("Prefabs/etc/greedIcon", typeof(Sprite)) as Sprite;
+            fill.sprite = Resources.Load("Prefabs/etc/greed", typeof(Sprite)) as Sprite;
+        }
+        fearAndGreedIndex.value = list.fearAndGreed;
     }
     void checkOpt()//매번 옵션 선택 확인
     {
@@ -77,10 +110,20 @@ public class InGameControl : MonoBehaviour
         weatherFlag = weatherOpt.isOn;
         marketTimeFlag = marketTimeOpt.isOn;
 
-        priceFlag = priceOpt.isOn; 
+        priceFlag = priceOpt.isOn;
+        gainFlag = gainOpt.isOn; 
         volumeFlag = volumeOpt.isOn; 
         divFlag = divOpt.isOn; 
-        interestFlag = interestOpt.isOn;
+        vidCntFlag = vidCntOpt.isOn;
+        viewCntFlag = viewCntOpt.isOn; 
+
+        if (priceFlag) { optInfo.text = "주가 변화율"; }
+        else if(gainFlag){optInfo.text = "수익율";}
+        else if (volumeFlag){ optInfo.text = "거래량"; }
+        else if (divFlag) { optInfo.text = "배당 정보"; }
+        else if (vidCntFlag) { optInfo.text = "비디오 수 랭킹"; }
+        else if (viewCntFlag) { optInfo.text = "조회수 랭킹"; }
+        else { optInfo.text = "레이어를 선택하세요"; }
     }
     void ToggleValueChanged(Toggle change)
     {
@@ -96,6 +139,33 @@ public class InGameControl : MonoBehaviour
             }
             return;
         }
+        if(change == weatherOpt)
+        {
+            if (change.isOn)//이전 자산 대비 변화비율에 따라 날씨 결정
+            {
+                if (totalGainChange < -50)
+                {
+                    GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().RainScript.RainIntensity = 10f;
+                }
+                else if ((-50 < totalGainChange) && (totalGainChange < -30))
+                {
+                    GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().RainScript.RainIntensity = 5f;
+                }
+                else if ((-30 < totalGainChange) && (totalGainChange < 0))
+                {
+                    GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().RainScript.RainIntensity = 2.5f;
+                }
+                else
+                {
+                    GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().RainScript.RainIntensity = 0f;
+                }
+            }
+            else// 기본 설정인 화창한 날로 설정
+            {
+                GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().RainScript.RainIntensity = 0f;
+            }
+            return;
+        }
         if (change.isOn)
         {
             optInfo.text = "";
@@ -106,43 +176,64 @@ public class InGameControl : MonoBehaviour
     {
         if (change == priceOpt)
         {
-            optInfo.text = "수익률";
             volumeOpt.isOn = false;
             divOpt.isOn = false;
-            interestOpt.isOn = false;
+            vidCntOpt.isOn = false;
+            viewCntOpt.isOn = false;
+            gainOpt.isOn = false;
             priceOpt.isOn = true;
+        }
+        else if (change == gainOpt)
+        {
+            volumeOpt.isOn = false;
+            divOpt.isOn = false;
+            vidCntOpt.isOn = false;
+            viewCntOpt.isOn = false;
+            gainOpt.isOn = true;
+            priceOpt.isOn = false;
         }
         else if (change == volumeOpt)
         {
-            optInfo.text = "거래량";
-            priceOpt.isOn = false;
+            gainOpt.isOn = false;
             divOpt.isOn = false;
-            interestOpt.isOn = false;
+            vidCntOpt.isOn = false;
+            viewCntOpt.isOn = false;
             volumeOpt.isOn = true;
+            priceOpt.isOn = false;
         }
         else if (change == divOpt)
         {
-            optInfo.text = "배당일";
             volumeOpt.isOn = false;
-            priceOpt.isOn = false;
-            interestOpt.isOn = false;
+            gainOpt.isOn = false;
+            vidCntOpt.isOn = false;
+            viewCntOpt.isOn = false;
             divOpt.isOn = true;
+            priceOpt.isOn = false;
+        }
+        else if(change == vidCntOpt)
+        {
+            volumeOpt.isOn = false;
+            divOpt.isOn = false;
+            gainOpt.isOn = false;
+            vidCntOpt.isOn = true;
+            viewCntOpt.isOn = false;
+            priceOpt.isOn = false;
         }
         else
         {
-            optInfo.text = "관심도";
             volumeOpt.isOn = false;
             divOpt.isOn = false;
+            gainOpt.isOn = false;
+            vidCntOpt.isOn = false;
+            viewCntOpt.isOn = true;
             priceOpt.isOn = false;
-            interestOpt.isOn = true;
         }
     }
     public void SubMenuBtnClick()
     {
-        if (EditPage.activeSelf || InfoOptPage.activeSelf || OptPage.activeSelf)
+        if (EditPage.activeSelf || OptPage.activeSelf)
         {
             EditPage.SetActive(false);
-            InfoOptPage.SetActive(false);
             OptPage.SetActive(false);
             pagePopUp = false;
             return;
@@ -150,9 +241,11 @@ public class InGameControl : MonoBehaviour
         //서브메뉴가 화면에 없으면 창 띄우기
         if (!SubMenu.activeSelf)
         {
+            //다른 창을 다 내리기
             totalGainPage.SetActive(false);
-            GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().StockInfo.SetActive(false);
-
+            totalRankPage.SetActive(false);
+            StockInfoPage.SetActive(false);
+            InfoOptPage.SetActive(false);
             SubMenu.SetActive(true);
             pagePopUp = true;
         }
@@ -181,7 +274,7 @@ public class InGameControl : MonoBehaviour
 
             stock.SetActive(true);
             effect.SetActive(true);
-            //총 자산 대비 종목 비중 만큼 객체 스케일 조정하기
+            /*총 시가총액 만큼 객체 스케일 조정하기
             if (list.apiInfo.ContainsKey(key))
             {
                 tmp_cap = list.apiInfo[key].api_marketcap / 1000000000000;
@@ -194,6 +287,7 @@ public class InGameControl : MonoBehaviour
             {
                 stock.transform.localScale = new Vector3(scales[i].x, scales[i].y, scales[i].z);
             }
+            */
         }
     }
 
@@ -253,8 +347,24 @@ public class InGameControl : MonoBehaviour
     //정보 설정버튼을 누르면 인게임내 정보표시 설정 페이지로 전환됨
     public void InfoOptBtnClick()
     {
-        SubMenu.SetActive(false);
-        InfoOptPage.SetActive(true);
+        if (InfoOptPage.activeSelf)
+        {
+            InfoOptPage.SetActive(false);
+            pagePopUp = false;
+        }
+        else
+        {
+            //다른 창을 다 내리기
+            SubMenu.SetActive(false);
+            EditPage.SetActive(false);
+            InfoOptPage.SetActive(false);
+            StockInfoPage.SetActive(false);
+            OptPage.SetActive(false);
+            totalGainPage.SetActive(false);
+            totalRankPage.SetActive(false);
+            pagePopUp = true;
+            InfoOptPage.SetActive(true);
+        }
     }
     //옵션 버튼을 누르면 인게임내 설정 페이지로 전환됨
     public void OptBtnClick()
@@ -277,10 +387,10 @@ public class InGameControl : MonoBehaviour
             SubMenu.SetActive(false);
             EditPage.SetActive(false);
             InfoOptPage.SetActive(false);
+            StockInfoPage.SetActive(false);
             OptPage.SetActive(false);
             totalGainPage.SetActive(false);
-            GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().StockInfo.SetActive(false);
-
+            totalRankPage.SetActive(false);
             pagePopUp = true;
             totalGainPage.SetActive(true);
             for (int i = 0; i < content.transform.childCount; i++)
@@ -298,41 +408,107 @@ public class InGameControl : MonoBehaviour
             }
             if (tmp1 != 0) { tmp1 = (gainSum - tmp1) / tmp1 * 100; }
             totalGainInfo.text = "자산: $" + gainSum.ToString("F2");
-            totalGainInfo.text += " 수익률: " + tmp1.ToString("F2")+"%";
-
+            totalGainInfo.text += " 수익률: " + tmp1.ToString("F2") + "%";
+            float tmp2 = GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().divGainSet();
+            totalGainInfo.text += " 배당액: $" + tmp2.ToString("F2");
+            
             foreach (var key in myPortfolio.stockInfo.Keys.ToList())
             {
                 //개별 종목의 보유수량이 0개인 경우 배치에서 제외
                 if (myPortfolio.stockInfo[key].shares == 0) { continue; }
-                tmp = (GameObject)Instantiate(Resources.Load("Prefabs/etc/logo"));
+                tmp = (GameObject)Instantiate(Resources.Load("Prefabs/etc/slot"));
                 tmp.transform.SetParent(content.transform, false);
-                tmp.GetComponent<Image>().sprite = Resources.Load("Sprites/" + key, typeof(Sprite)) as Sprite;
+                tmp.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load("Sprites/" + key, typeof(Sprite)) as Sprite;
 
-                tmp = (GameObject)Instantiate(Resources.Load("Prefabs/etc/empty"));
-                tmp.transform.SetParent(content.transform, false);
-
-                tmp = (GameObject)Instantiate(Resources.Load("Prefabs/etc/totalGainList"));
-                tmp.transform.SetParent(content.transform, false);
                 int cnt = myPortfolio.stockInfo[key].shares;//보유수량
                 float market = myPortfolio.updateGain(key);//현재 평가금액
                 float apc = myPortfolio.stockInfo[key].avgCostPerShare;//평균 단가
-                
+
                 float current = list.apiInfo[key].api_marketprice;//현재 주가
-                float gainPercent = (market - apc*cnt)/(apc*cnt)*100;//수익률
+                float gainPercent = (market - apc * cnt) / (apc * cnt) * 100;//수익률
+                float div = GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().dividend(key);
 
-                TextMeshProUGUI info = tmp.GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI info = tmp.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
 
-                info.text = "종목 코드: "+key+"\n";
+                info.text = "종목 코드: " + key + "\n";
                 info.text += "현재 주가: $" + current.ToString("F2") + "\n";
                 info.text += "평균 단가: $" + apc.ToString("F2") + "\n";
-                info.text += "보유 수량: "+ cnt.ToString() + "개\n";
-                info.text += "수익률: "+ gainPercent.ToString("F2") + "%\n";
+                info.text += "보유 수량: " + cnt.ToString() + "개\n";
+                info.text += "수익률: " + gainPercent.ToString("F2") + "%\n";
                 info.text += "평가금액: $" + market.ToString("F2");
-
+                if (div != 0) {
+                    info.text += "\n예상 배당액: $" + div.ToString("F2");
+                }
                 tmp = (GameObject)Instantiate(Resources.Load("Prefabs/etc/empty"));
                 tmp.transform.SetParent(content.transform, false);
+                tmp = (GameObject)Instantiate(Resources.Load("Prefabs/etc/empty"));
+                tmp.transform.SetParent(content.transform, false);
+
             }
         }
+    }    //유튜브 관련 통계 정보를 리스트뷰로 볼 수 있는 정보창이 나옴
+    public void rankBtnClick()
+    {
+
+        if (totalRankPage.activeSelf)//이미 켜져있으면 꺼지고 꺼져있으면 켜지도록 제어
+        {
+            totalRankPage.SetActive(false);
+            pagePopUp = false;
+        }
+        else
+        {
+            //다른 창을 다 내리기
+            SubMenu.SetActive(false);
+            EditPage.SetActive(false);
+            InfoOptPage.SetActive(false);
+            StockInfoPage.SetActive(false);
+            OptPage.SetActive(false);
+            totalGainPage.SetActive(false);
+            pagePopUp = true;
+            totalRankPage.SetActive(true);
+
+            for (int i = 0; i < content1.transform.childCount; i++)
+            {
+                Destroy(content1.transform.GetChild(i).gameObject);
+            }
+            GameObject tmp = (GameObject)Instantiate(Resources.Load("Prefabs/etc/empty"));
+            tmp.transform.SetParent(content1.transform, false);
+            
+            foreach(var key in list.vidCntRank)
+            {
+                tmp = (GameObject)Instantiate(Resources.Load("Prefabs/etc/slot"));
+                tmp.transform.SetParent(content1.transform, false);
+                tmp.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load("Sprites/" + key.Key, typeof(Sprite)) as Sprite;
+
+                TextMeshProUGUI info = tmp.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+
+                int viewCnt = list.youtubeInfo[key.Key].api_view;
+                int likeCnt = list.youtubeInfo[key.Key].api_like;
+                int dislikeCnt = list.youtubeInfo[key.Key].api_dislike;
+                int cmtCnt = list.youtubeInfo[key.Key].api_comment;
+                int vidCnt = list.youtubeInfo[key.Key].api_cnt;
+
+                info.text = "종목 코드: " + key.Key + "\n";
+                info.text += "조회수: " + viewCnt.ToString() + "\n";
+                info.text += "좋아요: " + likeCnt.ToString() + "\n";
+                info.text += "싫어요: " + dislikeCnt.ToString() + "\n";
+                info.text += "댓글 수: " + cmtCnt.ToString() + "\n";
+                info.text += "영상 갯수: " + vidCnt.ToString() + "\n";
+
+                tmp = (GameObject)Instantiate(Resources.Load("Prefabs/etc/empty"));
+                tmp.transform.SetParent(content1.transform, false);
+                tmp = (GameObject)Instantiate(Resources.Load("Prefabs/etc/empty"));
+                tmp.transform.SetParent(content1.transform, false);
+            }
+        }
+    }
+    public void UpdateBtnClick()
+    {
+        //게임을 저장하고 갱신
+        Save();
+        list.eraseData();
+        myPortfolio.eraseData();
+        SceneManager.LoadScene("Load");
     }
     //서브페이지에서의 Back버튼을 누르면 서브메뉴 페이지로 전환됨
     public void QuitBtnClick()
@@ -340,7 +516,6 @@ public class InGameControl : MonoBehaviour
         //서브메뉴 화면으로 이동
         EditPage.SetActive(false);
         OptPage.SetActive(false);
-        InfoOptPage.SetActive(false);
         SubMenu.SetActive(true);
     }
     public void ExitBtnClick()
@@ -384,28 +559,12 @@ public class InGameControl : MonoBehaviour
                 totalGain += myPortfolio.updateGain(tmp.code);
             }
             //현재 업데이트 된 포트폴리오 평가금액과 이 전 포트폴리오 평가금액 비교하여 날씨 파악
-            float percent = (totalGain - preTotalGain) / preTotalGain * 100;
-            if (percent < -50 )
-            {
-                GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().isRain = 10f;
-            }
-            else if ((-50 < percent) && (percent < -30))
-            {
-                GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().isRain = 5f;
-            }
-            else if ((-30 < percent) && (percent < 0))
-            {
-                GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().isRain = 2.5f;
-            }
-            else
-            {
-                GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().isRain = 0f;
-            }
+            float totalGainChange = (totalGain - preTotalGain) / preTotalGain * 100;
+            Debug.Log(totalGainChange);
         }
         catch (Exception e)
         {
-            //세이브 데이터가 없는 경우 날씨는 화창함으로 표현됨
-            GameObject.Find("Main Camera").GetComponent<DigitalRuby.RainMaker.DemoScript>().isRain = 0f;
+            totalGainChange = 0;
         }
     }
     void Save()

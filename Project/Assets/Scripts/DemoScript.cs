@@ -17,7 +17,6 @@ namespace DigitalRuby.RainMaker
         public GameObject Sun;//낮/밤 제어를 위한 방향광 오브젝트
         public TextMeshProUGUI SectorName; //화면에 띄울 섹터 정보 텍스트 UI
 
-        public bool StockInfoMenuPopUp; //종목정보창이 띄워져있는지 확인하는 변수
         public GameObject StockInfo; //종목정보UI 페이지
         public Image StockPicture; //종목 로고 이미지
         public Image SectorIcon; //섹터별 아이콘
@@ -35,17 +34,15 @@ namespace DigitalRuby.RainMaker
 
         public Text timeAlarm; //개장 시간 정보
 
-        private Vector3[] SectorPos = { new Vector3(-25.7f, 53f, 25.8f), new Vector3(17.4f, 53f, 25.8f), new Vector3(60.4f, 53f, 25.8f), new Vector3(-26f, 53f, -48f), new Vector3(18f, 53f, -48f), new Vector3(59.9f, 53f, -47f) };
+        private Vector3[] SectorPos = { new Vector3(-25.7f, 53f, 25.8f), new Vector3(17.1f, 55f, 27f), new Vector3(60.4f, 53f, 25.8f), new Vector3(-26f, 53f, -48f), new Vector3(18.5f, 56f, -45.3f), new Vector3(59.9f, 53f, -47f) };
         private string[] SectorNames = { "산업", "소비재", "헬스케어", "금융", "기술", "부동산" };
-        Dictionary<string, string> dic = new Dictionary<string, string>(){{ "Technology","기술"},{ "Communication Service","기술"}, { "Real Estate" , "부동산"},
+        Dictionary<string, string> dic = new Dictionary<string, string>(){{ "Technology","기술"},{ "Communication Services","기술"}, { "Real Estate" , "부동산"},
                                                                             { "Industrials","산업" },{ "Consumer Defensive","소비재" }, { "Consumer Cyclical","소비재" } ,
                                                                                { "Financial Services","금융"},{ "Healthcare", "헬스케어" } };
-        bool isDay; //화창한지 저장한 상태변수
-        public float isRain; //비의 세기를 저장한 변수
+        bool isDay; //주식 시장 장 시간 저장 변수
         bool cameraMove; //카메라가 이동하는 지 확인하는 상태변수
         public bool cityView; //전체 주식 시장 뷰를 보는지 확인하는 상태변수
-        public AudioSource moveBgm;
-
+        
         private int SectorIndex;
         private bool posChange;//종목 위치 변경을 선택했는지 확인
         private string pos; //선택된 종목명 저장변수
@@ -55,16 +52,15 @@ namespace DigitalRuby.RainMaker
         private void Start()
         {
             SectorName.text = "";
+            Camera.main.orthographicSize = 13;
             SectorIndex = 0;
             RainScript.RainIntensity = 0f;
             RainScript.EnableWind = true;
-            StockInfoMenuPopUp = false;
             cameraMove = false;
             cityView = false;
             posChange = false;
             isDay = marketTimeCheck();
             //전날 대비 포트폴리오 평가금액 변화에 따라 날씨 제어(데이터 로드시 확인)
-            isRain = 0f;
         }
         // Update is called once per frame
         private void FixedUpdate()
@@ -76,11 +72,6 @@ namespace DigitalRuby.RainMaker
             marketTimeCheck();
             if (cameraMove)
             {
-                //이동하는 효과음이 실행되지 않고 있으면 실행한다.
-                if (!moveBgm.isPlaying)
-                {
-                    //moveBgm.Play();
-                }
                 //이동이 완료되면 카메라 이동을 멈춘다.
                 if (Vector3.Distance(Camera.main.transform.position, SectorPos[SectorIndex]) < 0.1f) { cameraMove = false; }
                 //섹터 위치로 카메라를 서서히 이동
@@ -96,13 +87,6 @@ namespace DigitalRuby.RainMaker
                 if (isDay) { Sun.GetComponent<Light>().intensity = 1f; }
                 else { Sun.GetComponent<Light>().intensity = 0f; }
             }
-            if (!GameObject.Find("InGameControl").GetComponent<InGameControl>().weatherFlag) { RainScript.RainIntensity = 0.0f; }
-            if (GameObject.Find("InGameControl").GetComponent<InGameControl>().weatherFlag)
-            {
-                //보유 종목의 수익률에 따라 비가 오도록 설정
-                if (isRain > 0) { RainScript.RainIntensity = isRain; }
-                else { RainScript.RainIntensity = 0.0f; }
-            }
         }
         void clickCheck()
         {
@@ -111,7 +95,6 @@ namespace DigitalRuby.RainMaker
             //클릭한 객체 이름 출력
             if (Input.GetMouseButtonDown(0))
             {
-                //Debug.Log(Input.mousePosition);
                 //클릭 인식범위에서 벗어나는 경우 바로 반환
                 if ((Input.mousePosition.x < 300) || (Input.mousePosition.x > 1600) || (Input.mousePosition.y < 300) || (Input.mousePosition.y > 900)) { return; }
                 string tmpname = "";
@@ -217,7 +200,7 @@ namespace DigitalRuby.RainMaker
 
             stockMarketPrice.text = "현재 주가: $" + list.apiInfo[code].api_marketprice.ToString("F2");
             stockPreviousClose.text = "전날 종가: $" + list.apiInfo[code].api_preclose.ToString("F2");
-            stockPer.text = "주가 수익 비율: " + list.apiInfo[code].api_per.ToString("F2") + "%";
+            stockPer.text = "주가 수익 비율: " + list.apiInfo[code].api_per.ToString("F2");
             stockSector.text = "산업군: " + dic[list.apiInfo[code].api_sector];
             stock52Week.text = "52주 간 변화율: " + list.apiInfo[code].api_52week.ToString("F2") + "%";
 
@@ -251,17 +234,12 @@ namespace DigitalRuby.RainMaker
             float XSpeed = 0f;
             float YSpeed = 0f;
 
-            if (Input.GetKey(KeyCode.Q))
-            {
-                cityView = false;
-                Camera.main.orthographicSize = 6;
-            }
-            else if (Input.GetKey(KeyCode.E))
+           if (Input.GetKey(KeyCode.Q))
             {
                 Camera.main.orthographicSize = 13;
                 cityView = false;
             }
-            else if (Input.GetKey(KeyCode.R))
+            else if (Input.GetKey(KeyCode.E))
             { //시티 뷰일 경우 카메라 시점 고정과 카메라 움직임 X
                 Camera.main.orthographicSize = 45;
                 Camera.main.transform.position = new Vector3(31.3f, 67.7f, -26.2f);

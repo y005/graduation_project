@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7cdacd261d9b3b4cbf0b8e90ecd989f, type: 3}
   m_Name: Stock List
   m_EditorClassIdentifier: 
+  fearAndGreed: 34

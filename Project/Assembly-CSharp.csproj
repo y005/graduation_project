@@ -49,22 +49,24 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\API.cs" />
      <Compile Include="Assets\GUI KIt SimpleRound\Scripts\PanelControl.cs" />
-     <Compile Include="Assets\Scripts\uiControl4.cs" />
      <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
      <Compile Include="Assets\Scripts\MainMenuControl.cs" />
-     <Compile Include="Assets\Scripts\uiControl2.cs" />
-     <Compile Include="Assets\Scripts\uiControl3.cs" />
+     <Compile Include="Assets\Scripts\falling.cs" />
+     <Compile Include="Assets\Scripts\shining.cs" />
+     <Compile Include="Assets\Scripts\sleeping.cs" />
+     <Compile Include="Assets\Scripts\rising.cs" />
      <Compile Include="Assets\RainMaker\Demo\DemoScriptStartRainOnSpaceBar.cs" />
      <Compile Include="Assets\Scripts\DemoScript.cs" />
      <Compile Include="Assets\RainMaker\Prefab\RainScript.cs" />
      <Compile Include="Assets\RainMaker\Prefab\RainCollision.cs" />
      <Compile Include="Assets\Scripts\StockList.cs" />
-     <Compile Include="Assets\Scripts\uiControl1.cs" />
+     <Compile Include="Assets\Scripts\youtube.cs" />
      <Compile Include="Assets\GUI KIt SimpleRound\Scripts\Panel.cs" />
      <Compile Include="Assets\RainMaker\Demo\DemoScript2D.cs" />
      <Compile Include="Assets\Scripts\portfolioControl.cs" />
      <Compile Include="Assets\Scripts\mouseCtrl.cs" />
      <Compile Include="Assets\Scripts\InGameControl.cs" />
+     <Compile Include="Assets\Scripts\movePosCtrl.cs" />
      <Compile Include="Assets\Scripts\dividendCtrl.cs" />
      <Compile Include="Assets\RainMaker\Prefab\RainScript2D.cs" />
      <Compile Include="Assets\Scripts\mouseOn.cs" />
@@ -682,6 +684,9 @@
  </Reference>
  <Reference Include="Unity.TextMeshPro">
  <HintPath>C:/Users/82102/Desktop/project1/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.2D.Sprite.Editor">
+ <HintPath>C:/Users/82102/Desktop/project1/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/Users/82102/Desktop/project1/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>

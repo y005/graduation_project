@@ -6,5 +6,8 @@ using UnityEngine;
 
 public class API : ScriptableObject
 {
-    public string key;
+    public string fgi;
+    public string yahoo;
+    public string youtube;
+
 }

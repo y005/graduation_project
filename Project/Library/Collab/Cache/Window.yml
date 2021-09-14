@@ -15,11 +15,11 @@ MonoBehaviour:
   SimpleSelectedItems:
     m_Keys:
     - Assets/Scenes/InGame.unity
+    - Assets/Scenes/MainMenu.unity
+    - Assets/Scripts/API.cs
     - Assets/Scripts/DemoScript.cs
     - Assets/Scripts/InGameControl.cs
-    - Assets/Scripts/mouseCtrl.cs
-    - Assets/Scripts/portfolio.cs
-    - Assets/user1.Json
+    - Assets/Scripts/MainMenuControl.cs
     - 
     m_Values: 00000000000000
   RevisionSummary: 
