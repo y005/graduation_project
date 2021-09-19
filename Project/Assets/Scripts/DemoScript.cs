@@ -317,27 +317,25 @@ namespace DigitalRuby.RainMaker
             if (!list.apiInfo.ContainsKey(code)) { return ""; }
             string tmp = list.apiInfo[code].api_divDate; //배당 날짜 불러오기
 
-            //배당주일 때
-            if (tmp != null)
+            try
             {
-                divDate = Convert.ToDateTime(tmp); //배당 날짜 - 날짜 타입으로 변환
-                compareDate = DateTime.Compare(today, divDate); //오늘 날짜와 배당 날짜 비교
+                 divDate = Convert.ToDateTime(tmp); //배당 날짜 - 날짜 타입으로 변환
+                 compareDate = DateTime.Compare(today, divDate); //오늘 날짜와 배당 날짜 비교
 
-                //아직 다음 배당 날짜가 지나지 않았다면
-                if (compareDate <= 0)
-                {
-                    return divDate.ToString("yyyy-MM-dd");
-                }
+                 //아직 다음 배당 날짜가 지나지 않았다면
+                 if (compareDate <= 0)
+                 {
+                     return divDate.ToString("yyyy-MM-dd");
+                 }
 
-                //이미 배당 날짜가 지났을 때 or 배당주가 아닐 때
-                else
-                {
-                    return "";
-                }
+                  //이미 배당 날짜가 지났을 때
+                  else
+                  {
+                      return "";
+                  }
             }
-
-            //배당주가 아닐 때
-            else
+            // 배당주가 아닐 때
+            catch (FormatException fe)
             {
                 return "";
             }

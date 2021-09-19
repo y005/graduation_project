@@ -12,6 +12,8 @@ public class StockList : ScriptableObject
     public Dictionary<string, APIData> apiInfo = new Dictionary<string, APIData>();
     //종목코드와 얻은 youtube data v3 api 자료를 저장한 딕셔너리
     public Dictionary<string, youtubeData> youtubeInfo = new Dictionary<string, youtubeData>();
+    //종목코드와 관련 뉴스 기사들의 감성 비율을 저장한 딕셔너리
+    public Dictionary<string, sentimentData> sentimentInfo = new Dictionary<string, sentimentData>();
     //관심도 순위(최근 한 달 간 1만 조회수 이상인 동영상의 갯수로 카운트) 
     public List<KeyValuePair<string, int>> vidCntRank = new List<KeyValuePair<string, int>>();
     //관심도 순위(최근 한 달 간 1만 조회수 이상인 동영상의 조회수 합으로 카운트) 
@@ -67,9 +69,25 @@ public class StockList : ScriptableObject
             this.api_comment = commentCount;
         }
     }
-    public void addYoutube(string code,int count,int viewCount, int likeCount, int dislikeCount, int commentCount)
+    public void addYoutube(string code, int count, int viewCount, int likeCount, int dislikeCount, int commentCount)
     {
-        youtubeInfo.Add(code, new youtubeData(count,viewCount, likeCount, dislikeCount, commentCount));
+        youtubeInfo.Add(code, new youtubeData(count, viewCount, likeCount, dislikeCount, commentCount));
+    }
+    //3. ec2서버 api에서 불러온 데이터 저장하기 위한 자료
+    public class sentimentData
+    {
+        public int api_positive; //긍정감성으로 분류된 뉴스 기사 비율
+        public int api_negative; //부정감성으로 분류된 뉴스 기사 비율
+
+        public sentimentData(int pos, int neg)
+        {
+            this.api_positive = pos;
+            this.api_negative = neg;
+        }
+    }
+    public void addSenti(string code,int pos,int neg)
+    {
+        sentimentInfo.Add(code, new sentimentData(pos,neg));
     }
     public void rankUpdate()
     {
@@ -119,6 +137,7 @@ public class StockList : ScriptableObject
     {
         apiInfo.Clear();
         youtubeInfo.Clear();
+        sentimentInfo.Clear();
         vidCntRank.Clear();
         viewRank.Clear();
     }

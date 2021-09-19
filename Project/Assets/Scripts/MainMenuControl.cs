@@ -14,7 +14,6 @@ public class MainMenuControl : MonoBehaviour
 {
     public GameObject start;
     public GameObject apiSetting;
-    public TextMeshProUGUI fgi;
     public TextMeshProUGUI yahoo;
     public TextMeshProUGUI youtube;
     public API api;
@@ -48,8 +47,22 @@ public class MainMenuControl : MonoBehaviour
     }
     public void InsertBtnClick()
     {
-        api.fgi = fgi.text;
-        api.yahoo = yahoo.text;
-        api.youtube = youtube.text;
+        if (checkApiInput())
+        {
+            api.yahoo = yahoo.text;
+            api.youtube = youtube.text;
+        }
+        inputsClear();
+    }
+    bool checkApiInput()
+    {
+        if ((yahoo.text == "") && (youtube.text == "")) { return false; }
+        return true;
+    }
+    //보유 종목 수정이 되면 인풋필드 값이 지워진다.
+    void inputsClear()
+    {
+        yahoo.text = "야후 api키를 입력하세요";
+        youtube.text = "유튜브 api키를 입력하세요";
     }
 }

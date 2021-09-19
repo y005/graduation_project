@@ -35,6 +35,7 @@ public class InGameControl : MonoBehaviour
     public Toggle divOpt; //배당 정보 표시하는 옵션
     public Toggle vidCntOpt; // 영상 갯수 기준 등수 표시하는 옵션
     public Toggle viewCntOpt; // 영상 조회수 기준 등수 표시하는 옵션
+    public Toggle newsSentiOpt; // 뉴스 감성분석 정보를 표시하는 옵션
 
     public Toggle myStockOpt; //내 종목만 표시하는 옵션
     public Toggle layerOpt; //내 종목만 투명하게 표시하는 옵션
@@ -47,6 +48,7 @@ public class InGameControl : MonoBehaviour
     public bool divFlag;
     public bool vidCntFlag;
     public bool viewCntFlag;
+    public bool newsSentiFlag;
 
     public bool myStockFlag;
     public bool layerFlag;
@@ -82,6 +84,7 @@ public class InGameControl : MonoBehaviour
         divOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(divOpt); });
         vidCntOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(vidCntOpt); });
         viewCntOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(viewCntOpt); });
+        newsSentiOpt.onValueChanged.AddListener(delegate { ToggleValueChanged(newsSentiOpt); });
     }
     void Update()
     {
@@ -115,7 +118,8 @@ public class InGameControl : MonoBehaviour
         volumeFlag = volumeOpt.isOn; 
         divFlag = divOpt.isOn; 
         vidCntFlag = vidCntOpt.isOn;
-        viewCntFlag = viewCntOpt.isOn; 
+        viewCntFlag = viewCntOpt.isOn;
+        newsSentiFlag = newsSentiOpt.isOn;
 
         if (priceFlag) { optInfo.text = "주가 변화율"; }
         else if(gainFlag){optInfo.text = "수익율";}
@@ -123,6 +127,7 @@ public class InGameControl : MonoBehaviour
         else if (divFlag) { optInfo.text = "배당 정보"; }
         else if (vidCntFlag) { optInfo.text = "비디오 수 랭킹"; }
         else if (viewCntFlag) { optInfo.text = "조회수 랭킹"; }
+        else if (newsSentiFlag) { optInfo.text = "뉴스 감성 분석"; }
         else { optInfo.text = "레이어를 선택하세요"; }
     }
     void ToggleValueChanged(Toggle change)
@@ -182,6 +187,7 @@ public class InGameControl : MonoBehaviour
             viewCntOpt.isOn = false;
             gainOpt.isOn = false;
             priceOpt.isOn = true;
+            newsSentiOpt.isOn = false;
         }
         else if (change == gainOpt)
         {
@@ -191,6 +197,7 @@ public class InGameControl : MonoBehaviour
             viewCntOpt.isOn = false;
             gainOpt.isOn = true;
             priceOpt.isOn = false;
+            newsSentiOpt.isOn = false;
         }
         else if (change == volumeOpt)
         {
@@ -200,6 +207,7 @@ public class InGameControl : MonoBehaviour
             viewCntOpt.isOn = false;
             volumeOpt.isOn = true;
             priceOpt.isOn = false;
+            newsSentiOpt.isOn = false;
         }
         else if (change == divOpt)
         {
@@ -209,6 +217,7 @@ public class InGameControl : MonoBehaviour
             viewCntOpt.isOn = false;
             divOpt.isOn = true;
             priceOpt.isOn = false;
+            newsSentiOpt.isOn = false;
         }
         else if(change == vidCntOpt)
         {
@@ -218,6 +227,17 @@ public class InGameControl : MonoBehaviour
             vidCntOpt.isOn = true;
             viewCntOpt.isOn = false;
             priceOpt.isOn = false;
+            newsSentiOpt.isOn = false;
+        }
+        else if (change == newsSentiOpt)
+        {
+            volumeOpt.isOn = false;
+            divOpt.isOn = false;
+            gainOpt.isOn = false;
+            vidCntOpt.isOn = false;
+            viewCntOpt.isOn = false;
+            priceOpt.isOn = false;
+            newsSentiOpt.isOn = true;
         }
         else
         {
@@ -227,6 +247,7 @@ public class InGameControl : MonoBehaviour
             vidCntOpt.isOn = false;
             viewCntOpt.isOn = true;
             priceOpt.isOn = false;
+            newsSentiOpt.isOn = false;
         }
     }
     public void SubMenuBtnClick()
@@ -274,6 +295,7 @@ public class InGameControl : MonoBehaviour
 
             stock.SetActive(true);
             effect.SetActive(true);
+            stock.transform.localScale = new Vector3(scales[i].x, scales[i].y, scales[i].z);
             /*총 시가총액 만큼 객체 스케일 조정하기
             if (list.apiInfo.ContainsKey(key))
             {
@@ -537,39 +559,112 @@ public class InGameControl : MonoBehaviour
         public float Cash;
         public List<stockInfo> stocks;
     }
+    //저장을 위한 자료구조
+    [Serializable]
+    public class stockApiInfo
+    {
+        public string code;
+        public float api_marketprice; //현재 시가
+        public string api_divDate; //배당일
+        public float api_divRate; //배당률
+        public string api_sector; //관련 업종별 분류
+        public float api_marketcap; //시가총액
+        public float api_per; //PER
+        public float api_52week; //시가 성장 변화(52 week change)
+        public float api_preclose; //이전 마감가
+        public float api_volume; //거래량
+        public float api_avgVolume; //평균 10일 거래량
+    }
+    public class savApiData
+    {
+        public List<stockApiInfo> stocksApi;
+    }//저장을 위한 자료구조
+    [Serializable]
+    public class youtubeInfo
+    {
+        public string code;
+        public int api_cnt; //일주일 간 1만 조회수 이상인 영상 수
+        public int api_view; //일주일 간 관련 영상 조회수 합산
+        public int api_like; //일주일 간 관련 영상 좋아요수 합산
+        public int api_dislike; //일주일 간 관련 영상 싫어요수 합산
+        public int api_comment; //일주일 간 관련 영상 댓글수 합산
+    }
+    public class savYoutubeData
+    {
+        public List<youtubeInfo> youtubeInfos;
+    }
     void Load()
     {
         //Json파일 가져온 다음에 게임과 연동시키기 
         try
         {
-            string path = Application.dataPath + "/" + "user1" + ".Json";
-            string json = File.ReadAllText(path);
-            savData loadData = JsonUtility.FromJson<savData>(json);
-            float preTotalGain = 0f;
-            float totalGain = 0f;
-            myPortfolio.Cash = loadData.Cash;
-            foreach (var tmp in loadData.stocks)
-            {
-                preTotalGain += tmp.shares * tmp.apc;
-                myPortfolio.addTrade(tmp.code, "0000-0-0", tmp.shares, tmp.apc, false);
-            }
-            //현재 업데이트 된 포트폴리오 평가금액 갱신
-            foreach (var tmp in loadData.stocks)
-            {
-                totalGain += myPortfolio.updateGain(tmp.code);
-            }
-            //현재 업데이트 된 포트폴리오 평가금액과 이 전 포트폴리오 평가금액 비교하여 날씨 파악
-            float totalGainChange = (totalGain - preTotalGain) / preTotalGain * 100;
-            Debug.Log(totalGainChange);
+            //1. API정보 로드
+            yahooApiLoad();
+            //2. 유저 포트폴리오 정보 로드
+            portfolioLoad();
+            //3. 유튜브 정보 가져오기
+            youtubeApiLoad();
         }
         catch (Exception e)
         {
             totalGainChange = 0;
         }
     }
+    void yahooApiLoad()
+    {
+        string path = Application.dataPath + "/" + "api" + ".Json";
+        string json = File.ReadAllText(path);
+        savApiData loadData = JsonUtility.FromJson<savApiData>(json);
+        foreach (var tmp in loadData.stocksApi)
+        {
+            list.add(tmp.code, tmp.api_marketprice, tmp.api_divDate, tmp.api_divRate, tmp.api_sector, tmp.api_marketcap, tmp.api_per, tmp.api_52week, tmp.api_preclose, tmp.api_volume, tmp.api_avgVolume);
+        }
+    }
+    void youtubeApiLoad()
+    {
+        string path = Application.dataPath + "/" + "youtube" + ".Json";
+        string json = File.ReadAllText(path);
+        savYoutubeData loadData = JsonUtility.FromJson<savYoutubeData>(json);
+        foreach (var tmp in loadData.youtubeInfos)
+        {
+            list.addYoutube(tmp.code, tmp.api_cnt, tmp.api_view, tmp.api_like, tmp.api_dislike, tmp.api_comment);
+        }
+    }
+    void portfolioLoad()
+    {
+        string path = Application.dataPath + "/" + "user1" + ".Json";
+        string json = File.ReadAllText(path);
+        savData loadData = JsonUtility.FromJson<savData>(json);
+        float preTotalGain = 0f;
+        float totalGain = 0f;
+        myPortfolio.Cash = loadData.Cash;
+        foreach (var tmp in loadData.stocks)
+        {
+            preTotalGain += tmp.shares * tmp.apc;
+            myPortfolio.addTrade(tmp.code, "0000-0-0", tmp.shares, tmp.apc, false);
+        }
+        //현재 업데이트 된 포트폴리오 평가금액 갱신
+        foreach (var tmp in loadData.stocks)
+        {
+            totalGain += myPortfolio.updateGain(tmp.code);
+        }
+        //현재 업데이트 된 포트폴리오 평가금액과 이 전 포트폴리오 평가금액 비교하여 날씨 파악
+        float totalGainChange = (totalGain - preTotalGain) / preTotalGain * 100;
+        Debug.Log(totalGainChange);
+    }
     void Save()
     {
-        //Json파일 형태로 저장시키기
+        //1. 유저 포트폴리오 정보 저장하기
+        portfolioSave();
+
+        //2. api 정보 저장하기
+        //yahooApiSave();
+
+        //3. api 정보 저장하기
+        //youtubeApiSave();
+    }
+    void portfolioSave()
+    {
         savData sav = new savData();
         sav.Cash = myPortfolio.Cash;
         sav.stocks = new List<stockInfo>();
@@ -585,6 +680,49 @@ public class InGameControl : MonoBehaviour
         }
         string json = JsonUtility.ToJson(sav);
         string path = Application.dataPath + "/" + "user1" + ".Json";
+        File.WriteAllText(path, json);
+    }
+    void yahooApiSave()
+    {
+        savApiData sav = new savApiData();
+        sav.stocksApi = new List<stockApiInfo>();
+        foreach (var key in list.apiInfo.Keys.ToList())
+        {
+            stockApiInfo tmp = new stockApiInfo();
+            tmp.code = key;
+            tmp.api_marketprice = list.apiInfo[key].api_marketprice;
+            tmp.api_divDate = list.apiInfo[key].api_divDate;
+            tmp.api_divRate = list.apiInfo[key].api_divRate;
+            tmp.api_sector = list.apiInfo[key].api_sector;
+            tmp.api_marketcap = list.apiInfo[key].api_marketcap;
+            tmp.api_per = list.apiInfo[key].api_per;
+            tmp.api_52week = list.apiInfo[key].api_52week;
+            tmp.api_preclose = list.apiInfo[key].api_preclose;
+            tmp.api_volume = list.apiInfo[key].api_volume;
+            tmp.api_avgVolume = list.apiInfo[key].api_avgVolume;
+            sav.stocksApi.Add(tmp);
+        }
+        string json = JsonUtility.ToJson(sav);
+        string path = Application.dataPath + "/" + "api" + ".Json";
+        File.WriteAllText(path, json);
+    }
+    void youtubeApiSave()
+    {
+        savYoutubeData sav = new savYoutubeData();
+        sav.youtubeInfos = new List<youtubeInfo>();
+        foreach (var key in list.youtubeInfo.Keys.ToList())
+        {
+            youtubeInfo tmp = new youtubeInfo();
+            tmp.code = key;
+            tmp.api_cnt = list.youtubeInfo[key].api_cnt;
+            tmp.api_view = list.youtubeInfo[key].api_view;
+            tmp.api_like = list.youtubeInfo[key].api_like;
+            tmp.api_dislike = list.youtubeInfo[key].api_dislike;
+            tmp.api_comment = list.youtubeInfo[key].api_comment;
+            sav.youtubeInfos.Add(tmp);
+        }
+        string json = JsonUtility.ToJson(sav);
+        string path = Application.dataPath + "/" + "youtube" + ".Json";
         File.WriteAllText(path, json);
     }
 }

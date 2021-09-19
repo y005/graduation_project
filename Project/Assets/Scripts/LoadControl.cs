@@ -13,9 +13,9 @@ using TMPro;
 
 public class LoadControl : MonoBehaviour
 {
-    IEnumerator coroutine1;
     float yahooApiCnt = 0;
     float youtubeApiCnt = 0;
+    float sentimentApiCnt = 0;
 
     //프로그래스 바
     public Slider LoadSlider;
@@ -28,63 +28,29 @@ public class LoadControl : MonoBehaviour
     public TextMeshProUGUI progress2; // 진행사항 문구 UI
 
     //사용하는 주식의 종목코드 배열
-    List<string> codeList = new List<string>() { "MSFT" , "KO"  };//"MSFT", "AAPL", "AMT", "KO", "PFE", "HON", "C" };
-    /*List<string> codeList = new List<string>() { "MSFT", "ORCL", "AAPL", "IBM", "GOOGL", "FB", "NFLX", "DIS",
+    List<string> codeList = new List<string>() { "MSFT", "ORCL", "AAPL", "IBM", "GOOGL", "FB", "NFLX", "DIS",
                                                  "AMZN", "TSLA", "SBUX", "NKE", "WMT", "COST", "KO", "PEP",
                                                   "V", "PYPL", "BAC", "C", "WFC",
                                                   "JNJ","PFE", "UNH", "AMGN", "LLY",
                                                   "HON", "UNP", "MMM", "TT", "LMT",
-                                                  "AMT", "EQIX", "PLD", "O" };*/
+                                                  "AMT", "EQIX", "PLD", "O" };
 
-    //원하는 유튜브 api 사용을 위한 변수들
-    const string baseURL = "https://www.googleapis.com/youtube/v3";
-    const string apiKey = "AIzaSyAuAYznsu0YJDB2Pbv3_ukCJwtGDZCHnNM";
+    //api 키 정보들
+    string yahooApiKey = "f977847401mshd7a2fe4cba6191fp1ae565jsnf4676589249d";
+    string youtubeApiKey = "AIzaSyDbfW37L3 - gRuKPrvU2yZDVP_ySxr1wttU";//"AIzaSyAuAYznsu0YJDB2Pbv3_ukCJwtGDZCHnNM";
 
     void Start()
     {
         //슬라이더 바 상태 초기화
         LoadSlider.value = 0;
         progress1.text = "0%";
-        progress2.text = "게임 맵 세팅 중...";//"DOWNLODING...(0/10)";
+        progress2.text = "게임 맵 세팅 중...";
         
-        //API 호출로 주식정보들 저장
+        //API 호출로 api정보 저장
         apiCall();
-        //코루틴 함수 호출을 통해 로딩을 슬라이더 바로 보여줌
-        coroutine1 = gameSetting();
-        StartCoroutine(coroutine1);
-        StartCoroutine(youtubeStat());
-        FearAndGreed();
-        
-        //test();
-    }
-
-    //restApi 서버 정보 요청 테스트
-    async Task test()
-    {
-        try
-        {
-            await ApiServerTest();
-        }
-        catch (Exception)
-        {
-            Debug.Log("API를 사용 중 에러가 발생했습니다.");
-        }
-    }
-    async Task ApiServerTest()
-    {
-        var client = new HttpClient();
-        var request = new HttpRequestMessage
-        {
-            Method = HttpMethod.Post,
-            RequestUri = new Uri("http://13.125.69.26:5000/hello"),
-        };
-        using (var response = await client.SendAsync(request))
-        {
-            response.EnsureSuccessStatusCode();
-            var body = await response.Content.ReadAsStringAsync();
-            JObject obj = JObject.Parse(body);
-            Debug.Log(obj);
-        };
+        //StartCoroutine(youtubeStat());
+        //로딩게이지바로 갱신 함수 보여줌
+        StartCoroutine(gameSetting());
     }
 
     //API요청하여 정보를 스크립터블 오브젝트에 저장
@@ -100,27 +66,35 @@ public class LoadControl : MonoBehaviour
         while (!op.isDone)
         {
             yield return null;
-            float prog = Mathf.Clamp01(op.progress / .9f) * 2f;
+            float prog = Mathf.Clamp01(op.progress / .9f) * 1f;
             LoadSlider.value = prog;
             progress1.text = (prog * 10).ToString() + "%";
             progress2.text = "게임 맵 세팅 중...";
 
-            if (prog >= 2)
+            if (prog >= 1)
             {
                 while (yahooApiCnt < codeList.Count)
                 {
-                    float prog2 = Mathf.Clamp01(yahooApiCnt / codeList.Count) * 4f;
-                    LoadSlider.value = 2f + prog2;
-                    progress1.text = ((2f + prog2) * 10).ToString("F0") + "%";
+                    float prog2 = Mathf.Clamp01(yahooApiCnt / codeList.Count) * 3f;
+                    LoadSlider.value = 1f + prog2;
+                    progress1.text = ((1f + prog2) * 10).ToString("F0") + "%";
                     progress2.text = "주식 정보 다운로드 중...";
                     yield return null;
                 }
                 while (youtubeApiCnt < codeList.Count)
                 {
-                    float prog3 = Mathf.Clamp01(youtubeApiCnt / codeList.Count) * 4f;
-                    LoadSlider.value = 6f + prog3;
-                    progress1.text = ((6f + prog3) * 10).ToString("F0") + "%";
+                    float prog3 = Mathf.Clamp01(youtubeApiCnt / codeList.Count) * 3f;
+                    LoadSlider.value = 4f + prog3;
+                    progress1.text = ((4f + prog3) * 10).ToString("F0") + "%";
                     progress2.text = "유튜브 통계 다운로드 중...";
+                    yield return null;
+                }
+                while(sentimentApiCnt < codeList.Count)
+                {
+                    float prog4 = Mathf.Clamp01(sentimentApiCnt / codeList.Count) * 3f;
+                    LoadSlider.value = 7f + prog4;
+                    progress1.text = ((7f + prog4) * 10).ToString("F0") + "%";
+                    progress2.text = "뉴스 감성분석 중...";
                     yield return null;
                 }
                 op.allowSceneActivation = true;
@@ -128,23 +102,25 @@ public class LoadControl : MonoBehaviour
             }
         }
     }
-    //1. 주식 정보를 위한 야후 파이낸스 api 호출 함수
     async Task apiCall()
     {
         try
         {
-            foreach (string i in codeList)
+            await FearAndGreed();
+            foreach (string code in codeList)
             {
-                await BeginNetwork(i);
+                //await yahooFinanceApi(code);
+                yahooApiCnt = codeList.Count;
+                youtubeApiCnt = codeList.Count;
+                await sentimentApi(code);
             }
-
         }
         catch (Exception)
         {
             Debug.Log("API를 사용 중 에러가 발생했습니다.");
         }
     }
-    async Task BeginNetwork(string code)
+    async Task yahooFinanceApi(string code)
     {
         var client = new HttpClient();
         var request = new HttpRequestMessage
@@ -153,7 +129,7 @@ public class LoadControl : MonoBehaviour
             RequestUri = new Uri("https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary?symbol=" + code + "&region=US"),
             Headers =
     {
-        { "x-rapidapi-key", "bd2bc7360bmsha9dc79919d1c7e9p1641b7jsnb4bd1c60dbe6"},
+        { "x-rapidapi-key", yahooApiKey},
         { "x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com" },
     },
         };
@@ -225,17 +201,35 @@ public class LoadControl : MonoBehaviour
             }
         };
     }
+    async Task sentimentApi(string code)
+    {
+        string uri = "http://3.37.190.174:5000/sentiment/"+code;
+        var client = new HttpClient();
+        var request = new HttpRequestMessage
+        {
+            Method = HttpMethod.Post,
+            RequestUri = new Uri(uri),
+        };
+        using (var response = await client.SendAsync(request))
+        {
+            response.EnsureSuccessStatusCode();
+            var body = await response.Content.ReadAsStringAsync();
+            JObject obj = JObject.Parse(body);
+            stockList.addSenti(code, (int)obj["result"]["positive ratio"], (int)obj["result"]["negative ratio"]);
+            sentimentApiCnt++;
+        };
+    }
     IEnumerator youtubeStat()
     {
         DateTime today = DateTime.Now;
         string tmp;
+        string baseURL = "https://www.googleapis.com/youtube/v3";
         int val;
-
         foreach (string keyword in codeList)
         {
             List<string> idList = new List<string>();
             //종목 코드로 검색한 최근 한 달간 관련 비디오 ID를 요청하는 URL
-            string query1 = baseURL + "/search?part=id&maxResults=100&order=viewCount&publishedAfter=" + today.AddDays(-30).ToString(("yyyy-MM-dd")) + "T00:00:00Z&publishedBefore=" + today.ToString(("yyyy-MM-dd")) + "T00:00:00Z&q=" + keyword + "+stock&type=video&videoDefinition=high&key=" + apiKey;
+            string query1 = baseURL + "/search?part=id&maxResults=100&order=viewCount&publishedAfter=" + today.AddDays(-30).ToString(("yyyy-MM-dd")) + "T00:00:00Z&publishedBefore=" + today.ToString(("yyyy-MM-dd")) + "T00:00:00Z&q=" + keyword + "+stock&type=video&videoDefinition=high&key=" + youtubeApiKey;
 
             WWW w1 = new WWW(query1);
             yield return w1;
@@ -262,7 +256,7 @@ public class LoadControl : MonoBehaviour
             foreach (var videoID in idList)
             {
                 //영상의 통계지표를 요청하는 URL (조회수, 좋아요, 싫어요, 댓글수)
-                string query = baseURL + "/videos?part=statistics&id=" + videoID + "&key=" + apiKey;
+                string query = baseURL + "/videos?part=statistics&id=" + videoID + "&key=" + youtubeApiKey;
 
                 WWW w2 = new WWW(query);
                 yield return w2;
@@ -274,7 +268,7 @@ public class LoadControl : MonoBehaviour
                     {
                         tmp = item["statistics"]["viewCount"].ToString();
                         val = int.Parse(tmp);
-                        if (val < 10000) { break; }
+                        if (val < 1000) { break; }
                         totalView += val;
                         cnt++;
 
@@ -311,7 +305,7 @@ public class LoadControl : MonoBehaviour
             Headers =
     {
         { "x-rapidapi-host", "fear-and-greed-index.p.rapidapi.com" },
-        { "x-rapidapi-key", "bd2bc7360bmsha9dc79919d1c7e9p1641b7jsnb4bd1c60dbe6" },
+        { "x-rapidapi-key", yahooApiKey },
     },
         };
         using (var response = await client.SendAsync(request))

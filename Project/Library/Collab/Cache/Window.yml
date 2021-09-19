@@ -14,14 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SimpleSelectedItems:
     m_Keys:
-    - Assets/Scenes/InGame.unity
-    - Assets/Scenes/MainMenu.unity
-    - Assets/Scripts/API.cs
-    - Assets/Scripts/DemoScript.cs
     - Assets/Scripts/InGameControl.cs
-    - Assets/Scripts/MainMenuControl.cs
+    - Assets/user1.Json
     - 
-    m_Values: 00000000000000
+    m_Values: 010101
   RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 
