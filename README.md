@@ -14,7 +14,8 @@
 
 * 개발 환경: unity3D (for window/mac) 
 
-* 프로젝트 설계도 
+## 프로젝트 설계도 
+
 ![프로젝트 계획문서2](https://user-images.githubusercontent.com/37391733/134131641-842d4840-fde9-4de4-b1f1-8092e98c1f32.png)
 
 ## 프로젝트 파일 설명
