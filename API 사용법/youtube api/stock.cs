@@ -14,12 +14,12 @@ using System;
 
 public class stock : MonoBehaviour
 {
-    //¿øÇÏ´Â À¯Æ©ºê µ¿¿µ»ó °ü·Ã Á¤º¸¸¦ URL·Î Á¶ÇÕÇØ¼­ ¿äÃ»ÇÏ´Â ¹æ½Ä 
+    //ì›í•˜ëŠ” ìœ íŠœë¸Œ ë™ì˜ìƒ ê´€ë ¨ ì •ë³´ë¥¼ URLë¡œ ì¡°í•©í•´ì„œ ìš”ì²­í•˜ëŠ” ë°©ì‹ 
     const string baseURL = "https://www.googleapis.com/youtube/v3";
-    const string apiKey = "AIzaSyAuAYznsu0YJDB2Pbv3_ukCJwtGDZCHnNM";
+    const string apiKey = "api ";
     string videoid = "3mxHOuIA2T8";
-    private string pageToken = "";//¿øÇÏ´Â Á¤º¸ ¼±ÅÃ°ú °ü·ÃµÈ Å°¿öµå(¿µ»óÀÇ Á¶È¸¼ö Á¤º¸¶û ÃßÃµ Á¤º¸ °¡Á®¿À´Â Å°¿öµå Ã£¾Æ¾ßµÊ)
-    private string keywords = "Ä«Ä«¿À+ÁÖ½Ä";//°Ë»öÇÒ Å°¿öµå·Î ¶ç¾î¾²±â´Â + Ç¥½Ã
+    private string pageToken = "";//ì›í•˜ëŠ” ì •ë³´ ì„ íƒê³¼ ê´€ë ¨ëœ í‚¤ì›Œë“œ(ì˜ìƒì˜ ì¡°íšŒìˆ˜ ì •ë³´ë‘ ì¶”ì²œ ì •ë³´ ê°€ì ¸ì˜¤ëŠ” í‚¤ì›Œë“œ ì°¾ì•„ì•¼ë¨)
+    private string keywords = "ì¹´ì¹´ì˜¤+ì£¼ì‹";//ê²€ìƒ‰í•  í‚¤ì›Œë“œë¡œ ë„ì–´ì“°ê¸°ëŠ” + í‘œì‹œ
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +31,7 @@ public class stock : MonoBehaviour
         // Pull down the JSON from YouTube
         string query = "";
 
-        //search ¸Ş¼Òµå
+        //search ë©”ì†Œë“œ
        if (pageToken == "")
         {
             query = baseURL + "/search?part=snippet&maxResults=1&order=relevance&q=" + keywords + "&type=video&videoDefinition=high&key=" + apiKey;
@@ -41,7 +41,7 @@ public class stock : MonoBehaviour
             query = baseURL + "/search?pageToken=" + pageToken + "&part=snippet&maxResults=1&order=relevance&q=" + keywords + "&type=video&videoDefinition=high&key=" + apiKey;
         }
 
-        //videos ¸Ş¼Òµå (Á¶È¸¼ö, ÁÁ¾Æ¿ä, ½È¾î¿ä, favorite Count?!, ´ñ±Û¼ö)
+        //videos ë©”ì†Œë“œ (ì¡°íšŒìˆ˜, ì¢‹ì•„ìš”, ì‹«ì–´ìš”, favorite Count?!, ëŒ“ê¸€ìˆ˜)
         //query = baseURL + "/videos?part=statistics&id=" + videoid + "&key=" + apiKey;
 
         WWW w = new WWW(query);
