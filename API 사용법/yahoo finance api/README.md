@@ -1,4 +1,4 @@
-# 유니티 Window PC환경에서 yahoo finance api사용절차
+# 유니티 환경에서 yahoo finance api사용절차
 
 ## yahoo finance api
 * 국내증권사와 다르게 로그인만 하면 사용가능해 편리함
