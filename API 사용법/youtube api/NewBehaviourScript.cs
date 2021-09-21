@@ -15,11 +15,11 @@ using System;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    //¿øÇÏ´Â À¯Æ©ºê µ¿¿µ»ó °ü·Ã Á¤º¸¸¦ URL·Î Á¶ÇÕÇØ¼­ ¿äÃ»ÇÏ´Â ¹æ½Ä 
+    //ì›í•˜ëŠ” ìœ íŠœë¸Œ ë™ì˜ìƒ ê´€ë ¨ ì •ë³´ë¥¼ URLë¡œ ì¡°í•©í•´ì„œ ìš”ì²­í•˜ëŠ” ë°©ì‹ 
     const string baseURL = "https://www.googleapis.com/youtube/v3";
-    const string apiKey = "AIzaSyAGRkQrjnyX95_mPdJ_IJejXztgjPAVYWw"; 
-    private string pageToken = "";//¿øÇÏ´Â Á¤º¸ ¼±ÅÃ°ú °ü·ÃµÈ Å°¿öµå(¿µ»óÀÇ Á¶È¸¼ö Á¤º¸¶û ÃßÃµ Á¤º¸ °¡Á®¿À´Â Å°¿öµå Ã£¾Æ¾ßµÊ)
-    private string keywords = "Ä«Ä«¿À+ÁÖ½Ä";//°Ë»öÇÒ Å°¿öµå·Î ¶ç¾î¾²±â´Â + Ç¥½Ã
+    const string apiKey = ""; 
+    private string pageToken = "";//ì›í•˜ëŠ” ì •ë³´ ì„ íƒê³¼ ê´€ë ¨ëœ í‚¤ì›Œë“œ(ì˜ìƒì˜ ì¡°íšŒìˆ˜ ì •ë³´ë‘ ì¶”ì²œ ì •ë³´ ê°€ì ¸ì˜¤ëŠ” í‚¤ì›Œë“œ ì°¾ì•„ì•¼ë¨)
+    private string keywords = "ì¹´ì¹´ì˜¤+ì£¼ì‹";//ê²€ìƒ‰í•  í‚¤ì›Œë“œë¡œ ë„ì–´ì“°ê¸°ëŠ” + í‘œì‹œ
     // Start is called before the first frame update
     void Start()
     {
