@@ -2,15 +2,17 @@
 
 ## 대신증권 사용 준비
 
-- 비대면 가상계좌 개설/CYBOS 5 설치
+- 비대면 가상계좌 개설
+- CYBOS 5 설치
 - 모의투자 회원가입/모의투자 신청(모의투자 매매할때도 [여기](https://vt.daishin.com/ds/cybos/info/info.do?m=4102&p=5492&v=4630)에서 하면 됨)
-- cybos5 hts에서 번호 1846을 누르고 시스템 트레이딩 신청
-[관련 참고 자료](https://money2.daishin.com/e5/mboard/ptype_basic/HTS_Plus_Helper/DW_Basic_Read_Page.aspx?boardseq=296&seq=219&page=1&searchString=&p=&v=&m=)
+- cybos5 hts에서 번호 1846을 누르고 시스템 트레이딩 신청([관련 참고 자료](https://money2.daishin.com/e5/mboard/ptype_basic/HTS_Plus_Helper/DW_Basic_Read_Page.aspx?boardseq=296&seq=219&page=1&searchString=&p=&v=&m=))
 
 ## python 32bit를 가상환경과 연결
 - pyvenv.txt 내 파이썬 연결 정보 수정
-  `home = 실행할 파이썬 위치`
-  `version = 실행할 파이썬 버전`
+```bash
+home = 실행할 파이썬 위치
+version = 실행할 파이썬 버전
+```
 - py32에 있는 가상환경 세팅 예시
 ```bash
 python -m venv py32
