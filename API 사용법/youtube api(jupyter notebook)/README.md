@@ -1,4 +1,4 @@
-# 유니티 환경에서 youtube data v3 api 사용방법 절차
+# 주피터 노트북 환경에서 youtube data v3 api 사용방법 절차
 
 [전체 과정 참고 링크](https://brunch.co.kr/@joypinkgom/49)
 
@@ -15,16 +15,12 @@
 * 특정 사용자에게 허용된 API를 사용 시 oAuth 2.0
 * 그렇지 않은 경우 API키 사용, 서비스 계정 사용(API키는 테스트용으로만 사용되고 서비스 계정을 통한 사용을 권고함)
 
-[Net 환경 기준 간단한 사용 예제1](https://developers.google.com/api-client-library/dotnet/get_started)
-[Net 환경 기준 간단한 사용 예제2](https://developers.google.com/youtube/v3/code_samples/dotnet?hl=ko)
+## 프로젝트 파일 설명
+`youtubeStat(19_08-20_07).ipynb` : 19년 8월부터 20년 7월까지의 주식 관련 동영상 정보를 수집하는 코드
+`youtube title extract.ipynb` : 비디오 아이디를 이용해 수집한 영상들의 제목을 추가하는 코드
+`youtubeComment.ipynb` : 비디오의 특정 댓글들만 수집하는 코드
+`Live chat from youtube.ipynb` : 라이브 비디오의 댓글을 수집하는 코드
+`sentiment analysis video comment.ipynb` : 수집한 영상 댓글들을 감성분석하는 코드
+`sentiment analysis(make model).ipynb` : 영화리뷰 데이터를 이용해 감성분석기를 학습하는 코드
+`sentiment analysis(using model).ipynb` : 학습된 감성분석기를 사용하는 코드
 
-## 사용방법
-```bash
-string query = "https://www.googleapis.com/youtube/v3";
-query += pageToken(요청하고 싶은 데이터 종류)
-query += api키값
-WWW w = new WWW(query);
-JObject result = JObject.Parse(w.text);
-Debug.Log(result);
-```
-[다른 api 요청 예시](https://developers.google.com/youtube/v3/docs/channels/list)
