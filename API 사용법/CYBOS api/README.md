@@ -13,9 +13,9 @@
   `version = 실행할 파이썬 버전`
 - py32에 있는 가상환경 세팅 예시
 ```bash
-python -m venv C:\Users\82102\Desktop\stock api\py32
+python -m venv py32
 pip install -r requirements.txt
-cd C:\Users\82102\Desktop\stock api\py32\Scripts
+cd py32/Scripts
 activate
 ```
 
