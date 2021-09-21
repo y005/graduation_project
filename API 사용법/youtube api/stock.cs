@@ -16,7 +16,7 @@ public class stock : MonoBehaviour
 {
     //원하는 유튜브 동영상 관련 정보를 URL로 조합해서 요청하는 방식 
     const string baseURL = "https://www.googleapis.com/youtube/v3";
-    const string apiKey = "api ";
+    const string apiKey = "api key";
     string videoid = "3mxHOuIA2T8";
     private string pageToken = "";//원하는 정보 선택과 관련된 키워드(영상의 조회수 정보랑 추천 정보 가져오는 키워드 찾아야됨)
     private string keywords = "카카오+주식";//검색할 키워드로 띄어쓰기는 + 표시
