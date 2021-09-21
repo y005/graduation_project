@@ -12,6 +12,7 @@ yahoo finance api에 로그인 후 Basic Subscribe: [여기](https://rapidapi.co
 1. unity에 json관련 라이브러리인 newtonsoft.json을 [홈페이지](https://www.nuget.org/packages/Newtonsoft.Json/)에서 Download package 클릭
 2. 다운로드한 파일을 찾아서 확장자를 `.nupkg` 에서 `.zip` 으로 변경합니다
 3. 압축 해제된 폴더에 `lib/net20`에 있는 `newtonsoft.json.dll`를 `Asset/Plugins`에 세팅
+
 [참고 링크](https://docs.microsoft.com/ko-kr/visualstudio/gamedev/unity/unity-scripting-upgrade)
 
 ## 사용 코드 예시
