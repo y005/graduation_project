@@ -1,3 +1,27 @@
-# 졸업 프로젝트 관련
+# 게이미피케이션을 활용한 주식 포트폴리오 분석 및 시각화
 
-관련 URL: https://docs.google.com/document/d/1tuIHSd5zLhlpO3-iiiPaRaQ_29pljF6nVNqXlcJVMp4/edit
+## 졸업 프로젝트 설명
+
+* 연구 목적
+- 기존 MTS,HTS에서 제공되는 정보 시각화 방식을 개선한 3D기반의 동적인 정보 시각화 방식 제안 
+- 새로운 주식 분석 지표 제공
+  1.소셜미디어 내 투자자들의 관심동향 제공
+  2.종목별 뉴스 기사들에 대한 감성분석 제공
+
+* 연구 목표: 초보 투자자들도 효과적으로 정보를 얻을 수 있는 효율적인 시각화 방식 제공과 주식시장 동향에 대한 새로운 분석 지표 제공
+
+* 기능
+  1. 포트폴리오 기능
+  2. 레이어 기능을 통한 정보 시각화 방식 제공
+  3. 소셜미디어내 종목별 관심도 정보 제공
+  4. 종목별 관련 뉴스들의 감성분석 결과 제공
+
+* 개발 환경: unity3D (for window/mac) 
+
+## 프로젝트 파일 설명
+ 
+ * `Project`: 졸업 프로젝트 원본 파일 
+ * `API`: 졸업 프로젝트 개발에 사용된 API 사용과 관련된 문서
+ * `EXE`: 빌드된 게임 파일 
+ * [프로젝트 개발문서1](https://docs.google.com/document/d/1tuIHSd5zLhlpO3-iiiPaRaQ_29pljF6nVNqXlcJVMp4/edit)
+ * [프로젝트 개발문서2](https://docs.google.com/document/d/1zfq5J5_YUFQ3t67Vtsd0CIGxtNTGYoTzoCyMeq5ZCHo/edit)
