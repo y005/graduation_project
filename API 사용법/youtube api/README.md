@@ -1,4 +1,4 @@
-# 유니티 프로젝트 내 youtube data v3 api 사용방법 절차
+# 유니티 환경에서 youtube data v3 api 사용방법 절차
 
 [전체 과정 참고 링크](https://brunch.co.kr/@joypinkgom/49)
 
