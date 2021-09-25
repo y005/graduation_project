@@ -14,6 +14,15 @@
 
 * 개발 환경: unity3D (for window/mac) 
 
+* 사용한 API 관련 문서
+ [Cybos API](https://github.com/y005/graduation_project/tree/main/API%20%EC%82%AC%EC%9A%A9%EB%B2%95/CYBOS%20api)
+
+ [Yahoo Finance API](https://github.com/y005/graduation_project/tree/main/API%20%EC%82%AC%EC%9A%A9%EB%B2%95/yahoo%20finance%20api)
+
+ [Youtube Data V3 API - Jupyter Notebook ver](https://github.com/y005/graduation_project/tree/main/API%20%EC%82%AC%EC%9A%A9%EB%B2%95/youtube%20api(jupyter%20notebook))
+
+ [Youtube Data V3 API - Unity C# ver](https://github.com/y005/graduation_project/tree/main/API%20%EC%82%AC%EC%9A%A9%EB%B2%95/youtube%20api(unity))
+
 ## 프로젝트 실행 화면
 
 ![스크린샷(33)](https://user-images.githubusercontent.com/37391733/134770394-f81c74fc-7c4b-4541-b46a-c452c72c119d.png)
