@@ -14,6 +14,19 @@
 
 * 개발 환경: unity3D (for window/mac) 
 
+## 프로젝트 실행 화면
+
+![스크린샷(33)](https://user-images.githubusercontent.com/37391733/134770394-f81c74fc-7c4b-4541-b46a-c452c72c119d.png)
+
+![스크린샷(36)](https://user-images.githubusercontent.com/37391733/134770419-d86f3d80-09be-4084-8cd5-580b8ede0c0c.png)
+
+![스크린샷(39)](https://user-images.githubusercontent.com/37391733/134770440-e6a3e919-8da2-4834-a4c4-c616097c3f6a.png)
+
+![스크린샷(41)](https://user-images.githubusercontent.com/37391733/134770429-94d01d2a-ef4b-44aa-bf97-9673d7e049fb.png)
+
+
+
+
 ## 프로젝트 파일 설명
  
  * `/API`: 졸업 프로젝트 개발에 사용된 API 사용과 관련된 문서
