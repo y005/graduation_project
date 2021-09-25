@@ -20,11 +20,13 @@
 
 ![스크린샷(36)](https://user-images.githubusercontent.com/37391733/134770419-d86f3d80-09be-4084-8cd5-580b8ede0c0c.png)
 
-![스크린샷(38)](https://user-images.githubusercontent.com/37391733/134770466-63c36bc6-ee17-450b-814d-d40e6e684e90.png)
+![스크린샷(42)](https://user-images.githubusercontent.com/37391733/134770509-d22243fa-3a57-4137-8bdb-b691ec9cccd8.png)
 
 ![스크린샷(39)](https://user-images.githubusercontent.com/37391733/134770440-e6a3e919-8da2-4834-a4c4-c616097c3f6a.png)
 
 ![스크린샷(40)](https://user-images.githubusercontent.com/37391733/134770470-1a9ae43e-95be-47f6-b310-a3d7f845b4b5.png)
+
+![스크린샷(38)](https://user-images.githubusercontent.com/37391733/134770466-63c36bc6-ee17-450b-814d-d40e6e684e90.png)
 
 ![스크린샷(41)](https://user-images.githubusercontent.com/37391733/134770429-94d01d2a-ef4b-44aa-bf97-9673d7e049fb.png)
 
