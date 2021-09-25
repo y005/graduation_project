@@ -20,7 +20,6 @@
 
 ## 프로젝트 파일 설명
  
- * `/Project`: 졸업 프로젝트 원본 파일 
  * `/API`: 졸업 프로젝트 개발에 사용된 API 사용과 관련된 문서
  * `/EXE`: 빌드된 게임 파일 
  * [프로젝트 개발문서1](https://docs.google.com/document/d/1tuIHSd5zLhlpO3-iiiPaRaQ_29pljF6nVNqXlcJVMp4/edit)
