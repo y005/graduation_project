@@ -14,13 +14,34 @@
 
 * 개발 환경: unity3D (for window/mac) 
 
-## 프로젝트 설계도 
+* 사용한 API 관련 문서
 
-![프로젝트 계획문서2](https://user-images.githubusercontent.com/37391733/134131957-10cce865-0c99-4d6b-86eb-c9424f8aeaab.png)
+  [Cybos API](https://github.com/y005/graduation_project/tree/main/API%20%EC%82%AC%EC%9A%A9%EB%B2%95/CYBOS%20api)
+
+  [Yahoo Finance API](https://github.com/y005/graduation_project/tree/main/API%20%EC%82%AC%EC%9A%A9%EB%B2%95/yahoo%20finance%20api)
+
+  [Youtube Data V3 API - Jupyter Notebook ver](https://github.com/y005/graduation_project/tree/main/API%20%EC%82%AC%EC%9A%A9%EB%B2%95/youtube%20api(jupyter%20notebook))
+
+  [Youtube Data V3 API - Unity C# ver](https://github.com/y005/graduation_project/tree/main/API%20%EC%82%AC%EC%9A%A9%EB%B2%95/youtube%20api(unity))
+
+## 프로젝트 실행 화면
+
+![스크린샷(33)](https://user-images.githubusercontent.com/37391733/134770394-f81c74fc-7c4b-4541-b46a-c452c72c119d.png)
+
+![스크린샷(36)](https://user-images.githubusercontent.com/37391733/134770419-d86f3d80-09be-4084-8cd5-580b8ede0c0c.png)
+
+![스크린샷(42)](https://user-images.githubusercontent.com/37391733/134770509-d22243fa-3a57-4137-8bdb-b691ec9cccd8.png)
+
+![스크린샷(39)](https://user-images.githubusercontent.com/37391733/134770440-e6a3e919-8da2-4834-a4c4-c616097c3f6a.png)
+
+![스크린샷(40)](https://user-images.githubusercontent.com/37391733/134770470-1a9ae43e-95be-47f6-b310-a3d7f845b4b5.png)
+
+![스크린샷(38)](https://user-images.githubusercontent.com/37391733/134770466-63c36bc6-ee17-450b-814d-d40e6e684e90.png)
+
+![스크린샷(41)](https://user-images.githubusercontent.com/37391733/134770429-94d01d2a-ef4b-44aa-bf97-9673d7e049fb.png)
 
 ## 프로젝트 파일 설명
  
- * `/Project`: 졸업 프로젝트 원본 파일 
  * `/API`: 졸업 프로젝트 개발에 사용된 API 사용과 관련된 문서
  * `/EXE`: 빌드된 게임 파일 
  * [프로젝트 개발문서1](https://docs.google.com/document/d/1tuIHSd5zLhlpO3-iiiPaRaQ_29pljF6nVNqXlcJVMp4/edit)
