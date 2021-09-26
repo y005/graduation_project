@@ -34,8 +34,24 @@ nohup python3 app.py &
   (ACL의 경우 여러 서브넷 접근제한 가능)
 
 ### 대용량 파일을 Git에 업로드 하기
-1. dfj
-2. 
+
+0. [EBS 볼륨 확장하기] (https://ithub.tistory.com/253)  
+1. 파티션 크기 확인
+```bash
+lsblk
+```
+2. 파티션 크기 조절
+```bash
+sudo growpart /dev/xvdf 1
+```
+3. 파일 시스템 크기 확장
+```bash
+sudo resize2fs /dev/xvdf1
+```
+4. 디스크 용량 확인
+```bash
+df -h
+```
 
 ### 1시간 마다 파이썬 코드 실행하는 방법 
 ```bash
