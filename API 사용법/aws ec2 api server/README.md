@@ -35,7 +35,7 @@ nohup python3 app.py &
 
 ### 대용량 파일을 Git에 업로드 하기
 
-0. [EBS 볼륨 확장하기] (https://ithub.tistory.com/253)  
+0. [EBS 볼륨 확장하기](https://ithub.tistory.com/253)  
 
 1. 파티션 크기 확인
 ```bash
