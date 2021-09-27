@@ -28,7 +28,7 @@
  
   [Finbert - Financial sentiment analysis with pre-trained language models](https://github.com/y005/finBERT)
 
-## 프로젝트 실행 화면
+## 프로젝트 실행 화면 
 
 ![스크린샷(33)](https://user-images.githubusercontent.com/37391733/134770394-f81c74fc-7c4b-4541-b46a-c452c72c119d.png)
 
