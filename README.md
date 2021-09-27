@@ -16,7 +16,7 @@
 
 * 사용한 API 관련 문서
 
-  [Cybos API(유니티와 호환문제로 실제 사용 X)](https://github.com/y005/graduation_project/tree/main/API%20%EC%82%AC%EC%9A%A9%EB%B2%95/CYBOS%20api)
+  [Cybos API](https://github.com/y005/graduation_project/tree/main/API%20%EC%82%AC%EC%9A%A9%EB%B2%95/CYBOS%20api)(유니티와 호환문제로 실제 사용 X)
 
   [Yahoo Finance API](https://github.com/y005/graduation_project/tree/main/API%20%EC%82%AC%EC%9A%A9%EB%B2%95/yahoo%20finance%20api)
 
